@@ -6,7 +6,7 @@ import { join } from "node:path";
 import { test } from "node:test";
 import { boxConfigDir, boxed, CLAUDE_FILES, claudeAdapter, claudeArgs, claudeFilesBoxSpec, claudeTempEnv, FILE_TOOLS, NO_CLAUDE_KEY, WORKSPACE_TOOLS } from "../src/agents/claude.ts";
 import { fakeCli } from "./fake-cli.ts";
-import { ancestors, boxForPlatform, checkWorkspace, installOf, realPath, seatbeltProfile, tempEnv, toolReads, SANDBOX_EXEC, type ToolFs } from "../src/box.ts";
+import { ancestors, boxForPlatform, checkWorkspace, installOf, judgeWorkspace, realPath, seatbeltProfile, tempEnv, toolReads, SANDBOX_EXEC, type ToolFs } from "../src/box.ts";
 
 /** The box is macOS's sandbox, and a profile names POSIX paths: these read one, which Windows writes with its own. */
 const seatbelt = { skip: process.platform === "win32" && "the box is macOS's sandbox; its profile names POSIX paths" };
@@ -81,6 +81,46 @@ test("a workspace must be a real folder of its own, never the home folder, above
     assert.match((checkWorkspace(join(home, "nope", "x"), home) as { problem: string }).problem, /does not exist/);
     const system = process.platform === "win32" ? (process.env.SystemRoot ?? "C:\\Windows") : "/usr/bin";
     assert.match((checkWorkspace(system, home) as { problem: string }).problem, /folder of its own/);
+  } finally {
+    rmSync(home, { recursive: true, force: true });
+  }
+});
+
+test("an installed copy's video work folder, under ~/.opensourcebook, is a workspace because the connector was set up with it; settings folders stay refused whatever it was set up with", () => {
+  // The layout the one-line install makes: the app in ~/.opensourcebook/app, the scenes service's data beside its code.
+  const home = "/Users/ann";
+  const root = "/Users/ann/.opensourcebook/app/services/scenes/.data";
+  const temps = ["/private/var/folders/ab/cd/T", "/private/tmp"];
+  const work = `${root}/job1/work`;
+  const problem = (path: string, roots: string[] = [root]) => (judgeWorkspace(path, home, temps, roots) as { problem?: string }).problem;
+  assert.deepEqual(judgeWorkspace(work, home, temps, [root]), { path: work }, "inside the scenes service's own folder");
+  assert.match(problem(work, [])!, /\.opensourcebook at the top of the home folder/, "not without the connector being set up with it, and the real reason is said");
+  assert.match(problem(root)!, /top of the home folder/, "never the root itself");
+  assert.match(problem("/Users/ann/.opensourcebook/app/engine/x")!, /top of the home folder/, "the rest of the app's folder stays refused");
+  assert.match(problem("/Users/ann/.opensourcebook/state/x")!, /top of the home folder/);
+  assert.match(problem("/Users/ann/.npm/x")!, /top of the home folder/, "other dot folders stay refused");
+  // Settings, logins and keys: refused even when a root was set up there.
+  for (const dir of [".ssh", ".gnupg", ".aws", ".claude", ".codex", ".config", ".gemini", ".cursor", ".docker", ".kube", "Library/Application Support"]) {
+    const set = `/Users/ann/${dir}/opensourcebook`;
+    assert.match(problem(`${set}/job1/work`, [set])!, /own settings/, dir);
+  }
+  assert.match(problem(`${root}/job1/.claude/x`)!, /own settings/, "a settings folder inside the root");
+  assert.match(problem("/Users/ann/.opensourcebook/job/work", [home])!, /top of the home folder/, "the home folder is never a root");
+  assert.match(problem("/Users/ann/.opensourcebook/job/work", ["/"])!, /top of the home folder/, "nor a folder above it");
+  // A developer's copy in a plain folder needs no root.
+  assert.deepEqual(judgeWorkspace("/Users/ann/code/opensourcebook/services/scenes/.data/job1/work", home, temps), { path: "/Users/ann/code/opensourcebook/services/scenes/.data/job1/work" });
+});
+
+test("on disk, the installed layout's work folder is a workspace when its root is named, through links too", () => {
+  const home = realpathSync(mkdtempSync(join(tmpdir(), "opensourcebook-home-")));
+  try {
+    const root = join(home, ".opensourcebook", "app", "services", "scenes", ".data");
+    mkdirSync(join(root, "job1", "work"), { recursive: true });
+    mkdirSync(join(home, ".ssh", "x"), { recursive: true });
+    symlinkSync(root, join(home, "data-link"));
+    assert.deepEqual(checkWorkspace(join(root, "job1", "work"), home, tmpdir(), [join(home, "data-link")]), { path: join(root, "job1", "work") });
+    assert.match((checkWorkspace(join(root, "job1", "work"), home) as { problem: string }).problem, /\.opensourcebook/);
+    assert.match((checkWorkspace(join(home, ".ssh", "x"), home, tmpdir(), [join(home, ".ssh")]) as { problem: string }).problem, /own settings/);
   } finally {
     rmSync(home, { recursive: true, force: true });
   }

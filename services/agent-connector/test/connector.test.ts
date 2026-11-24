@@ -470,6 +470,40 @@ test("the scenes service's token starts turns only in its own folders, sees and 
   }
 });
 
+test("on an installed copy the scenes service's turns start in its folder under ~/.opensourcebook, and a refused folder says why", async () => {
+  const home = realpathSync(mkdtempSync(join(tmpdir(), "opensourcebook-home-")));
+  const root = join(home, ".opensourcebook", "app", "services", "scenes", ".data");
+  const inside = join(root, "job1", "work");
+  const other = join(home, ".opensourcebook", "app", "elsewhere", "work");
+  const settings = join(home, ".ssh", "work");
+  for (const dir of [inside, other, settings]) mkdirSync(dir, { recursive: true });
+  const SCENES = "scenes-token-0123456789";
+  const box: Box = { kind: "seatbelt", wrap: (bin, args) => ({ bin, args }) };
+  const agent = { ...fakeAgent(() => new Promise<TurnEnd>(() => undefined)), boxing: { note: "boxed", unready: () => undefined } };
+  const engine = await fakeEngine();
+  const { server } = createConnector({ token: TOKEN, scenes: { token: SCENES, roots: [root] }, agents: new AgentRegistry().register(agent), defaults: { agent: "fake" }, box, home, log: () => undefined });
+  const url = await listen(server);
+  const call = (path: string, token: string, body: unknown) => fetch(`${url}${path}`, { method: "POST", headers: { authorization: `Bearer ${token}`, "content-type": "application/json" }, body: JSON.stringify(body) });
+  const turn = (turnId: string, path: string) => ({ turnId, systemPrompt: "s", prompt: "p", tools: [], callback: { url: `${engine.url}/v1/agent-turns/${turnId}`, token: "t" }, workspace: { path } });
+  try {
+    const started = await call("/turns", SCENES, turn("s1", inside));
+    assert.equal(started.status, 202, "the video's work folder");
+    assert.equal((await started.json()).workspace, true);
+    assert.equal(agent.specs[0]!.cwd, inside);
+    const elsewhere = await call("/turns", SCENES, turn("s2", other));
+    assert.equal(elsewhere.status, 403);
+    assert.match((await elsewhere.json()).message, /\.opensourcebook at the top of the home folder/, "the real reason, not only that it is outside the service's folders");
+    const ssh = await call("/turns", TOKEN, turn("e1", settings));
+    assert.equal(ssh.status, 400, "the full token neither");
+    assert.match((await ssh.json()).message, /own settings/);
+    await call("/turns/s1/stop", TOKEN, {});
+  } finally {
+    server.close();
+    engine.server.close();
+    rmSync(home, { recursive: true, force: true });
+  }
+});
+
 test("a boxed turn gets a temporary folder of its own, 0700, removed when the turn ends", async () => {
   const work = mkdtempSync(join(tmpdir(), "opensourcebook-work-"));
   const box: Box = { kind: "seatbelt", wrap: (bin, args) => ({ bin, args }) };

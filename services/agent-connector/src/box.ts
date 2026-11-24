@@ -157,14 +157,22 @@ export function within(child: string, parent: string): boolean {
 }
 
 /**
+ * Folders anywhere under the home folder where an agent, a tool or a program keeps its own settings, logins or keys
+ * (~/.ssh, ~/.claude, a project's .claude): never a workspace, not even inside a folder the connector was set up with.
+ */
+const SETTINGS = /(^|[\\/])\.(claude|codex|gemini|cursor|copilot|ssh|gnupg|aws|config|netrc|docker|kube|azure|gcloud)([\\/]|$)/;
+
+/**
  * The workspace a caller asked for, checked: an existing folder, by its real path, at least two levels inside the home
  * folder or inside a temporary folder (this user's own, or /private/tmp), and never the home folder, a folder above it,
- * or a place a program keeps its own state: no dot folder at the top of the home folder (~/.kube, ~/.docker, ~/.config,
- * ~/.local, any of them: where tools keep settings and logins), not ~/Library (the apps' own data), and no agent's or
- * tool's settings folder deeper down (a project's .claude). A dot folder deeper inside a project is fine: Open Sourcebook's video
- * maker works in `services/scenes/.data/<job>/work`.
+ * or a place a program keeps its own state: not ~/Library (the apps' own data), no agent's or tool's settings folder at
+ * any depth (`SETTINGS`), and no dot folder at the top of the home folder (~/.kube, ~/.local, any of them: where tools
+ * keep settings and logins) unless the workspace is inside one of `roots`. Those are the work folders this connector
+ * was set up with in its own environment, never by a request (the scenes service's, OPENSOURCEBOOK_CONNECTOR_SCENES_ROOTS):
+ * an installed copy keeps them in `~/.opensourcebook/app/services/scenes/.data`. A dot folder deeper inside a project is
+ * fine: Open Sourcebook's video maker works in `services/scenes/.data/<job>/work`.
  */
-export function checkWorkspace(path: unknown, home: string = homedir(), temp: string = tmpdir()): { path: string } | { problem: string } {
+export function checkWorkspace(path: unknown, home: string = homedir(), temp: string = tmpdir(), roots: readonly string[] = []): { path: string } | { problem: string } {
   if (typeof path !== "string" || !isAbsolute(path)) return { problem: "workspace.path must be an absolute path." };
   let real: string;
   try {
@@ -174,17 +182,27 @@ export function checkWorkspace(path: unknown, home: string = homedir(), temp: st
     return { problem: "workspace.path does not exist." };
   }
   const realHome = existsSync(home) ? realpathSync(home) : home;
+  return judgeWorkspace(real, realHome, [realPath(temp), "/private/tmp"], roots.map(realPath));
+}
+
+/**
+ * `checkWorkspace`'s judgement of a folder already named by its real path, against the real paths of the home folder,
+ * the temporary folders and the connector's own work folders (`roots`).
+ */
+export function judgeWorkspace(real: string, home: string, temps: readonly string[], roots: readonly string[] = []): { path: string } | { problem: string } {
   const own = "workspace.path must be a folder of its own, inside the home folder or a temporary folder.";
-  if (within(realHome, real)) return { problem: own };
-  if (within(real, realHome)) {
-    const inside = relative(realHome, real);
+  if (within(home, real)) return { problem: own };
+  if (within(real, home)) {
+    const inside = relative(home, real);
     const parts = inside.split(sep);
     if (parts.length < 2) return { problem: own };
-    if (parts[0]!.startsWith(".") || parts[0] === "Library" || /(^|[\\/])\.(claude|codex|ssh|gnupg|aws|config)([\\/]|$)/.test(inside)) return { problem: "workspace.path can't be inside an agent's, a tool's or an app's own settings." };
+    if (parts[0] === "Library" || SETTINGS.test(inside)) return { problem: "workspace.path can't be inside an agent's, a tool's or an app's own settings." };
+    // A root is trusted only inside the home folder and below it, never the home folder itself.
+    const inRoot = roots.some((root) => within(root, home) && root !== home && within(real, root) && real !== root);
+    if (parts[0]!.startsWith(".") && !inRoot) return { problem: `workspace.path can't be inside ${parts[0]} at the top of the home folder, where programs keep their own settings, unless it is inside one of the work folders this connector was set up with.` };
     return { path: real };
   }
   // A temporary folder: this user's own (not other users' or the system's caches beside it in /private/var/folders), or /private/tmp.
-  const temps = [realPath(temp), "/private/tmp"];
   return temps.some((t) => within(real, t) && real !== t) ? { path: real } : { problem: own };
 }
 

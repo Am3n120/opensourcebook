@@ -48,6 +48,8 @@ export interface ConnectorOptions {
   noWorkspaces?: boolean;
   /** Path to the JSONL file where finished turns' usage is appended. */
   usageLog?: string;
+  /** The home folder a workspace is checked against; the user's own unless a test names one. */
+  home?: string;
 }
 
 const MAX_BODY = 2_000_000;
@@ -64,6 +66,8 @@ export function createConnector(options: ConnectorOptions): { server: Server; tu
     ...(options.timeoutMs ? { timeoutMs: options.timeoutMs } : {}),
     ...(options.box ? { box: options.box } : {}),
     ...(options.noWorkspaces ? { noWorkspaces: true } : {}),
+    ...(options.scenes?.roots.length ? { roots: options.scenes.roots } : {}),
+    ...(options.home ? { home: options.home } : {}),
     ...(options.usageLog ? { usageLog: options.usageLog } : {}),
   });
   let cached: { at: number; body: unknown } | undefined;

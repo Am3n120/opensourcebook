@@ -54,6 +54,11 @@ export interface TurnsOptions {
   noWorkspaces?: boolean;
   /** The home folder, for checking a workspace. */
   home?: string;
+  /**
+   * The work folders this connector was set up with in its own environment (the scenes service's), where a workspace
+   * may be even under a dot folder at the top of the home folder, as an installed copy's are (`checkWorkspace`).
+   */
+  roots?: string[];
   /** Path to the JSONL file where finished turns' usage is appended. */
   usageLog?: string;
 }
@@ -217,8 +222,9 @@ export class Turns {
     const read = readStart(body);
     if ("problem" in read) return { ok: false, status: 400, problem: "badRequest", message: read.problem };
     if (scope && read.workspace !== undefined) {
-      const checked = checkWorkspace(read.workspace, this.options.home);
-      const inRoots = "path" in checked && scope.roots.map(realPath).some((root) => within(checked.path, root) && checked.path !== root);
+      const checked = checkWorkspace(read.workspace, this.options.home, undefined, scope.roots);
+      if ("problem" in checked) return { ok: false, status: 403, problem: "badRequest", message: checked.problem };
+      const inRoots = scope.roots.map(realPath).some((root) => within(checked.path, root) && checked.path !== root);
       if (!inRoots) return { ok: false, status: 403, problem: "badRequest", message: `workspace.path must be inside the ${scope.name} service's own folders.` };
     }
     if (this.turns.has(read.turnId)) return { ok: false, status: 409, problem: "badRequest", message: "That turn is already running." };
@@ -234,7 +240,7 @@ export class Turns {
     let workspace: string | undefined;
     const offer = read.workspace !== undefined ? workspaceAccess(agent, this.options.box, this.options.noWorkspaces) : {};
     if (offer.access) {
-      const checked = checkWorkspace(read.workspace, this.options.home);
+      const checked = checkWorkspace(read.workspace, this.options.home, undefined, [...(this.options.roots ?? []), ...(scope?.roots ?? [])]);
       if ("problem" in checked) return { ok: false, status: 400, problem: "badRequest", message: checked.problem };
       workspace = checked.path;
     }
