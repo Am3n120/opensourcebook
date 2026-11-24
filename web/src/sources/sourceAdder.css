@@ -1,0 +1,61 @@
+/* The adder: one drop area, four ways to add from elsewhere, and the list of what is being added. */
+.sadder { display: flex; flex-direction: column; gap: var(--space-16); min-width: 0; }
+.sadder-sec { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.sadder-lbl { color: var(--muted); font-size: var(--fs-label); line-height: var(--lh-label); font-weight: 600; }
+
+.sadder-drop {
+  border: 1.5px dashed var(--borderStrong); border-radius: 16px; background: var(--bg);
+  padding: 36px 20px 28px; display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center;
+  transition: border-color var(--dur-quick) var(--ease-out), background var(--dur-quick) var(--ease-out);
+}
+.sadder-drop.over { border-color: var(--primary); background: var(--primaryGhost); }
+.sadder-up { width: 48px; height: 48px; border-radius: 14px; background: var(--fill); display: grid; place-items: center; color: var(--mutedText); }
+.sadder-up .ico { width: 22px; height: 22px; }
+.sadder-txt { display: flex; flex-direction: column; gap: 4px; }
+.sadder-txt b { font-size: 15px; line-height: 22px; font-weight: 600; }
+.sadder-txt span, .sadder-hint { font-size: var(--fs-label); line-height: var(--lh-label); color: var(--mutedText); }
+.sadder-btns { display: flex; gap: var(--space-8); flex-wrap: wrap; justify-content: center; }
+.sadder-btns .btn .ico { width: 14px; height: 14px; }
+.sadder-note { margin: 0; font-size: var(--fs-label); line-height: var(--lh-label); color: var(--mutedText); }
+
+.sadder-tiles { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-8); }
+.sadder-tile {
+  display: flex; flex-direction: column; align-items: center; gap: var(--space-8); padding: 14px 8px 12px;
+  border: 1px solid var(--border); border-radius: var(--r-12); background: var(--surface); color: var(--text);
+  font: inherit; cursor: pointer; text-align: center; min-width: 0;
+}
+.sadder-tile:hover { border-color: var(--borderStrong); }
+.sadder-tile.on { border-color: var(--primary); background: var(--primaryGhost); }
+.sadder-tile[disabled] { opacity: .45; cursor: not-allowed; }
+.sadder-tile b { font-size: 13px; line-height: 18px; font-weight: 600; }
+.sadder-ic { width: 36px; height: 36px; border-radius: 10px; background: var(--fill); display: grid; place-items: center; color: var(--mutedText); }
+.sadder-ic svg { width: 20px; height: 20px; }
+.sadder-ic .ico { width: 18px; height: 18px; }
+.sadder-ic.youtube { background: #2A1215; }
+.sadder-ic.drive { background: #1B2230; }
+:root:not([data-theme="dark"]) .sadder-ic.youtube { background: #FDE8EA; }
+:root:not([data-theme="dark"]) .sadder-ic.drive { background: #E8F0FE; }
+
+.sadder-field { display: flex; flex-direction: column; gap: var(--space-8); }
+.sadder-help { color: var(--mutedText); font-size: var(--fs-label); line-height: var(--lh-label); }
+.sadder-bad { color: var(--danger); font-size: var(--fs-label); line-height: var(--lh-label); }
+.sadder-add { display: flex; justify-content: flex-end; }
+
+.srows { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.srow { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border-radius: var(--r-12); background: var(--bg); border: 1px solid var(--border); min-width: 0; }
+.srow .dot { flex: none; width: 8px; height: 8px; border-radius: 50%; background: var(--borderStrong); }
+.srow.adding .dot, .srow.reading .dot { background: var(--accent); animation: pulse 1.6s var(--ease) infinite; }
+.srow.done .dot { background: var(--success); }
+.srow.failed .dot { background: var(--danger); }
+.srow .nm { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.srow .nm b { font-size: var(--fs-caption); line-height: var(--lh-caption); font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.srow .nm span { font-size: var(--fs-label); line-height: var(--lh-label); color: var(--mutedText); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.srow.adding .nm span, .srow.reading .nm span { color: var(--accentText); }
+.srow.done .nm span { color: var(--successText); }
+.srow.failed .nm span { color: var(--danger); }
+
+.sadder.compact .sadder-drop { padding: 18px 14px; gap: 12px; }
+.sadder.compact .sadder-btns { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; }
+.sadder.compact .sadder-btns .btn { padding: 12px 10px; }
+.sadder.compact .sadder-tile { gap: 6px; padding: 10px 4px; min-height: 72px; }
+.sadder.compact .sadder-tile b { font-size: 11px; line-height: 14px; }

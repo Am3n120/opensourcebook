@@ -1,0 +1,20 @@
+{
+  "family": "Comic Neue",
+  "licence": "SIL Open Font License 1.1",
+  "licenceFiles": [
+    "OFL.txt"
+  ],
+  "source": "https://github.com/google/fonts/tree/main/ofl/comicneue",
+  "faces": [
+    {
+      "file": "ComicNeue-Regular.ttf",
+      "weight": 400,
+      "sizeAdjust": "106%"
+    },
+    {
+      "file": "ComicNeue-Bold.ttf",
+      "weight": 700,
+      "sizeAdjust": "106%"
+    }
+  ]
+}

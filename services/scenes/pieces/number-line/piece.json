@@ -1,0 +1,14 @@
+{
+  "about": "A number line with ticks, named points that drop onto it, and hops along it: where values sit, how far apart they are, adding and taking away, negatives, dates on a scale.",
+  "tags": ["number line", "scale", "position", "where", "between", "distance", "difference", "negative", "add", "subtract", "count on", "jump", "hop", "interval", "range", "values", "dates", "temperature"],
+  "params": {
+    "from": { "default": "0", "about": "the smallest value on the line" },
+    "to": { "default": "10", "about": "the largest value on the line" },
+    "marks": { "default": "", "about": "values to mark with a dot, split by commas or |" },
+    "names": { "default": "", "about": "a name for each mark, split by |; else its number" },
+    "hops": { "default": "", "about": "steps to hop along the line, such as 3,-5; each arc carries its +N" },
+    "start": { "default": "", "about": "where the hops start; else at the first mark" },
+    "lastIsKey": { "default": "0", "about": "1 draws the last mark in the accent" },
+    "when": { "default": "", "about": "moments for each mark, then each hop; else when their names are said, or spread out" }
+  }
+}

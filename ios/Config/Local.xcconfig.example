@@ -1,0 +1,18 @@
+// Copy to ios/Config/Local.xcconfig (git-ignored) and fill in your own values.
+// Base.xcconfig includes this file last, so any key set here overrides Base
+// (also DEVELOPMENT_TEAM, OPENSOURCEBOOK_BUNDLE_ID_PREFIX, OPENSOURCEBOOK_APP_GROUP).
+// The two engine values reach the app through Config/OpenSourcebook-Info.plist.
+// "$()" breaks up "//" so xcconfig does not read the URL as a comment.
+ENGINE_BASE_URL = https:/$()/your-engine.workers.dev
+ENGINE_CLIENT_TOKEN = paste-the-OPENSOURCEBOOK_CLIENT_TOKEN-you-deployed
+
+// Signing on your own device: your Apple team id, and a bundle id prefix and
+// app group your team can register (change the two together).
+// DEVELOPMENT_TEAM = ABCDE12345
+// OPENSOURCEBOOK_BUNDLE_ID_PREFIX = com.example.opensourcebook
+// OPENSOURCEBOOK_APP_GROUP = group.com.example.opensourcebook
+
+// A phone that has the app from before the rename: the ids above changed, so a
+// build now installs a second app with nothing in it. To keep building the
+// old one, with its saved things, set here the bundle id prefix and the app
+// group that copy was built with.

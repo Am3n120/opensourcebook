@@ -1,0 +1,14 @@
+{
+  "about": "A pendulum or a weight on a spring that swings by its real equation of motion, slowing with friction if asked, with a trace of its position over time beside it: oscillation, rhythm, clocks, resonance, damping.",
+  "tags": ["pendulum", "spring", "swing", "oscillation", "oscillate", "back and forth", "bounce", "bob", "period", "rhythm", "clock", "vibration", "damping", "friction", "slows down", "harmonic", "motion", "physics"],
+  "params": {
+    "kind": { "default": "pendulum", "about": "pendulum or spring" },
+    "period": { "default": "2", "about": "seconds for one full swing there and back" },
+    "start": { "default": "0.8", "about": "how far it is pulled before it is let go, from 0 to 1" },
+    "damping": { "default": "0", "about": "how quickly friction stops it, from 0 (never) to 2" },
+    "trace": { "default": "0", "about": "1 draws its position over time beside it" },
+    "traceName": { "default": "position over time", "about": "the words under the trace" },
+    "restName": { "default": "rest", "about": "the words at the spring's resting point" },
+    "when": { "default": "", "about": "the moment it is let go; else at once" }
+  }
+}

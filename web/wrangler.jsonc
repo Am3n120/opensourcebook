@@ -1,0 +1,17 @@
+// The web Studio on Cloudflare: the built app served as static assets, and
+// worker/index.ts answering /api/* as a same-origin proxy to the engine.
+// Read README.md ("Deploying") before deploying: the site must sit behind a
+// login gate first.
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // The name from before the app was called Open Sourcebook. It stays: a build's Worker folder is named after it
+  // (re_web), and the launcher expects one such folder in a build it made earlier.
+  "name": "re-web",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-11-01",
+  "assets": {
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api/*"]
+  },
+  "observability": { "enabled": true }
+}

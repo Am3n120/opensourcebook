@@ -1,0 +1,488 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Open Sourcebook: install it with one line</title>
+<meta name="description" content="Understand what you have to read and explain what you know. Open Sourcebook turns your PDFs, notes, slides and reports into explainer videos, flashcards, quizzes, audio and guides, on your own computer. Free and open source. One line installs it.">
+<meta name="color-scheme" content="light dark">
+<link rel="icon" href="data:,">
+<style>
+:root {
+  --bg: #f6f4ee;
+  --surface: #fffdf8;
+  --text: #1c1a16;
+  --muted: #57524a;
+  --line: #d9d4c8;
+  --accent: #1d5a48;
+  --accent-text: #ffffff;
+  --code-bg: #1c1a16;
+  --code-text: #f3efe6;
+  --code-line: #1c1a16;
+  --focus: #0b57d0;
+  --note-bg: #ece8dc;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #14130f;
+    --surface: #1c1a15;
+    --text: #ece8df;
+    --muted: #aca698;
+    --line: #37342c;
+    --accent: #8fd3ba;
+    --accent-text: #10201a;
+    --code-bg: #0c0b09;
+    --code-text: #f3efe6;
+    --code-line: #37342c;
+    --focus: #9cc2ff;
+    --note-bg: #24221b;
+  }
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 17px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+main, footer {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+main { padding-top: 4.5rem; }
+h1, h2 {
+  font-family: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  font-weight: 600;
+  line-height: 1.2;
+  margin: 0;
+}
+h1 { font-size: 2.6rem; letter-spacing: -0.01em; }
+h2 { font-size: 1.45rem; margin-bottom: 0.75rem; }
+p { margin: 0 0 1rem; }
+.lede { font-size: 1.2rem; margin: 1rem 0 0; max-width: 36rem; }
+.free { color: var(--muted); margin: 0.6rem 0 0; }
+section { margin-top: 3.5rem; }
+#install { margin-top: 2.75rem; }
+a { color: var(--accent); text-underline-offset: 0.18em; }
+a:hover { text-decoration-thickness: 2px; }
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+code, pre, kbd {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+}
+p code, li code {
+  font-size: 0.9em;
+  background: var(--note-bg);
+  padding: 0.12em 0.38em;
+  border-radius: 4px;
+  overflow-wrap: anywhere;
+}
+kbd {
+  font-size: 0.85em;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  padding: 0.08em 0.42em;
+  white-space: nowrap;
+}
+
+.note {
+  background: var(--note-bg);
+  border-left: 4px solid var(--accent);
+  border-radius: 4px;
+  padding: 0.8rem 1rem;
+  margin: 0 0 1.25rem;
+}
+
+.tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin: 0 0 1rem;
+}
+.tabs[hidden] { display: none; }
+.tab {
+  font: inherit;
+  font-size: 0.95rem;
+  color: var(--text);
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 0.4rem 1.05rem;
+  min-height: 2.6rem;
+  cursor: pointer;
+}
+.tab:hover { border-color: var(--muted); }
+.tab[aria-selected="true"] {
+  background: var(--text);
+  border-color: var(--text);
+  color: var(--bg);
+}
+
+.os + .os { margin-top: 2.5rem; }
+.os-name {
+  font-family: inherit;
+  font-size: 1.05rem;
+  font-weight: 650;
+  line-height: 1.3;
+  margin: 0 0 0.6rem;
+}
+.js .os { display: none; margin-top: 0; }
+.js .os.is-on { display: block; }
+.js .os-name {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+}
+
+.line {
+  display: flex;
+  align-items: stretch;
+  gap: 0.6rem;
+}
+.cmd {
+  flex: 1 1 auto;
+  min-width: 0;
+  margin: 0;
+  background: var(--code-bg);
+  color: var(--code-text);
+  border: 1px solid var(--code-line);
+  border-radius: 10px;
+  padding: 1.15rem 1.25rem;
+  font-size: 1.12rem;
+  line-height: 1.5;
+  white-space: pre;
+  overflow-x: auto;
+}
+.copy {
+  display: none;
+  flex: 0 0 auto;
+  font: inherit;
+  font-weight: 600;
+  color: var(--accent-text);
+  background: var(--accent);
+  border: 0;
+  border-radius: 10px;
+  padding: 0 1.3rem;
+  min-width: 6.2rem;
+  min-height: 3rem;
+  cursor: pointer;
+}
+.js .copy { display: block; }
+.copy:hover { filter: brightness(1.1); }
+.copy-help { color: var(--muted); font-size: 0.95rem; margin: 0.5rem 0 0; min-height: 1.5em; }
+
+.steps {
+  list-style: none;
+  counter-reset: step;
+  margin: 1.5rem 0 0;
+  padding: 0;
+}
+.steps li {
+  counter-increment: step;
+  position: relative;
+  padding-left: 2.9rem;
+  margin-bottom: 1rem;
+}
+.steps li::before {
+  content: counter(step);
+  position: absolute;
+  left: 0;
+  top: 0.05rem;
+  width: 1.9rem;
+  height: 1.9rem;
+  border: 1.5px solid var(--text);
+  border-radius: 50%;
+  font-weight: 650;
+  font-size: 0.95rem;
+  line-height: 1.75rem;
+  text-align: center;
+}
+
+.plain { margin: 0; padding-left: 1.2rem; }
+.plain li { margin-bottom: 0.5rem; }
+.plain li::marker { color: var(--muted); }
+.small { color: var(--muted); font-size: 0.95rem; }
+.block {
+  margin: 0.4rem 0 1.25rem;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0.8rem 1rem;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  white-space: pre;
+  overflow-x: auto;
+}
+footer {
+  margin-top: 4.5rem;
+  padding-top: 1.5rem;
+  padding-bottom: 3.5rem;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+footer p { margin: 0; padding: 0; }
+
+@media (max-width: 34rem) {
+  main { padding-top: 2.75rem; }
+  h1 { font-size: 2.05rem; }
+  .lede { font-size: 1.1rem; }
+  .line { flex-direction: column; }
+  .cmd { font-size: 1rem; padding: 1rem; }
+  .copy { width: 100%; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .tab, .copy { transition: background-color 0.15s, border-color 0.15s, color 0.15s; }
+}
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <h1>Open Sourcebook</h1>
+    <p class="lede">Understand what you have to read, and explain what you know. Turn your PDFs, notes, slides and reports into explainer videos, flashcards, quizzes, audio and guides, on your own computer, with the AI subscription you already have: Claude, ChatGPT, Gemini, Cursor or GitHub Copilot.</p>
+    <p class="free">Free and open source.</p>
+  </header>
+
+  <section id="install" aria-labelledby="install-title">
+    <h2 id="install-title">Install it with one line</h2>
+
+    <p class="note" id="not-a-computer" hidden>Open Sourcebook is installed on a computer. Open this page on your Mac, Windows or Linux computer and use the line there. The Mac line is shown below.</p>
+
+    <div class="tabs" id="tabs" role="tablist" aria-label="Your computer" hidden>
+      <button class="tab" type="button" role="tab" id="tab-mac" data-os="mac" aria-controls="os-mac" aria-selected="false">Mac</button>
+      <button class="tab" type="button" role="tab" id="tab-windows" data-os="windows" aria-controls="os-windows" aria-selected="false">Windows</button>
+      <button class="tab" type="button" role="tab" id="tab-linux" data-os="linux" aria-controls="os-linux" aria-selected="false">Linux</button>
+    </div>
+
+    <div class="os" id="os-mac" data-os="mac">
+      <h3 class="os-name">On a Mac</h3>
+      <div class="line">
+        <pre class="cmd" tabindex="0" aria-label="The line for a Mac"><code id="cmd-mac">curl -fsSL https://opensourcebook.app/install | sh</code></pre>
+        <button class="copy" type="button" data-copy="cmd-mac">Copy</button>
+      </div>
+      <p class="copy-help" data-help="cmd-mac" role="status"></p>
+      <ol class="steps">
+        <li>Open Terminal: press <kbd>Command</kbd> and <kbd>Space</kbd>, type <kbd>Terminal</kbd>, and press <kbd>Return</kbd>.</li>
+        <li>Paste the line into the window that opens and press <kbd>Return</kbd>.</li>
+        <li>Wait. The first time takes a few minutes. When it is done, your browser opens on Open Sourcebook.</li>
+      </ol>
+    </div>
+
+    <div class="os" id="os-windows" data-os="windows">
+      <h3 class="os-name">On Windows</h3>
+      <div class="line">
+        <pre class="cmd" tabindex="0" aria-label="The line for Windows"><code id="cmd-windows">irm https://opensourcebook.app/install.ps1 | iex</code></pre>
+        <button class="copy" type="button" data-copy="cmd-windows">Copy</button>
+      </div>
+      <p class="copy-help" data-help="cmd-windows" role="status"></p>
+      <ol class="steps">
+        <li>Open PowerShell: press the <kbd>Windows</kbd> key, type <kbd>PowerShell</kbd>, and press <kbd>Enter</kbd>.</li>
+        <li>Paste the line into the window that opens and press <kbd>Enter</kbd>.</li>
+        <li>Wait. The first time takes a few minutes. When it is done, your browser opens on Open Sourcebook.</li>
+      </ol>
+    </div>
+
+    <div class="os" id="os-linux" data-os="linux">
+      <h3 class="os-name">On Linux</h3>
+      <div class="line">
+        <pre class="cmd" tabindex="0" aria-label="The line for Linux"><code id="cmd-linux">curl -fsSL https://opensourcebook.app/install | sh</code></pre>
+        <button class="copy" type="button" data-copy="cmd-linux">Copy</button>
+      </div>
+      <p class="copy-help" data-help="cmd-linux" role="status"></p>
+      <ol class="steps">
+        <li>Open a terminal.</li>
+        <li>Paste the line and press <kbd>Enter</kbd>.</li>
+        <li>Wait. The first time takes a few minutes. When it is done, your browser opens on Open Sourcebook.</li>
+      </ol>
+    </div>
+  </section>
+
+  <section aria-labelledby="does-title">
+    <h2 id="does-title">What the line does</h2>
+    <ul class="plain">
+      <li>It uses the Node 24 you already have. If you have none, it keeps a private copy of its own and leaves the rest of your computer as it is.</li>
+      <li>It downloads Open Sourcebook into one folder, <code>.opensourcebook</code> in your home folder.</li>
+      <li>It gets ffmpeg, which videos need, if you do not have it.</li>
+      <li>It never asks for your password or for administrator rights.</li>
+      <li>It changes nothing else. Outside that folder it adds only the <code>opensourcebook</code> command and a shortcut to open it. The first start also downloads the browser that videos are drawn with, once, into your computer's own cache folder.</li>
+      <li>Deleting that folder removes Open Sourcebook, and your projects with it.</li>
+    </ul>
+    <p style="margin-top:1.1rem">Read the script first: <a href="/install">the one for Mac and Linux</a>, <a href="/install.ps1">the one for Windows</a>.</p>
+  </section>
+
+  <section aria-labelledby="again-title">
+    <h2 id="again-title">Starting it again</h2>
+    <p>Type <code>opensourcebook</code> in Terminal or PowerShell and press Return. Or open Open Sourcebook from Applications on a Mac, or from the Start menu on Windows.</p>
+  </section>
+
+  <section aria-labelledby="need-title">
+    <h2 id="need-title">What you need</h2>
+    <ul class="plain">
+      <li>A Mac, Windows or Linux computer.</li>
+      <li>An AI subscription with its agent: Claude, ChatGPT, Gemini, Cursor or GitHub Copilot. An API key works too. Open Sourcebook has buttons that install the agent and sign it in for you.</li>
+    </ul>
+    <p class="small" style="margin-top:1.1rem">Open Sourcebook is early. It has been tried most on a Mac, and Windows is the least tried.</p>
+  </section>
+
+  <section aria-labelledby="other-title">
+    <h2 id="other-title">Other ways</h2>
+    <p>If you already have Node 24:</p>
+    <pre class="block" tabindex="0" aria-label="The line for people who have Node 24"><code>npx opensourcebook</code></pre>
+    <p>If you want to change Open Sourcebook itself, get the code from <a href="https://github.com/Mikiyas-Meles-Assefa/opensourcebook">github.com/Mikiyas-Meles-Assefa/opensourcebook</a>:</p>
+    <pre class="block" tabindex="0" aria-label="The lines for people who want to change it"><code>git clone --depth 1 https://github.com/Mikiyas-Meles-Assefa/opensourcebook.git
+cd opensourcebook
+npm start</code></pre>
+  </section>
+</main>
+
+<footer>
+  <p>Open Sourcebook is free and open source, under the MIT licence. <a href="https://github.com/Mikiyas-Meles-Assefa/opensourcebook">The code is on GitHub.</a> This page asks nothing of any other site and keeps no record of you.</p>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+  var doc = document;
+  var names = ['mac', 'windows', 'linux'];
+
+  function byId(id) { return doc.getElementById(id); }
+
+  // Which system is this? known is false for phones, tablets and anything unrecognised.
+  function detect() {
+    var nav = window.navigator || {};
+    var data = nav.userAgentData || null;
+    var platform = String((data && data.platform) || nav.platform || '');
+    var agent = String(nav.userAgent || '');
+    var touchMac = /Mac/i.test(platform) && nav.maxTouchPoints > 1; // an iPad that says it is a Mac
+    var phone = (data && data.mobile === true) || touchMac ||
+      /Android|iPhone|iPad|iPod|Mobile|Tablet/i.test(agent) || /Android|iPhone|iPad|iPod/i.test(platform);
+    if (phone) return { os: 'mac', known: false };
+    if (/Win/i.test(platform) || /Windows/i.test(agent)) return { os: 'windows', known: true };
+    if (/Mac/i.test(platform) || /Macintosh|Mac OS X/i.test(agent)) return { os: 'mac', known: true };
+    if (/Linux|X11/i.test(platform) || /Linux|X11/i.test(agent)) return { os: 'linux', known: true };
+    return { os: 'mac', known: false };
+  }
+
+  function select(os, focus) {
+    names.forEach(function (name) {
+      var on = name === os;
+      var tab = byId('tab-' + name);
+      var panel = byId('os-' + name);
+      tab.setAttribute('aria-selected', on ? 'true' : 'false');
+      tab.tabIndex = on ? 0 : -1;
+      panel.className = on ? 'os is-on' : 'os';
+      if (on && focus) tab.focus();
+    });
+  }
+
+  // The old way of copying, for browsers without the clipboard API or pages not served securely.
+  function copyOldWay(text) {
+    var area = doc.createElement('textarea');
+    area.value = text;
+    area.setAttribute('readonly', '');
+    area.style.position = 'fixed';
+    area.style.top = '0';
+    area.style.left = '-9999px';
+    area.style.opacity = '0';
+    doc.body.appendChild(area);
+    var ok = false;
+    try {
+      area.select();
+      area.setSelectionRange(0, text.length);
+      ok = doc.execCommand('copy');
+    } catch (e) {
+      ok = false;
+    }
+    doc.body.removeChild(area);
+    return ok;
+  }
+
+  function selectText(node) {
+    try {
+      var range = doc.createRange();
+      range.selectNodeContents(node);
+      var sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+    } catch (e) { /* nothing to do: the line is still on the page to select by hand */ }
+  }
+
+  function wireCopy(button) {
+    var id = button.getAttribute('data-copy');
+    var code = byId(id);
+    var help = doc.querySelector('[data-help="' + id + '"]');
+    var timer = null;
+
+    function done(ok) {
+      if (timer) window.clearTimeout(timer);
+      if (ok) {
+        button.textContent = 'Copied';
+        help.textContent = '';
+        timer = window.setTimeout(function () { button.textContent = 'Copy'; }, 2000);
+      } else {
+        button.textContent = 'Copy';
+        selectText(code);
+        help.textContent = 'The line is selected. Copy it with Command and C on a Mac, or Ctrl and C on Windows and Linux.';
+      }
+    }
+
+    button.addEventListener('click', function () {
+      var text = code.textContent;
+      var clip = window.navigator.clipboard;
+      if (clip && typeof clip.writeText === 'function' && window.isSecureContext !== false) {
+        clip.writeText(text).then(
+          function () { done(true); },
+          function () { done(copyOldWay(text)); }
+        );
+      } else {
+        done(copyOldWay(text));
+      }
+    });
+  }
+
+  try {
+    var tabs = byId('tabs');
+    names.forEach(function (name) {
+      var panel = byId('os-' + name);
+      panel.setAttribute('role', 'tabpanel');
+      panel.setAttribute('aria-labelledby', 'tab-' + name);
+      byId('tab-' + name).addEventListener('click', function () { select(name, false); });
+    });
+    tabs.addEventListener('keydown', function (event) {
+      var at = names.indexOf(doc.activeElement && doc.activeElement.getAttribute('data-os'));
+      if (at < 0) return;
+      var to = -1;
+      if (event.key === 'ArrowRight' || event.key === 'ArrowDown') to = (at + 1) % names.length;
+      else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') to = (at + names.length - 1) % names.length;
+      else if (event.key === 'Home') to = 0;
+      else if (event.key === 'End') to = names.length - 1;
+      if (to < 0) return;
+      event.preventDefault();
+      select(names[to], true);
+    });
+    Array.prototype.forEach.call(doc.querySelectorAll('.copy'), wireCopy);
+
+    var found = detect();
+    select(found.os, false);
+    if (!found.known) byId('not-a-computer').hidden = false;
+    tabs.hidden = false;
+    // Only now hide the other systems: if anything above failed, every line stays on the page.
+    doc.documentElement.className += ' js';
+  } catch (e) {
+    // Leave the page as it is without scripts: all three lines visible.
+  }
+})();
+</script>
+</body>
+</html>

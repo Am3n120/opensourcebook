@@ -1,0 +1,20 @@
+{
+  "family": "Mulish",
+  "licence": "SIL Open Font License 1.1",
+  "licenceFiles": [
+    "OFL.txt"
+  ],
+  "source": "https://github.com/google/fonts/tree/main/ofl/mulish",
+  "serves": [
+    "default"
+  ],
+  "faces": [
+    {
+      "file": "Mulish[wght].ttf",
+      "weight": [
+        200,
+        1000
+      ]
+    }
+  ]
+}

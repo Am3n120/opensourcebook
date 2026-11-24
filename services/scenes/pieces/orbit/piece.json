@@ -1,0 +1,11 @@
+{
+  "about": "Bodies circling a centre on their own rings, each going round in the time its period gives, so inner fast ones lap outer slow ones, names riding along: planets and moons, satellites, electrons in shells, anything that goes round something else.",
+  "tags": ["orbit", "orbits", "circling", "goes round", "revolve", "rotation", "planets", "solar system", "moon", "satellite", "electrons", "shells", "atom", "period", "year", "astronomy", "rings", "around a centre"],
+  "params": {
+    "centre": { "default": "", "about": "what is in the middle" },
+    "bodies": { "default": "Inner|Outer", "about": "what goes round, from the inside out, split by |" },
+    "periods": { "default": "1,2", "about": "how long each takes to go round, in the same unit, split by commas" },
+    "speed": { "default": "1", "about": "how fast the whole picture runs" },
+    "when": { "default": "", "about": "moments each body starts; else when its name is said, or one after another" }
+  }
+}

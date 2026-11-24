@@ -1,0 +1,307 @@
+{
+  "name": "atlas",
+  "label": "Map and timeline",
+  "offered": false,
+  "description": "A map or a line of time as the stage: crisp navy pen lines on pale chart paper, land in a soft wash, routes and borders drawn on in a brick red, the places and dates that matter in a sea teal, a classic serif for titles over a clean sans for place names, glides across the map from one place to the next and a quiet dip between scenes. Suits history, geography, exploration, trade, migration, wars and empires, the spread of an idea or a disease, and anything where where and when are the story.",
+  "palette": {
+    "paper": "#eef0e6",
+    "ink": "#1b2a3a",
+    "accent": "#a02f1c",
+    "highlight": "#155058"
+  },
+  "fonts": {
+    "caption": "Barlow",
+    "title": "Libre Caslon Display",
+    "body": "Barlow"
+  },
+  "art": {
+    "scene": "Old atlas illustration: a clean printed map or landscape view in navy pen lines with soft watercolour washes on pale paper, one brick red accent, the subject accurate and instantly recognizable, no text.",
+    "object": "Atlas illustration of a single object or landmark shown whole on plain pale paper: navy pen lines, soft watercolour wash, nothing around it, no text.",
+    "diagram": "Clean map-style diagram on pale paper: navy lines, soft washes, one brick red route or arrow, simple clear shapes, one idea only."
+  },
+  "realAssets": "proof",
+  "grain": 0,
+  "vignette": 0.12,
+  "voice": {
+    "id": "JBFqnCBsd6RMkjVDRZzb",
+    "model": "eleven_v4"
+  },
+  "render": {
+    "line": {
+      "pen": "ink",
+      "weight": 0.75,
+      "wobble": 0.25,
+      "pressure": 0.3
+    },
+    "fill": {
+      "kind": "wash",
+      "base": 0.8,
+      "offset": 2
+    },
+    "surface": {
+      "kind": "paper",
+      "grain": 0.18,
+      "smudge": 0.03,
+      "light": 0.05
+    },
+    "type": {
+      "title": "\"Libre Caslon Display\", serif",
+      "body": "\"Barlow\", sans-serif",
+      "mono": "\"PT Mono\", monospace",
+      "tracking": 0.01,
+      "halo": 0.8
+    },
+    "motion": {
+      "feel": "calm",
+      "frames": 24,
+      "ease": "smooth",
+      "enter": "draw",
+      "cut": "dip",
+      "cutFrames": 12
+    },
+    "read": {
+      "text": 0.032,
+      "dim": 0.5
+    },
+    "caption": {
+      "kind": "strip",
+      "size": 56,
+      "words": 6
+    }
+  },
+  "design": {
+    "moves": {
+      "leans": [
+        {
+          "move": "travel",
+          "why": "a map is crossed: gliding from one place to the next follows the story as it moves"
+        },
+        {
+          "move": "draw",
+          "why": "a route or a border drawn on as it is said shows the way something went, not only where it ended"
+        },
+        {
+          "move": "zoom",
+          "why": "moving from the whole map in to one region tells the viewer where to look and how far it is from the rest"
+        }
+      ]
+    },
+    "colors": {
+      "card": "#f8f9f3",
+      "faded": "#5d6873",
+      "rust": "#8a2f1d",
+      "tint": "#dfe4d8"
+    },
+    "scale": {
+      "base": 0.045,
+      "ratio": 1.3
+    },
+    "roles": {
+      "title": {
+        "color": "ink",
+        "step": 3,
+        "weight": 400,
+        "font": "title",
+        "case": "asis",
+        "glow": 0
+      },
+      "heading": {
+        "color": "ink",
+        "step": 0,
+        "weight": 700,
+        "font": "title",
+        "case": "upper",
+        "glow": 0
+      },
+      "body": {
+        "color": "ink",
+        "step": 0,
+        "weight": 400,
+        "font": "body",
+        "case": "asis",
+        "glow": 0
+      },
+      "label": {
+        "color": "ink",
+        "step": -1,
+        "weight": 400,
+        "font": "body",
+        "case": "asis",
+        "glow": 0
+      },
+      "note": {
+        "color": "faded",
+        "step": -1,
+        "weight": 400,
+        "font": "body",
+        "case": "asis",
+        "glow": 0
+      },
+      "key": {
+        "color": "accent",
+        "step": 1,
+        "weight": 700,
+        "font": "body",
+        "case": "asis",
+        "glow": 0
+      },
+      "answer": {
+        "color": "accent",
+        "step": 2,
+        "weight": 700,
+        "font": "title",
+        "case": "asis",
+        "glow": 0
+      },
+      "muted": {
+        "color": "faded",
+        "step": 0,
+        "weight": 400,
+        "font": "body",
+        "case": "asis",
+        "glow": 0
+      },
+      "wrong": {
+        "color": "rust",
+        "step": 0,
+        "weight": 400,
+        "font": "body",
+        "case": "asis",
+        "glow": 0
+      },
+      "code": {
+        "color": "ink",
+        "step": 0,
+        "weight": 400,
+        "font": "mono",
+        "case": "asis",
+        "glow": 0
+      },
+      "caption": {
+        "color": "ink",
+        "step": 0,
+        "weight": 400,
+        "font": "body",
+        "case": "asis",
+        "glow": 0,
+        "back": "card"
+      },
+      "panel": {
+        "color": "ink",
+        "back": "card",
+        "stroke": 0.5
+      },
+      "pointer": {
+        "color": "accent",
+        "stroke": 0.7,
+        "glow": 0
+      }
+    },
+    "surfaces": {
+      "paper": {
+        "text": "ink",
+        "roles": [
+          "title",
+          "heading",
+          "body",
+          "label",
+          "note",
+          "key",
+          "answer",
+          "muted",
+          "wrong",
+          "code",
+          "pointer"
+        ]
+      },
+      "card": {
+        "text": "ink",
+        "roles": [
+          "title",
+          "heading",
+          "body",
+          "label",
+          "note",
+          "key",
+          "answer",
+          "muted",
+          "wrong",
+          "code",
+          "caption"
+        ]
+      },
+      "tint": {
+        "text": "ink",
+        "roles": [
+          "key",
+          "body",
+          "answer"
+        ]
+      },
+      "highlight": {
+        "text": "card",
+        "roles": []
+      },
+      "accent": {
+        "text": "card",
+        "roles": []
+      }
+    },
+    "elements": {
+      "panel": {
+        "radius": 0,
+        "edge": "ink",
+        "edgeWidth": 1.5,
+        "shadow": 0,
+        "rotate": 0,
+        "pad": 0.9
+      },
+      "caption": {
+        "rotate": 0,
+        "pad": 0.4,
+        "rule": "none",
+        "ruleWidth": 0,
+        "edge": "none"
+      },
+      "label": {
+        "back": "card",
+        "leader": "ink",
+        "leaderWidth": 1.5
+      },
+      "table": {
+        "lines": "header",
+        "rule": "ink",
+        "ruleWidth": 1.2,
+        "header": "heading",
+        "zebra": "none"
+      },
+      "pointer": {
+        "head": "open",
+        "ring": "clean",
+        "width": 4
+      },
+      "highlight": {
+        "kind": "underline",
+        "color": "accent",
+        "opacity": 1
+      },
+      "dim": {
+        "amount": 0.42,
+        "keepHue": false,
+        "glow": 0,
+        "stroke": 0.6
+      }
+    },
+    "picture": {
+      "saturation": 0.6,
+      "contrast": 1.05,
+      "brightness": 1.0,
+      "tint": "card",
+      "tintAmount": 0.15,
+      "border": "ink",
+      "borderWidth": 2,
+      "shadow": 0,
+      "rotate": 0
+    }
+  }
+}

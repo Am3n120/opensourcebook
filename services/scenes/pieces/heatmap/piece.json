@@ -1,0 +1,12 @@
+{
+  "about": "A grid of cells shaded by their values, with named rows and columns, filling in row by row as the voice goes and the highest cell ringed: when something peaks over hours and days, places by month, groups by measure, any table of numbers seen as a pattern.",
+  "tags": ["heatmap", "heat map", "grid", "pattern", "intensity", "peak", "busiest", "hours", "days", "week", "months", "regions", "matrix of values", "density", "hot spots", "when is it highest", "table of numbers", "shading"],
+  "params": {
+    "values": { "default": "1,2,3;2,4,6;3,6,9", "about": "the numbers, rows split by ; and cells by commas" },
+    "rows": { "default": "", "about": "the rows' names, split by |" },
+    "cols": { "default": "", "about": "the columns' names, split by |" },
+    "peak": { "default": "1", "about": "0 leaves the highest cell unringed" },
+    "peakName": { "default": "", "about": "words under the grid about the peak; else its value" },
+    "when": { "default": "", "about": "moments each row fills; else when its name is said, or one after another" }
+  }
+}

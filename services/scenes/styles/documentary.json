@@ -1,0 +1,312 @@
+{
+  "name": "documentary",
+  "label": "Documentary",
+  "offered": false,
+  "description": "Real pictures with notes drawn on top: archive photographs and footage frames shown large and in their own colour on a dark screen, circled, underlined and pointed at in a yellow marker, labels on small dark cards, a classic serif for titles over clean sans words, unhurried glides and a dip to black between scenes. Suits history, places, people, events, news, nature and anything where seeing the real thing is the point.",
+  "palette": {
+    "paper": "#15171a",
+    "ink": "#f2eee6",
+    "accent": "#ffd23a",
+    "highlight": "#ff8a5b"
+  },
+  "fonts": {
+    "caption": "Barlow",
+    "title": "Libre Caslon Display",
+    "body": "Barlow"
+  },
+  "art": {
+    "scene": "Documentary photograph: a real, natural-light photo of the subject, sharp and instantly recognizable, no text, no illustration.",
+    "object": "Documentary photograph of a single real object shown whole on a plain dark background, natural light, no text.",
+    "diagram": "Simple diagram drawn as yellow marker lines over a dark background, one idea only, clear shapes."
+  },
+  "realAssets": "prefer",
+  "grain": 0.04,
+  "vignette": 0.25,
+  "voice": {
+    "id": "JBFqnCBsd6RMkjVDRZzb",
+    "model": "eleven_v4"
+  },
+  "render": {
+    "line": {
+      "pen": "marker",
+      "weight": 1.15,
+      "wobble": 1.3,
+      "nib": 0.2
+    },
+    "fill": {
+      "kind": "wash",
+      "base": 0.85,
+      "offset": 3
+    },
+    "surface": {
+      "kind": "night",
+      "grain": 0.12,
+      "light": 0.18
+    },
+    "type": {
+      "title": "\"Libre Caslon Display\", serif",
+      "body": "\"Barlow\", sans-serif",
+      "mono": "\"PT Mono\", monospace",
+      "tracking": 0.01,
+      "halo": 0.5
+    },
+    "motion": {
+      "feel": "calm",
+      "frames": 24,
+      "write": 0,
+      "cut": "dip",
+      "cutFrames": 12
+    },
+    "read": {
+      "text": 0.032,
+      "dim": 0.45
+    },
+    "caption": {
+      "kind": "strip",
+      "size": 56,
+      "words": 6
+    }
+  },
+  "design": {
+    "moves": {
+      "leans": [
+        {
+          "move": "zoom",
+          "why": "a documentary looks closer at the real thing: moving in on a photograph sends the eye to the detail the voice names"
+        },
+        {
+          "move": "travel",
+          "why": "a slow glide across a picture is how a film lets a still image breathe"
+        },
+        {
+          "move": "draw",
+          "why": "marker notes drawn on over the photograph feel like someone pointing at it as they talk"
+        }
+      ]
+    },
+    "colors": {
+      "card": "#0a0b0d",
+      "smoke": "#a9a49a",
+      "red": "#ff7a6b",
+      "film": "#22252a"
+    },
+    "scale": {
+      "base": 0.045,
+      "ratio": 1.333
+    },
+    "roles": {
+      "title": {
+        "color": "ink",
+        "step": 3,
+        "weight": 400,
+        "font": "title",
+        "case": "asis",
+        "glow": 0
+      },
+      "heading": {
+        "color": "accent",
+        "step": 0,
+        "weight": 700,
+        "font": "body",
+        "case": "upper",
+        "glow": 0
+      },
+      "body": {
+        "color": "ink",
+        "step": 0,
+        "weight": 600,
+        "font": "body",
+        "case": "asis",
+        "glow": 0
+      },
+      "label": {
+        "color": "ink",
+        "step": -1,
+        "weight": 600,
+        "font": "body",
+        "case": "asis",
+        "glow": 0
+      },
+      "note": {
+        "color": "smoke",
+        "step": -1,
+        "weight": 600,
+        "font": "body",
+        "case": "asis",
+        "glow": 0
+      },
+      "key": {
+        "color": "accent",
+        "step": 1,
+        "weight": 700,
+        "font": "body",
+        "case": "asis",
+        "glow": 0
+      },
+      "answer": {
+        "color": "accent",
+        "step": 2,
+        "weight": 700,
+        "font": "body",
+        "case": "asis",
+        "glow": 0
+      },
+      "muted": {
+        "color": "smoke",
+        "step": 0,
+        "weight": 600,
+        "font": "body",
+        "case": "asis",
+        "glow": 0
+      },
+      "wrong": {
+        "color": "red",
+        "step": 0,
+        "weight": 600,
+        "font": "body",
+        "case": "asis",
+        "glow": 0
+      },
+      "code": {
+        "color": "ink",
+        "step": 0,
+        "weight": 400,
+        "font": "mono",
+        "case": "asis",
+        "glow": 0
+      },
+      "caption": {
+        "color": "ink",
+        "step": 0,
+        "weight": 600,
+        "font": "body",
+        "case": "asis",
+        "glow": 0,
+        "back": "card"
+      },
+      "panel": {
+        "color": "ink",
+        "back": "film",
+        "stroke": 0.5
+      },
+      "pointer": {
+        "color": "accent",
+        "stroke": 1,
+        "glow": 0
+      }
+    },
+    "surfaces": {
+      "paper": {
+        "text": "ink",
+        "roles": [
+          "title",
+          "heading",
+          "body",
+          "label",
+          "note",
+          "key",
+          "answer",
+          "muted",
+          "wrong",
+          "code",
+          "pointer"
+        ]
+      },
+      "card": {
+        "text": "ink",
+        "roles": [
+          "title",
+          "heading",
+          "body",
+          "label",
+          "note",
+          "key",
+          "answer",
+          "muted",
+          "wrong",
+          "code",
+          "caption"
+        ]
+      },
+      "film": {
+        "text": "ink",
+        "roles": [
+          "title",
+          "heading",
+          "body",
+          "label",
+          "note",
+          "key",
+          "answer",
+          "muted",
+          "wrong",
+          "code"
+        ]
+      },
+      "accent": {
+        "text": "card",
+        "roles": []
+      },
+      "highlight": {
+        "text": "card",
+        "roles": []
+      }
+    },
+    "elements": {
+      "panel": {
+        "radius": 0.02,
+        "edge": "none",
+        "edgeWidth": 0,
+        "shadow": 0.3,
+        "rotate": 0,
+        "pad": 0.7
+      },
+      "caption": {
+        "rotate": 0,
+        "pad": 0.4,
+        "rule": "accent",
+        "ruleWidth": 6,
+        "edge": "none"
+      },
+      "label": {
+        "back": "card",
+        "leader": "accent",
+        "leaderWidth": 3
+      },
+      "table": {
+        "lines": "rows",
+        "rule": "smoke",
+        "ruleWidth": 1.5,
+        "header": "heading",
+        "zebra": "none"
+      },
+      "pointer": {
+        "head": "open",
+        "ring": "hand",
+        "width": 6
+      },
+      "highlight": {
+        "kind": "ring",
+        "color": "accent",
+        "opacity": 1
+      },
+      "dim": {
+        "amount": 0.35,
+        "keepHue": false,
+        "glow": 0,
+        "stroke": 0.6
+      }
+    },
+    "picture": {
+      "saturation": 1.0,
+      "contrast": 1.05,
+      "brightness": 1.0,
+      "tint": "card",
+      "tintAmount": 0,
+      "border": "none",
+      "borderWidth": 0,
+      "shadow": 0.35,
+      "rotate": 0
+    }
+  }
+}

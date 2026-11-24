@@ -1,0 +1,20 @@
+/* The bottom-left "Open on your phone" is a button; it wears the same plain look as the links beside it. */
+.shell-foot button.navphone {
+  display: inline-flex; align-items: center; gap: var(--space-12);
+  height: 32px; padding: 0 var(--space-12); border: 0; border-radius: 11px; background: none;
+  color: var(--mutedText); font: inherit; font-size: 14px; line-height: 20px; font-weight: 550;
+  white-space: nowrap; cursor: pointer;
+}
+.shell-foot button.navphone:hover { background: var(--fill); color: var(--text); }
+
+/* Search: a field beside the tabs on a computer; an icon that opens it on a phone. */
+.topfind-btn, .topfind-close { display: none; }
+@media (max-width: 640px) {
+  .topfind-btn { display: grid; margin-left: auto; flex: none; }
+  .topfind { display: none; }
+  .topbar.finding .logo, .topbar.finding .topnav, .topbar.finding .topfind-btn { display: none; }
+  .topbar.finding .topfind { display: flex; flex: 1; margin-left: 0; }
+  .topbar.finding .topfind-close { display: grid; flex: none; }
+  /* The phone is the one thing to open it on. */
+  .shell-foot button.navphone { display: none; }
+}

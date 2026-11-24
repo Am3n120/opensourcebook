@@ -1,0 +1,12 @@
+{
+  "about": "A dictionary-style entry built up as it is said: the term large, how it sounds and what kind of word it is, its meaning, and an example in use with the term picked out: a new word, a concept, a term of art, a word in another language.",
+  "tags": ["definition", "define", "meaning", "what is", "term", "word", "vocabulary", "glossary", "dictionary", "concept", "jargon", "pronunciation", "new word", "means", "language", "foreign word", "example sentence", "key term"],
+  "params": {
+    "term": { "default": "Term", "about": "the word or term" },
+    "sounds": { "default": "", "about": "how it is said, written as it sounds" },
+    "kind": { "default": "", "about": "what kind of word it is, such as noun or verb" },
+    "meaning": { "default": "What the term means.", "about": "its meaning, in a sentence or two" },
+    "example": { "default": "", "about": "a sentence using it" },
+    "when": { "default": "", "about": "moments for the term, its meaning and its example; else when they are said, or one after another" }
+  }
+}

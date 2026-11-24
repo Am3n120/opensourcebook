@@ -1,0 +1,33 @@
+const labels = items(args.labels).map(String);
+const values = items(args.values).map(Number);
+const n = Math.max(1, Math.min(labels.length || values.length, 12));
+const top = Math.max(...values.slice(0, n).map((v) => Math.abs(v)), 1e-9);
+const unit = String(args.unit || "");
+const lit = items(args.highlight).map(String);
+const at = beats(n, args.when, labels);
+const fmt = (v) => (Math.abs(v) >= 100 || Number.isInteger(v) ? String(Math.round(v)) : v.toFixed(1)) + unit;
+const L = clamp(Math.min(W, H) * 0.08, 40, 96);
+const row = H / n;
+const barH = Math.min(row * 0.42, L * 2.4);
+const valueRoom = textWidth(fmt(top), L) + L * 0.6;
+const full = W - valueRoom;
+for (let i = 0; i < n; i++) {
+  const y = row * i + row * 0.5;
+  const v = values[i] ?? 0;
+  const w = Math.max(4, (Math.abs(v) / top) * full);
+  const on = lit.includes(labels[i]);
+  const name = labels[i] ?? "";
+  const ls = fitSize(name, L, W);
+  text("label" + i, { x: 0, y: y - barH / 2 - ls * 0.75, text: name, size: ls, anchor: "start", color: "ink", weight: on ? 700 : 400 });
+  path("track" + i, { x: 0, y: y - barH / 2, points: rect(0, 0, full, barH), fill: "none", stroke: "ink", strokeWidth: 2, opacity: 0.18 });
+  const bar = path("bar" + i, { x: 0, y: y - barH / 2, points: rect(0, 0, w, barH), fill: on ? "accent" : "highlight", stroke: "ink", strokeWidth: 4, closed: 1, scaleX: 0 });
+  const grow = at[i];
+  key(bar, "scaleX", T0, 0);
+  key(bar, "scaleX", grow, 0, "step");
+  key(bar, "scaleX", grow + 18, 1, "out");
+  const val = text("value" + i, { x: w + L * 0.4, y, text: fmt(v), size: L, anchor: "start", color: "ink", weight: 700, opacity: 0 });
+  key(val, "opacity", T0, 0);
+  key(val, "opacity", grow + 8, 0, "step");
+  key(val, "opacity", grow + 16, 1, "smooth");
+  emit("bar", grow, { label: name });
+}

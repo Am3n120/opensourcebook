@@ -1,0 +1,9 @@
+{
+  "about": "Things that drop one by one into the labelled bin they belong to as each is named, the bins filling up: sorting into categories, classifying examples, what goes where, recycling, kinds of rock, word or cell.",
+  "tags": ["sort", "sorting", "categories", "categorise", "classify", "classification", "groups", "bins", "which goes where", "belongs to", "kinds", "types", "examples", "recycling", "buckets", "group by", "put in", "label"],
+  "params": {
+    "items": { "default": "One:First|Two:Second", "about": "things and their bin, as thing:bin, split by |" },
+    "bins": { "default": "", "about": "more bins that stay empty, split by |" },
+    "when": { "default": "", "about": "moments each thing drops; else when it is named, or one after another" }
+  }
+}

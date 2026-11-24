@@ -1,0 +1,20 @@
+name = "re-ytdlp"
+main = "worker/index.js"
+compatibility_date = "2026-08-08"
+workers_dev = true
+
+[[containers]]
+class_name = "YtdlpContainer"
+image = "./Dockerfile"
+max_instances = 2
+# lite OOMs loading even tiny whisper models in prod (500s, 2026-08-10);
+# standard-1 has the headroom for the baked base model (see Dockerfile).
+instance_type = "standard-1"
+
+[[durable_objects.bindings]]
+name = "YTDLP_CONTAINER"
+class_name = "YtdlpContainer"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["YtdlpContainer"]

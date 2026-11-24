@@ -1,0 +1,11 @@
+{
+  "about": "A timeline down the frame that draws itself to each event as it is said, with its date and what happened, spaced by the real time between them: history, a life, a process over days or years, a sequence of dates.",
+  "tags": ["timeline", "time line", "history", "dates", "chronology", "sequence", "events", "when", "years", "century", "biography", "life", "era", "period", "milestones", "steps in time", "order of events", "past"],
+  "params": {
+    "dates": { "default": "1900|1950|2000", "about": "each event's date or time, split by |" },
+    "events": { "default": "First|Second|Third", "about": "what happened, split by |" },
+    "highlight": { "default": "", "about": "dates or events drawn larger in the accent, split by |" },
+    "even": { "default": "0", "about": "1 spaces the events evenly instead of by their dates" },
+    "when": { "default": "", "about": "moments the line reaches each event; else when its date or words are said, or one after another" }
+  }
+}

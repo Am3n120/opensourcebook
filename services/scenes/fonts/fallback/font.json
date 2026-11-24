@@ -1,0 +1,39 @@
+{
+  "family": "Open Sourcebook Fallback",
+  "licence": "SIL Open Font License 1.1",
+  "licenceFiles": [
+    "OFL-NotoSans.txt",
+    "OFL-NotoSansMath.txt",
+    "OFL-NotoSansSymbols2.txt"
+  ],
+  "source": "https://github.com/google/fonts/tree/main/ofl/notosans, https://github.com/google/fonts/tree/main/ofl/notosansmath and https://github.com/google/fonts/tree/main/ofl/notosanssymbols2, each cut down to the characters in its unicodeRange",
+  "serves": [
+    "fallback"
+  ],
+  "faces": [
+    {
+      "file": "NotoSans-Subset[wght].ttf",
+      "weight": [
+        100,
+        900
+      ],
+      "unicodeRange": "U+A0-FF, U+100-24F, U+300-36F, U+370-3FF, U+400-4FF, U+1E00-1EFF, U+2000-206F, U+2070-209F, U+20A0-20CF, U+2100-214F, U+2150-218F"
+    },
+    {
+      "file": "NotoSansMath-Subset.ttf",
+      "weight": [
+        100,
+        900
+      ],
+      "unicodeRange": "U+2190-22FF, U+27F0-27FF"
+    },
+    {
+      "file": "NotoSansSymbols2-Subset.ttf",
+      "weight": [
+        100,
+        900
+      ],
+      "unicodeRange": "U+25A0-27BF"
+    }
+  ]
+}

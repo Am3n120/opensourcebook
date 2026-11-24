@@ -1,0 +1,13 @@
+{
+  "about": "A dial with a needle that swings to each value as it is said, over named zones and a readout: a level, a reading, a rate or a risk between a low and a high.",
+  "tags": ["gauge", "meter", "dial", "needle", "level", "reading", "speed", "speedometer", "pressure", "temperature", "risk", "rating", "score", "how high", "how much", "measure", "indicator", "zone", "safe", "danger"],
+  "params": {
+    "min": { "default": "0", "about": "the low end of the dial" },
+    "max": { "default": "100", "about": "the high end of the dial" },
+    "values": { "default": "70", "about": "the values the needle goes to, in turn, split by commas" },
+    "zones": { "default": "", "about": "names of equal zones from low to high, such as low|normal|high" },
+    "unit": { "default": "", "about": "written after the numbers" },
+    "label": { "default": "", "about": "what the dial measures, under the readout" },
+    "when": { "default": "", "about": "moments the needle swings to each value; else when the value is said, or one after another" }
+  }
+}

@@ -1,0 +1,52 @@
+# Open Sourcebook
+
+> An open-source app that turns a person's own sources (PDFs, notes, slides, links) into short drawn explainer videos, flashcards, quizzes, guides, audio and cited answers, to help them understand what they have to read and explain it to others: for study, research or work (an exam, a stack of papers, a new colleague to bring up to speed, a manual to turn into something people will watch). It runs on the person's own computer and the making is done by the coding agent they already have, on the plan they already pay for: Claude Code on a Claude plan, Codex on a ChatGPT plan, Antigravity on a Google (Gemini) plan, Cursor, GitHub Copilot or OpenCode. Every cite is checked word for word against the source. Licence: MIT.
+
+Website: https://opensourcebook.app
+Repository: https://github.com/Mikiyas-Meles-Assefa/opensourcebook
+
+## What is true today
+
+- Made and used on a Mac. The Linux and Windows installs are written and not proven yet.
+- Six agents are supported: Claude Code, Codex, OpenCode, Cursor, Antigravity and GitHub Copilot. It is used most with Claude Code and Codex (docs/LIMITS.md).
+- The person's files and projects stay on their computer. Their agent still sends what it reads to its own provider (docs/PRIVACY.md).
+- No API key is needed on a plan. A key works too: a Gemini, DeepSeek or OpenRouter key for chat, flashcards and quizzes, or a provider connected in OpenCode for everything (docs/INSTALL.md).
+- A video's sound and audio need a voice: a key for a voice service, or a free voice installed on the computer (docs/VOICE.md).
+
+## Install
+
+- Mac or Linux: `curl -fsSL https://opensourcebook.app/install | sh`
+- Windows (PowerShell): `irm https://opensourcebook.app/install.ps1 | iex`
+- To change the code: clone the repository and run `npm start` (needs Node 24 and ffmpeg; docs/DEVELOPING.md).
+- Needed besides: one coding agent, installed and signed in the normal way.
+
+## Commands
+
+Everything the app does is an `opensourcebook` command. `opensourcebook help` lists all of them, `opensourcebook <thing> help` says more, and each takes `--json`.
+
+- `opensourcebook start --background`, `status`, `stop`, `check`, `open`, `update`: run it and look after it.
+- `opensourcebook project make <title>`, `project list`, `project use <id>`: projects.
+- `opensourcebook source add <files or links...>`, `source list`, `source search <words>`, `source read <id>`: sources.
+- `opensourcebook chat ask <question>`: an answer from the sources, with cites.
+- `opensourcebook make <shape> <what it is about> --wait`: one thing at once. The shapes are video, flashcards, quiz, audio and guide.
+- `opensourcebook plan make <request>`, `plan show <id>`, `plan start <id> --wait`: several things as a plan.
+- `opensourcebook item get <item>`, `item open <item>`, `item ask <item> <words>`: what was made.
+- `opensourcebook quiz show <item>`, `quiz answer <item> 1=B 2=A`, `cards review <item>`, `cards mark <item> 1=got 2=not`: take a quiz or go through flashcards.
+- `opensourcebook makers`, `maker list`, `style list`, `agent list`, `pack list`: who makes what, and what can be made now.
+- `opensourcebook skill install`: copies the skill below to where the person's agent looks for skills.
+
+## Skills
+
+- skills/opensourcebook/SKILL.md: how an agent drives Open Sourcebook with the command. Start here.
+- skills/planner, skills/notebook, skills/listening, skills/guide: what Open Sourcebook's own agent reads to plan and to make flashcards, quizzes, audio and guides.
+- services/scenes/skills/: what it reads to make a video (make-a-video, teaching, media).
+
+## Docs
+
+- README.md: the front page.
+- AGENTS.md: how to work in this repository, for people and coding agents.
+- docs/USING.md, docs/INSTALL.md, docs/VOICE.md, docs/PHONE.md, docs/COMMAND.md: using it.
+- docs/LIMITS.md, docs/PRIVACY.md, SECURITY.md: what works, what leaves the computer, and how it is kept safe.
+- docs/DEVELOPING.md, docs/EXTENDING.md, docs/STRUCTURE.md, CONTRIBUTING.md: changing it.
+- services/scenes/README.md: the video engine.
+- docs/THIRD-PARTY.md: what it ships and depends on, with licences. Remotion, which draws the videos, has its own licence.

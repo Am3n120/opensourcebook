@@ -1,0 +1,6 @@
+.venv/
+node_modules/
+.wrangler/
+# Never ship local state into the image context; cookies.txt is copied
+# explicitly by the Dockerfile's cp-if-present step.
+*.log

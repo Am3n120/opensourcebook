@@ -1,0 +1,10 @@
+{
+  "about": "Things joined by their relations, laid out so linked things sit together, each arriving as it is named, links drawn as lines or arrows with a word on them: who knows whom, what feeds what, how ideas connect, a web of influences.",
+  "tags": ["network", "web", "graph", "connections", "connected", "relations", "relationships", "links", "related things", "map of ideas", "concept map", "mind map", "food web", "social network", "influence", "who knows whom", "dependencies", "ecosystem"],
+  "params": {
+    "links": { "default": "A>B|B>C|C-A", "about": "links split by |: A>B is an arrow, A-B a line, A>B:word puts a word on it" },
+    "alone": { "default": "", "about": "things with no links, split by |" },
+    "highlight": { "default": "", "about": "things drawn larger in the accent, split by |" },
+    "when": { "default": "", "about": "moments each thing arrives, in the order first named in links; else when its name is said, or one after another" }
+  }
+}

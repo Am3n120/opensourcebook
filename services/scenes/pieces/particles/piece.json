@@ -1,0 +1,11 @@
+{
+  "about": "Particles in a box moving by simple rules, bouncing off the walls, faster or slower as their speed changes on a word, and a wall that can lift so they spread with a count on each side: gases and heat, diffusion, random motion, crowds mixing.",
+  "tags": ["particles", "molecules", "atoms", "gas", "temperature", "heat", "heating", "cooling", "faster", "random motion", "diffusion", "spread", "mixing", "pressure", "kinetic", "crowd", "entropy", "brownian"],
+  "params": {
+    "count": { "default": "60", "about": "how many particles (up to 300)" },
+    "speeds": { "default": "1", "about": "speeds in turn, split by commas; 1 is gentle, 3 is hot" },
+    "start": { "default": "all", "about": "all to start spread through the box, left to start in its left half behind a wall" },
+    "wall": { "default": "0", "about": "1 puts a wall down the middle that lifts on its moment, with a count on each side" },
+    "when": { "default": "", "about": "moments each speed change begins, then the moment the wall lifts; else spread out" }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "about": "Two tracks side by side that must meet: a line that splits in two, each side going through its own steps under its own heading with a marker moving down it, the two coming together where they join and going on as one: two paths that join, two things done in parallel then merged, two sides that must agree, parts made apart then put together.",
+  "tags": ["two tracks", "two paths that join", "parallel", "in parallel", "side by side", "at the same time", "split", "merge", "join", "meet", "come together", "converge", "fork and join", "both", "two sides", "agree", "reconcile", "assemble", "combine", "two teams", "two routes"],
+  "params": {
+    "start": { "default": "", "about": "shared steps before the split, down the middle, split by |" },
+    "sides": { "default": "One side|Other side", "about": "the two tracks' headings, split by |" },
+    "left": { "default": "First|Second", "about": "the left track's steps in order, split by |" },
+    "right": { "default": "First|Second", "about": "the right track's steps in order, split by |" },
+    "join": { "default": "Join", "about": "where the two tracks meet: what joining them is" },
+    "then": { "default": "", "about": "steps after the join, down the middle, split by |" },
+    "thing": { "default": "", "about": "the name of what goes down both tracks, written at the top" },
+    "together": { "default": "0", "about": "1 when the voice goes back and forth between the two tracks step by step; else one track, then the other" },
+    "when": { "default": "", "about": "moments for the shared steps, then the left track's steps and the right's (in turn with together=1), then the join and each step after; else when each is said, or one after another" }
+  }
+}

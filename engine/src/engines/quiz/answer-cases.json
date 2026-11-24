@@ -1,0 +1,30 @@
+{
+  "about": "How a typed answer compares with the one written. The engine's grader (kinds.ts) and the web player's (web/src/player/quizGrade.ts, which the opensourcebook command also uses) are both tested on these cases, so they cannot drift apart.",
+  "same": [
+    [" −3 ", "-3"],
+    ["1/4", "0.25"],
+    ["Rank", "rank"],
+    ["52.50", "52.5"],
+    ["52,5", "52.5"],
+    ["52.5 cm", "52.5", "cm"],
+    ["52.5cm", "52.5 cm"],
+    ["52.5", "52.5 cm"],
+    ["1,000", "1000"],
+    ["1.000", "1000"],
+    ["1 000", "1000"],
+    ["1,234.5", "1234.5"],
+    ["1.234,5", "1234.5"],
+    ["$12.50", "12.5", "$"],
+    ["45 %", "45%"],
+    ["0.5.", "0.5"],
+    ["3e3", "3000"]
+  ],
+  "different": [
+    ["2", "3"],
+    ["52.5 m", "52.5", "cm"],
+    ["52.5 m", "52.5 cm"],
+    ["52.4", "52.5"],
+    ["525", "52.5"],
+    ["mitochondria", "ribosome"]
+  ]
+}

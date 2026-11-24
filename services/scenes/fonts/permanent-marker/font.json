@@ -1,0 +1,14 @@
+{
+  "family": "Permanent Marker",
+  "licence": "Apache License 2.0",
+  "licenceFiles": [
+    "LICENSE.txt"
+  ],
+  "source": "https://github.com/google/fonts/tree/main/apache/permanentmarker",
+  "faces": [
+    {
+      "file": "PermanentMarker-Regular.ttf",
+      "weight": 400
+    }
+  ]
+}

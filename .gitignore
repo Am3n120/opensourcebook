@@ -1,0 +1,62 @@
+engine/.dev.vars
+engine/wrangler.local.toml
+engine/.env
+engine/.env.*
+!engine/.env.example
+engine/node_modules/
+engine/dist/
+engine/benchmark-results/
+
+# An optional cookies file for the yt-dlp sidecar: a login, never commit
+services/ytdlp-sidecar/cookies.txt
+# An optional WireGuard profile (private key) for the sidecar's egress tunnel
+services/ytdlp-sidecar/wgcf-profile.conf
+services/ytdlp-sidecar/.dev.vars
+services/ytdlp-sidecar/.env
+services/ytdlp-sidecar/.env.*
+!services/ytdlp-sidecar/.env.example
+
+# Scenes service: jobs, scene sources, stills, audio and rendered videos stay on this computer
+services/scenes/.data/
+services/scenes/.env
+services/scenes/.env.*
+!services/scenes/.env.example
+services/agent-connector/.env
+services/agent-connector/.env.*
+!services/agent-connector/.env.example
+
+# General
+.DS_Store
+**/.venv/
+**/node_modules/
+**/__pycache__/
+*.pyc
+**/xcuserdata/
+DerivedData/
+build/
+.wrangler/
+
+# Notes and sketches at the top level stay on this computer. Only the documents named here are kept in git;
+# a new one is added with its own line below.
+/*.md
+!/AGENTS.md
+!/CHANGES.md
+!/CLAUDE.md
+!/CODE_OF_CONDUCT.md
+!/CONTRIBUTING.md
+!/README.md
+!/SECURITY.md
+/*.html
+
+# Research and reference material kept beside the code: local only, never committed
+docs/inspo/
+
+.vscode/
+
+# Machine-specific Xcode settings (engine endpoint + client token)
+Local.xcconfig
+
+# The launcher's state folder (cli/state.ts): shared secrets, settings, logs. Never commit.
+# `.re` is what it was called before the rename: a folder in a copy from then, a link to the new folder after.
+/.opensourcebook
+/.re

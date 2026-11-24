@@ -1,0 +1,88 @@
+/* Home: the projects grid, every card alike. */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: var(--space-20); }
+
+.pcw { position: relative; display: flex; flex-direction: column; min-width: 0; }
+.pc {
+  flex: 1; display: flex; flex-direction: column; min-width: 0;
+  padding: 0; border: 1px solid var(--border); border-radius: 16px; background: var(--surface); overflow: hidden;
+  text-decoration: none; color: inherit;
+  transition: border-color var(--dur-quick) var(--ease-out), box-shadow var(--dur-quick) var(--ease-out);
+}
+.pc:hover { border-color: var(--borderStrong); box-shadow: var(--shadow-card); }
+.pc:active, .pc-new:active { transform: scale(.995); }
+
+.pface { position: relative; display: block; flex: none; }
+.pc .face { border-radius: 0; }
+.pc .face .said { padding: 44px 16px 0; }
+.pc .face .ftile { left: 12px; bottom: 12px; }
+.face.empty-face { display: grid; place-items: center; background: var(--fill); color: var(--muted); }
+.face.empty-face .ico { position: absolute; left: 12px; bottom: 12px; width: 14px; height: 14px; opacity: .8; }
+.ptags { position: absolute; left: 10px; top: 10px; right: 10px; display: flex; align-items: center; gap: 6px; pointer-events: none; }
+.ptag {
+  display: inline-flex; align-items: center; gap: 6px; max-width: 100%;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+  padding: 3px 10px; border-radius: var(--r-pill);
+  background: var(--surface); color: var(--text);
+  box-shadow: 0 0 0 1px rgb(var(--edge) / .06);
+  font-size: var(--fs-label); line-height: var(--lh-label); font-weight: 600;
+}
+/* The making line: its words as a tag, Stop at the far side; only Stop takes clicks, the rest opens the card. */
+.ptags.live .making.tag { width: 100%; justify-content: space-between; }
+.ptags.live .obtn { pointer-events: auto; padding: 3px 10px 3px 8px; }
+
+.pbody { display: flex; flex-direction: column; gap: 6px; padding: 12px 14px; }
+.pbody h3 { margin: 0; font-size: var(--fs-caption); line-height: 20px; font-weight: 600; letter-spacing: 0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pfoot { display: flex; align-items: center; gap: 14px; color: var(--mutedText); font-size: var(--fs-label); line-height: var(--lh-label); font-weight: 500; font-variant-numeric: tabular-nums; }
+.pstat { display: inline-flex; align-items: center; gap: 5px; }
+.pstat .ico { width: 13px; height: 13px; color: var(--muted); }
+
+/* Example card: stretches a button inside its heading so the whole card opens it while keeping valid heading semantics. */
+.pc-example { position: relative; }
+.pc-open { border: 0; background: none; padding: 0; margin: 0; font: inherit; color: inherit; text-align: left; }
+.pc-open::after { content: ""; position: absolute; inset: 0; border-radius: 16px; }
+.pc-open:focus-visible { outline: none; }
+.pc-example:has(.pc-open:focus-visible) { outline: 2px solid var(--primary); outline-offset: 2px; }
+.pc-example .pbody h3 { overflow: hidden; }
+.pc-example .pc-open { max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* Plus card: quiet first card in the grid to start a new project. */
+.pc-new {
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--space-8);
+  min-height: 160px; padding: 18px;
+  border: 1px dashed var(--borderStrong); border-radius: 16px; background: transparent;
+  color: var(--mutedText); font-size: var(--fs-caption); line-height: var(--lh-caption); font-weight: 600;
+  transition: border-color var(--dur-quick) var(--ease-out), color var(--dur-quick) var(--ease-out), background var(--dur-quick) var(--ease-out);
+}
+.pc-new .ico { width: 20px; height: 20px; color: var(--muted); transition: color var(--dur-quick) var(--ease-out); }
+.pc-new:hover { border-color: var(--primary); background: var(--primaryGhost); color: var(--text); }
+.pc-new:hover .ico { color: var(--primaryText); }
+
+.pcw .pmenu { position: absolute; bottom: 10px; right: 10px; }
+.pcw .pmenu .ib { background: var(--surface); box-shadow: 0 1px 4px rgb(15 23 42 / .12); opacity: 0; transition: opacity var(--dur-quick) var(--ease-out); }
+.pcw:hover .pmenu .ib, .pcw .pmenu .ib:focus-visible, .pcw .pmenu .ib[aria-expanded="true"] { opacity: 1; }
+@media (hover: none) { .pcw .pmenu .ib { opacity: 1; } }
+
+.pc.renaming { gap: var(--space-8); justify-content: space-between; padding: 18px; }
+.pc.renaming .ipt { width: 100%; }
+.pc.renaming .acts { display: flex; gap: var(--space-8); }
+
+.archived { margin-top: var(--space-24); }
+.archived > .link { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); }
+.archived > .link .ico { width: 12px; height: 12px; }
+.archived ul { list-style: none; margin: var(--space-8) 0 0; padding: 0; max-width: 520px; }
+.archived li { display: flex; align-items: center; gap: var(--space-12); padding: 8px 0; border-bottom: 1px solid var(--border); font-size: var(--fs-caption); }
+.archived li a { flex: 1; min-width: 0; color: var(--text); text-decoration: none; font-weight: 550; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.archived li a:hover { text-decoration: underline; }
+.archived li .mini { flex: none; }
+.mini.quietdanger { color: var(--muted); }
+.mini.quietdanger:hover, .mini.quietdanger:focus-visible { color: var(--danger); background: var(--dangerSoft); border-color: transparent; }
+.gone-note { margin: var(--space-8) 0 0; color: var(--muted); font-size: var(--fs-caption); }
+
+@media (max-width: 640px) {
+  .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-12); }
+  .pc .face .said { padding: 40px 12px 0; font-size: 13px; }
+  .pc .face .ftile { display: none; }
+  .pc-new { min-height: 0; }
+}
+.menu hr { height: 1px; margin: 4px 0; border: 0; background: var(--border); }
+.menu button.mi.danger { color: var(--danger); }

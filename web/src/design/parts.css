@@ -1,0 +1,99 @@
+/* Shared parts every screen reuses: buttons, the progress look, Auto | Custom,
+   the make sheet's frame and its pick rows. Tokens only. */
+
+/* Buttons: the outlined small pill (Play, Open, Stop) and the filled primary pill. */
+.obtn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 5px; flex: none;
+  border: 1px solid var(--border); background: var(--surface); color: var(--text);
+  border-radius: var(--r-pill); padding: var(--space-4) 10px;
+  font: inherit; font-size: var(--fs-label); line-height: var(--lh-label); font-weight: 600;
+  text-decoration: none; white-space: nowrap; cursor: pointer;
+}
+.obtn:hover { border-color: var(--borderStrong); }
+.obtn .ico { width: 11px; height: 11px; }
+.obtn[disabled] { opacity: .45; cursor: not-allowed; }
+
+.pbtn {
+  display: inline-flex; align-items: center; justify-content: center; gap: var(--space-4);
+  border: 0; border-radius: var(--r-pill); padding: var(--space-8) var(--space-16);
+  background: var(--primary); color: var(--onPrimary);
+  font: inherit; font-size: var(--fs-caption); line-height: var(--lh-caption); font-weight: 600;
+  text-decoration: none; white-space: nowrap; cursor: pointer;
+  transition: opacity var(--dur-quick) var(--ease-out);
+}
+.pbtn:hover { opacity: .92; }
+.pbtn[disabled] { opacity: .45; cursor: not-allowed; }
+.pbtn.wide { width: 100%; padding: 13px var(--space-16); font-size: 15px; line-height: 20px; }
+
+/* Making: one look for waiting, making, stopped, failed and done. */
+.making-st { display: inline-flex; align-items: center; gap: 6px; min-width: 0; font-size: var(--fs-label); line-height: var(--lh-label); font-weight: 400; color: var(--mutedText); }
+.making-st .w { font-weight: 600; color: var(--text); }
+.making-st .dot { flex: none; background: var(--borderStrong); }
+.making-st.making .w { color: var(--accentText); }
+.making-st.making .dot { background: var(--accent); animation: pulse 1.6s var(--ease) infinite; }
+.making-st.failed { color: var(--danger); font-weight: 600; }
+.making-st.failed .dot { background: var(--danger); }
+.making-st.done .w { color: var(--successText); }
+.making-st.done .dot { background: var(--success); }
+
+.making.row { display: flex; flex-direction: column; gap: 10px; padding: var(--space-12); border: 1px solid var(--border); border-radius: var(--r-12); background: var(--surface); min-width: 0; }
+.making.row.waiting { border-style: dashed; border-color: var(--borderStrong); background: none; }
+.making.row.failed { border-color: var(--dangerBorder); background: var(--dangerSoft); }
+.making-top { display: flex; align-items: center; gap: 10px; min-width: 0; }
+.making-tx { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.making-tx b { font-size: var(--fs-caption); line-height: var(--lh-caption); font-weight: 600; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.making-tx .making-st { display: flex; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.making-line { position: relative; height: 3px; background: var(--fill); border-radius: var(--r-pill); overflow: hidden; }
+.making-line i { display: block; height: 100%; background: var(--primary); border-radius: inherit; }
+.making-line.unknown i { width: 30%; animation: making-slide 1.6s var(--ease) infinite; }
+@keyframes making-slide { from { transform: translateX(-100%); } to { transform: translateX(340%); } }
+
+.making.tag { display: inline-flex; align-items: center; gap: 6px; max-width: 100%; }
+.making.tag .making-st { padding: 3px 10px; border-radius: var(--r-pill); background: var(--surface); box-shadow: 0 0 0 1px rgb(var(--edge) / .06); white-space: nowrap; }
+
+/* Auto | Custom, and − number + */
+.autocustom { display: inline-flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.autocustom-mode { width: 150px; }
+.autocustom-mode .seg button { padding: 6px var(--space-8); font-size: var(--fs-caption); line-height: var(--lh-caption); }
+.stepper { display: inline-flex; align-items: center; height: 34px; border: 1px solid var(--borderStrong); border-radius: 10px; background: var(--bg); }
+.stepper button { width: 32px; height: 32px; border: 0; border-radius: 9px; background: none; color: var(--mutedText); font: inherit; font-size: 16px; line-height: 1; cursor: pointer; }
+.stepper button:hover:not([disabled]) { background: var(--fill); color: var(--text); }
+.stepper button[disabled] { opacity: .4; cursor: default; }
+.stepper output { min-width: 66px; text-align: center; font-size: var(--fs-caption); font-weight: 600; color: var(--text); white-space: nowrap; }
+
+/* Pick rows: Made by, Reviewed by, Voice */
+.pick { display: flex; align-items: center; gap: 10px; width: 100%; padding: 10px 14px; border: 0; background: none; color: inherit; font: inherit; text-align: left; }
+button.pick { cursor: pointer; }
+button.pick:hover { background: var(--fill); }
+.pick + .pick { border-top: 1px solid var(--border); }
+.pick-mark { flex: none; width: 28px; height: 28px; border-radius: var(--r-8); background: var(--fill); color: var(--mutedText); display: inline-grid; place-items: center; }
+.pick-who { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.pick-who b { font-size: var(--fs-caption); line-height: var(--lh-caption); font-weight: 600; color: var(--text); }
+.pick-who span { font-size: var(--fs-label); line-height: var(--lh-label); color: var(--mutedText); }
+.pick-time { display: flex; flex-direction: column; align-items: flex-end; text-align: right; }
+.pick-time b { font-size: var(--fs-caption); line-height: var(--lh-caption); font-weight: 600; color: var(--text); white-space: nowrap; }
+.pick-time.muted b { color: var(--mutedText); }
+.pick-time span { font-size: 11px; line-height: 15px; color: var(--muted); white-space: nowrap; }
+.pick-chev { flex: none; width: 16px; height: 16px; color: var(--muted); }
+
+/* Sheet: the right panel's frame; at phone width it rises from the bottom. */
+.sheet { display: flex; flex-direction: column; min-height: 0; min-width: 0; height: 100%; background: var(--surface); border: 1px solid var(--borderStrong); border-radius: 16px; overflow: hidden; }
+.sheet-scrim, .sheet-grab, .sheet-close { display: none; }
+.sheet-head { display: flex; align-items: center; gap: var(--space-8); padding: 10px var(--space-8) 6px; }
+.sheet-head h2 { flex: 1; min-width: 0; margin: 0; font-size: 15px; line-height: 22px; font-weight: 700; }
+.sheet-body { flex: 1; min-height: 0; overflow-y: auto; padding: 6px var(--space-16) var(--space-16); display: flex; flex-direction: column; gap: var(--space-16); }
+.sheet-foot { display: flex; justify-content: flex-end; gap: var(--space-8); padding: var(--space-12) var(--space-16) var(--space-16); border-top: 1px solid var(--border); }
+.sheet-foot .obtn { padding: var(--space-8) var(--space-16); font-size: var(--fs-caption); line-height: var(--lh-caption); }
+
+@media (max-width: 640px) {
+  .sheet-scrim { display: block; position: fixed; inset: 0; z-index: 60; background: var(--scrim); }
+  .sheet { position: fixed; left: 0; right: 0; bottom: 0; top: 96px; z-index: 61; height: auto; border: 0; border-top: 1px solid var(--borderStrong); border-radius: 22px 22px 0 0; }
+  .sheet-grab { display: block; align-self: center; width: 40px; height: 4px; margin-top: 10px; border-radius: var(--r-pill); background: var(--borderStrong); }
+  .sheet-head { gap: 10px; padding: var(--space-8) var(--space-8) var(--space-4) var(--space-16); }
+  .sheet-head h2 { font-size: 18px; line-height: 24px; }
+  .sheet-back, .sheet-cancel { display: none; }
+  .sheet-close { display: grid; width: 44px; height: 44px; }
+  .sheet-body { padding: var(--space-8) var(--space-16) var(--space-12); gap: 14px; }
+  .sheet-foot { padding: var(--space-12) var(--space-16) calc(24px + env(safe-area-inset-bottom, 0px)); }
+  .sheet-foot .pbtn { width: 100%; padding: 13px var(--space-16); font-size: 15px; line-height: 20px; }
+}

@@ -1,0 +1,18 @@
+{
+  "family": "Barlow",
+  "licence": "SIL Open Font License 1.1",
+  "licenceFiles": [
+    "OFL.txt"
+  ],
+  "source": "https://github.com/google/fonts/tree/main/ofl/barlow",
+  "faces": [
+    {
+      "file": "Barlow-SemiBold.ttf",
+      "weight": 600
+    },
+    {
+      "file": "Barlow-Bold.ttf",
+      "weight": 700
+    }
+  ]
+}

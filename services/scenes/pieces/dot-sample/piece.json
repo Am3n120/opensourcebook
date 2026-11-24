@@ -1,0 +1,11 @@
+{
+  "about": "A field of dots scattered at random with a share of them coloured, then a random sample ringed one by one with its count and percentage running beneath: sampling, surveys, estimating a share, chance, how common something is.",
+  "tags": ["sample", "sampling", "random", "survey", "poll", "estimate", "share", "proportion", "population", "prevalence", "how common", "chance", "statistics", "dots", "scatter", "randomness", "polling", "margin"],
+  "params": {
+    "total": { "default": "200", "about": "how many dots in all (up to 900)" },
+    "share": { "default": "0.3", "about": "the share that is the coloured kind, 0 to 1 or a percentage" },
+    "sample": { "default": "0", "about": "how many dots to pick at random and count; 0 for no sample" },
+    "names": { "default": "", "about": "what the coloured kind is, written in the count" },
+    "when": { "default": "", "about": "moments the kind colours in and the sampling starts; else when they are said, or one after another" }
+  }
+}

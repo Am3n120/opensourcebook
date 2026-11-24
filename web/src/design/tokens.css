@@ -1,0 +1,174 @@
+/* Open Sourcebook design tokens for the web app (locked Nov 10, 2026).
+   This file is the app's source of truth; change a value here, never in a
+   component. */
+
+:root {
+  /* Colour: brand */
+  --primary: #6C5CE7;
+  --primarySoft: #EFEDFC;
+  --primaryGhost: #F7F6FE;
+  --primaryText: #5B4BD6;
+  --success: #22C55E;
+  --successSoft: #E9F9F0;
+  --successText: #15803D;
+  --accent: #FFB020;
+  --accentSoft: #FFF6E6;
+  --accentText: #B45309;
+  --accentBorder: #FBE3B0;
+  --info: #2563EB;
+  --infoSoft: #EBF1FE;
+  --danger: #B42318;
+  --dangerSoft: #FDE8E8;
+  --dangerBorder: #F5C2BE; /* the edge of a row that failed */
+  --teal: #0F766E;
+  --tealSoft: #E6F6F4;
+
+  /* Colour: neutrals */
+  --bg: #F7F7FA;
+  --surface: #FFFFFF;
+  --border: #E5E7EB;
+  --borderStrong: #CBD5E1;
+  --fill: #F1F2F6;
+  --text: #0F172A;
+  --muted: #5E6E85;
+  --mutedText: #556277;
+  --onPrimary: #FFFFFF;
+  --scrim: rgb(15 23 42 / .28); /* the dimmed page under a sheet or a dialog */
+  --ink: #1B2335;       /* a reply's words in the chat */
+  /* The source reader's page is paper in both themes: light, with dark ink, so a source reads like a page. */
+  --paper: #F6F7F9;
+  --paperInk: #14161C;    /* a source's words on the page */
+  --paperMuted: #5B6472;  /* the page's small labels */
+  --paperRule: #E3E6EC;   /* the page's lines and code blocks */
+  --paperMark: #FFF1C2;   /* a cited spot marked on the page */
+  --paperCite: #4B3FC4;   /* the cite number beside a marked spot */
+  --paperCiteBg: #E9E6FF;
+  --inverse: #0F172A;   /* a dark chip or button on a light page */
+  --onInverse: #FFFFFF;
+  --onSolid: #FFFFFF;   /* an icon on a format's solid colour, and words on the solid danger button */
+  --onSuccess: #0F172A; /* a tick or a letter on the success green, which is too light for white */
+  --edge: 15 23 42;     /* the hairline ring around cards, as rgb(var(--edge) / alpha) */
+
+  /* Colour: logo */
+  --logo-dot: #FFB020;
+
+  /* Colour: format slots (soft background + text). Neutral: a slot belongs to
+     no format. Each format's descriptor from GET /v1/formats names its slot
+     (colorSlot); slot 8 is the fallback for an id no descriptor knows. */
+  --fmt-1-bg: var(--dangerSoft);  --fmt-1-fg: var(--danger);
+  --fmt-2-bg: var(--successSoft); --fmt-2-fg: var(--successText);
+  --fmt-3-bg: var(--accentSoft);  --fmt-3-fg: var(--accentText);
+  --fmt-4-bg: var(--primarySoft); --fmt-4-fg: var(--primaryText);
+  --fmt-5-bg: var(--fill);        --fmt-5-fg: var(--mutedText);
+  --fmt-6-bg: var(--tealSoft);    --fmt-6-fg: var(--teal);
+  --fmt-7-bg: var(--infoSoft);    --fmt-7-fg: var(--info);
+  --fmt-8-bg: var(--fill);        --fmt-8-fg: var(--mutedText);
+
+
+
+  /* Colour: the dark feed card (the phone's feed and the Studio's player) */
+  --feed-bg: var(--text);
+  --feed-bg-top: #1E2240;
+  --feed-border: #1F2937;
+  --feed-muted: #9AA3B5;
+  --feed-overlay: rgb(255 255 255 / .08);
+  --feed-overlay-strong: rgb(255 255 255 / .12);
+
+  /* Type: Inter. Size / line height pairs. */
+  --font: "Inter Variable", Inter, -apple-system, system-ui, sans-serif;
+  --font-mono: ui-monospace, Menlo, monospace;
+  --font-serif: ui-serif, Charter, "Bitstream Charter", Cambria, Georgia, serif; /* Georgia last: its old-style 0 reads as o in maths */
+  --fs-display: 40px;  --lh-display: 44px;
+  --fs-title: 28px;    --lh-title: 34px;
+  --fs-heading: 20px;  --lh-heading: 28px;
+  --fs-body: 16px;     --lh-body: 24px;
+  --fs-caption: 13px;  --lh-caption: 18px;
+  --fs-label: 12px;    --lh-label: 16px;
+  --tracking-tight: -.02em;
+
+  /* Spacing */
+  --space-4: 4px;
+  --space-8: 8px;
+  --space-12: 12px;
+  --space-16: 16px;
+  --space-20: 20px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --space-40: 40px;
+  --space-64: 64px;
+
+  /* Radii */
+  --r-4: 4px;
+  --r-8: 8px;
+  --r-12: 12px;
+  --r-20: 20px;
+  --r-24: 24px;
+  --r-pill: 999px;
+
+  /* Shadows */
+  --shadow-card: 0 1px 2px rgb(15 23 42 / .05), 0 4px 14px rgb(15 23 42 / .06);
+  --shadow-fab: 0 6px 16px rgb(0 0 0 / .25);
+
+  /* Motion */
+  --ease: ease-in-out;
+  --ease-out: ease-out;
+  --dur-quick: 200ms;
+  --dur-standard: 350ms;
+  --dur-gentle: 500ms;
+
+  color-scheme: light;
+}
+
+/* The same design in the dark. design/theme.ts sets data-theme on <html>
+   from Settings (system, light or dark; system follows the device). Only
+   colours change here; every pair of text and background keeps at least
+   4.5:1 contrast. */
+:root[data-theme="dark"] {
+  color-scheme: dark;
+
+  --primary: #6C5CE7;
+  --primarySoft: #2B2752;
+  --primaryGhost: #1C1A33;
+  --primaryText: #B7AEFF;
+  --success: #22C55E;
+  --successSoft: #13301F;
+  --successText: #4ADE80;
+  --accent: #FFB020;
+  --accentSoft: #33270F;
+  --accentText: #FBBF24;
+  --accentBorder: #5C4515;
+  --info: #7AB4FF;
+  --infoSoft: #172A4A;
+  --danger: #FF8A80;
+  --dangerSoft: #3D1C1C;
+  --dangerBorder: #5C2626;
+  --teal: #4FD1C5;
+  --tealSoft: #10302D;
+
+  --bg: #0E1015;
+  --surface: #181B22;
+  --border: #2A2F3A;
+  --borderStrong: #3C4352;
+  --fill: #22262F;
+  --text: #E7E9EE;
+  --muted: #9AA3B2;
+  --mutedText: #ABB3C1;
+  --onPrimary: #FFFFFF;
+  --scrim: rgb(5 6 10 / .66);
+  --ink: #DADDE5;
+  --inverse: #E7E9EE;
+  --onInverse: #0E1015;
+  --onSolid: #0E1015;
+  --onSuccess: #0E1015;
+  --edge: 255 255 255;
+
+  --fmt-5-fg: var(--mutedText);
+  --fmt-8-fg: var(--mutedText);
+
+  /* The feed card is dark in both themes; here it sits a step above the page. */
+  --feed-bg: #0B0E1A;
+  --feed-bg-top: #1E2240;
+  --feed-border: #2A2F3A;
+
+  --shadow-card: 0 1px 2px rgb(0 0 0 / .4), 0 4px 14px rgb(0 0 0 / .35);
+}

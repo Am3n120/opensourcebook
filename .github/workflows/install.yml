@@ -1,0 +1,138 @@
+name: install
+
+# The one-line install, tried for real on computers that have never had Open Sourcebook. Nothing comes from the
+# public address: each job packs the app from this commit (the archive a person would download) and the installer's
+# package, and points the line at them. The Linux job runs inside a bare image with no Node and no ffmpeg, as a person
+# who is not an administrator; the Windows job runs the PowerShell line in Windows PowerShell 5.1 and makes it fetch
+# its own Node.
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "install/**"
+      - ".github/workflows/install.yml"
+  pull_request:
+    paths:
+      - "install/**"
+      - "cli/**"
+      - "package.json"
+      - ".github/workflows/install.yml"
+
+concurrency:
+  group: install-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: The package's own tests
+        working-directory: install/package
+        run: npm test
+      - name: The Mac and Linux script is plain sh
+        run: |
+          sh -n install/site/install
+          dash -n install/site/install
+          shellcheck --shell=sh install/site/install install/test/try.sh
+      - name: The Windows script parses
+        shell: pwsh
+        run: |
+          $errors = $null
+          [void][System.Management.Automation.Language.Parser]::ParseFile("$PWD/install/site/install.ps1", [ref]$null, [ref]$errors)
+          $errors | ForEach-Object { Write-Host $_ }
+          if ($errors.Count) { exit 1 }
+          Invoke-ScriptAnalyzer -Path install/site/install.ps1 -Severity Error,Warning -ExcludeRule PSAvoidUsingWriteHost,PSAvoidUsingInvokeExpression,PSUseShouldProcessForStateChangingFunctions | Tee-Object -Variable found | Format-List
+          if ($found | Where-Object Severity -eq 'Error') { exit 1 }
+
+  linux:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Pack the app and the package from this commit
+        run: |
+          mkdir -p "$RUNNER_TEMP/in"
+          git archive --format=tar.gz --prefix=opensourcebook-main/ HEAD -o "$RUNNER_TEMP/in/app.tar.gz"
+          (cd install/package && npm pack --pack-destination "$RUNNER_TEMP/in")
+          mv "$RUNNER_TEMP"/in/opensourcebook-*.tgz "$RUNNER_TEMP/in/package.tgz"
+          cp -R install "$RUNNER_TEMP/in/install"
+          ls -la "$RUNNER_TEMP/in"
+      - name: The line on a bare Linux with no Node and no ffmpeg, as a person who is not an administrator
+        run: |
+          docker run --rm -v "$RUNNER_TEMP/in:/in:ro" debian:bookworm-slim sh -c '
+            set -eu
+            apt-get update -qq && apt-get install -y -qq curl ca-certificates procps >/dev/null
+            useradd -m jane
+            su jane -c "cd ~ && sh /in/install/test/try.sh /in/app.tar.gz /in/package.tgz 9300" || {
+              echo; echo "--- the logs"; tail -n 60 /home/jane/.opensourcebook/app/.opensourcebook/logs/*.log 2>/dev/null || true; exit 1; }
+          '
+
+  windows:
+    runs-on: windows-latest
+    timeout-minutes: 40
+    defaults:
+      run:
+        shell: powershell
+    env:
+      OPENSOURCEBOOK_ARGS: --no-open --ports-from 9300
+      OPENSOURCEBOOK_FORCE_PRIVATE_NODE: "1"
+    steps:
+      - run: git config --global core.autocrlf false
+      - uses: actions/checkout@v4
+      - name: Pack the app and the package from this commit
+        run: |
+          git archive --format=tar.gz --prefix=opensourcebook-main/ HEAD -o "$env:RUNNER_TEMP\app.tar.gz"
+          Push-Location install\package
+          npm pack --pack-destination "$env:RUNNER_TEMP"
+          Pop-Location
+          $package = (Get-ChildItem "$env:RUNNER_TEMP\opensourcebook-*.tgz")[0].FullName
+          "OPENSOURCEBOOK_ARCHIVE=$env:RUNNER_TEMP\app.tar.gz" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+          "OPENSOURCEBOOK_PACKAGE=$package" | Out-File -FilePath $env:GITHUB_ENV -Append -Encoding utf8
+      - name: The line in Windows PowerShell 5.1, fetching its own Node
+        timeout-minutes: 25
+        run: |
+          $PSVersionTable.PSVersion.ToString()
+          Get-Content -Raw install\site\install.ps1 | Invoke-Expression
+          if ($LASTEXITCODE) { exit 1 }
+      - name: What it left
+        run: |
+          $folder = "$env:USERPROFILE\.opensourcebook"
+          foreach ($f in "bin\opensourcebook.cmd", "node\node.exe", "app\package.json", "app.manifest") {
+            if (-not (Test-Path "$folder\$f")) { Write-Host "missing: $folder\$f"; exit 1 }
+          }
+          & "$folder\node\node.exe" --version
+          if (-not ([Environment]::GetEnvironmentVariable('Path', 'User') -like "*$folder\bin*")) { Write-Host "the user Path does not have $folder\bin"; exit 1 }
+          $lnk = Join-Path ([Environment]::GetFolderPath('Programs')) 'Open Sourcebook.lnk'
+          if (-not (Test-Path $lnk)) { Write-Host "no Start-menu entry at $lnk"; exit 1 }
+      - name: Each of the four programs answers
+        run: |
+          $status = & "$env:USERPROFILE\.opensourcebook\bin\opensourcebook.cmd" status 2>&1 | Out-String
+          Write-Host $status
+          foreach ($p in "Agent connector", "Video scenes", "Engine", "Web app") {
+            if ($status -notmatch "$p +up ") { Write-Host "$p does not answer"; exit 1 }
+          }
+      - name: The line a second time updates and starts again, and what the person made is kept
+        timeout-minutes: 15
+        run: |
+          $kept = "$env:USERPROFILE\.opensourcebook\app\.opensourcebook\try-kept.txt"
+          Set-Content -Path $kept -Value kept
+          Get-Content -Raw install\site\install.ps1 | Invoke-Expression
+          if ($LASTEXITCODE) { exit 1 }
+          if (-not (Test-Path $kept)) { Write-Host "the second run removed a file the person made"; exit 1 }
+          $status = & "$env:USERPROFILE\.opensourcebook\bin\opensourcebook.cmd" status 2>&1 | Out-String
+          Write-Host $status
+          if ($status -notmatch "Web app +up ") { exit 1 }
+      - name: Stopping
+        if: always()
+        run: |
+          $cmd = "$env:USERPROFILE\.opensourcebook\bin\opensourcebook.cmd"
+          if (Test-Path $cmd) { & $cmd stop }
+      - name: Logs
+        if: failure()
+        run: Get-ChildItem "$env:USERPROFILE\.opensourcebook\app\.opensourcebook\logs\*.log" -ErrorAction SilentlyContinue | ForEach-Object { "--- $($_.Name)"; Get-Content $_ -Tail 60 }

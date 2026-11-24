@@ -1,0 +1,38 @@
+{
+  "name": "opensourcebook-scenes",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "description": "Open Sourcebook's second video maker: drawn scenes in its own scene language, written by the person's own agent, rendered on their computer.",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "start": "node --env-file-if-exists=.env --experimental-strip-types --no-warnings src/main.ts",
+    "check-toolbox": "node --env-file-if-exists=.env --experimental-strip-types --no-warnings scripts/check-toolbox.ts",
+    "browser": "node --experimental-strip-types --no-warnings scripts/browser.ts",
+    "piece": "node --experimental-strip-types --no-warnings scripts/piece.ts",
+    "voice:kokoro": "cd voices/kokoro && npm install --no-audit --no-fund",
+    "typecheck": "tsc --noEmit",
+    "test": "npm run test:engine && npm run test:service",
+    "test:engine": "node --experimental-strip-types --no-warnings --test engine/core/*.test.ts engine/truth/*.test.ts engine/kits/*.test.ts engine/style/*.test.ts engine/language/*.test.ts engine/design/*.test.ts engine/design/*/*.test.ts",
+    "test:service": "node --experimental-strip-types --no-warnings --test test/*.test.ts"
+  },
+  "dependencies": {
+    "@meta-sam/parser": "^0.1.0",
+    "@napi-rs/canvas": "^1.1.1",
+    "@remotion/bundler": "4.0.539",
+    "@remotion/renderer": "4.0.539",
+    "katex": "0.19.1",
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "remotion": "4.0.539",
+    "unpdf": "^1.9.1"
+  },
+  "devDependencies": {
+    "@types/node": "^26.6.6",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "typescript": "^7.0.2"
+  }
+}

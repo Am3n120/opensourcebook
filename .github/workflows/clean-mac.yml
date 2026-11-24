@@ -1,0 +1,212 @@
+name: clean mac
+
+# The steps of docs/DEVELOPING.md for a clone, on a GitHub-hosted Mac that has never seen Open Sourcebook: no package cache, no browser for videos, no
+# coding agent signed in. Each step is one thing a stranger meets, so a red step says what broke, and the words Open Sourcebook
+# printed are kept in the run's summary. macOS minutes are costly, so this runs only when the install path changes, and
+# by hand.
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 5 * * 1"
+  pull_request:
+    paths:
+      - "cli/**"
+      - "package.json"
+      - "package-lock.json"
+      - "README.md"
+      - "docs/DEVELOPING.md"
+      - "engine/package.json"
+      - "engine/package-lock.json"
+      - "engine/scripts/**"
+      - "web/package.json"
+      - "web/package-lock.json"
+      - "services/agent-connector/package.json"
+      - "services/agent-connector/package-lock.json"
+      - "services/agent-connector/src/agents/**"
+      - "services/scenes/package.json"
+      - "services/scenes/package-lock.json"
+      - "services/scenes/scripts/**"
+      - ".github/workflows/clean-mac.yml"
+
+concurrency:
+  group: clean-mac-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  clean-mac:
+    runs-on: macos-15
+    timeout-minutes: 30
+    defaults:
+      run:
+        shell: bash
+        working-directory: opensourcebook
+    steps:
+      - name: What this Mac has as it comes
+        working-directory: .
+        run: |
+          {
+            echo "### What this Mac has as it comes"
+            echo '```'
+            sw_vers | tr '\n' ' '; echo
+            echo "node:     $(command -v node >/dev/null && node --version || echo none)"
+            echo "brew:     $(command -v brew >/dev/null && brew --version | head -1 || echo none)"
+            echo "ffmpeg:   $(command -v ffmpeg >/dev/null && ffmpeg -version | head -1 || echo none)"
+            for a in claude codex opencode; do echo "$a: $(command -v $a || echo none)"; done
+            echo "browser for videos: $(ls -d ~/Library/Caches/opensourcebook-scenes 2>/dev/null || echo none)"
+            echo '```'
+          } | tee -a "$GITHUB_STEP_SUMMARY"
+          # What the later steps share: a PATH with no Homebrew and no ffmpeg on it, a way to wait for a start, and a
+          # way to say whether anything Open Sourcebook started is still running.
+          cat > "$RUNNER_TEMP/opensourcebook-helpers.sh" <<'EOF'
+          bare_path() {
+            local out="" d
+            IFS=: read -ra dirs <<< "$PATH"
+            for d in "${dirs[@]}"; do
+              [ -x "$d/ffmpeg" ] || [ -x "$d/brew" ] && continue
+              out="${out:+$out:}$d"
+            done
+            echo "$out"
+          }
+          # Waits for "Open Sourcebook is running", a stop, or the launcher going away; prints the log either way.
+          wait_for_start() {
+            local log=$1 pid=$2
+            for i in $(seq 1 900); do
+              grep -q "Open Sourcebook is running" "$log" && break
+              grep -q "Stopped" "$log" && break
+              kill -0 "$pid" 2>/dev/null || break
+              sleep 1
+            done
+            cat "$log"
+            grep -q "Open Sourcebook is running" "$log"
+          }
+          # The processes the running launcher recorded, to look for after it stops.
+          recorded_pids() {
+            node -e 'const r=JSON.parse(require("fs").readFileSync(".opensourcebook/running.json","utf8")); console.log([r.pid,...(r.children||[]).map(c=>c.pid)].join(" "))'
+          }
+          nothing_left() {
+            local left=0 p
+            for p in "$@"; do if kill -0 "$p" 2>/dev/null; then echo "process $p is still running: $(ps -o command= -p "$p")"; left=1; fi; done
+            if pgrep -fl "workerd|wrangler|vite|chrome-headless-shell|$GITHUB_WORKSPACE/opensourcebook/"; then echo "something of Open Sourcebook is still running"; left=1; fi
+            return $left
+          }
+          summary() {
+            { echo "### $1"; echo '```'; cat "$2"; echo '```'; } >> "$GITHUB_STEP_SUMMARY"
+          }
+          EOF
+
+      # docs/DEVELOPING.md: git clone --depth 1 <the repo>, then cd opensourcebook. Checked out the same way (one commit, into opensourcebook/), so a
+      # pull request tests its own commit.
+      - name: "Clone (depth 1) and cd opensourcebook"
+        uses: actions/checkout@v4
+        with:
+          path: opensourcebook
+          fetch-depth: 1
+          persist-credentials: false
+
+      - name: "The clone's size"
+        run: du -sh . | tee -a "$GITHUB_STEP_SUMMARY"
+
+      # The runner comes with an older Node. A person with an old Node meets this before anything else.
+      - name: "With the Node that came with this Mac (not 24): npm start says what to do"
+        run: |
+          . "$RUNNER_TEMP/opensourcebook-helpers.sh"
+          node --version
+          npm start -- --no-open --ports-from 9100 > old-node.txt 2>&1 || true
+          cat old-node.txt
+          summary "npm start with a Node older than 24" old-node.txt
+          grep -q "Open Sourcebook needs Node 24 or newer" old-node.txt
+          test ! -e .opensourcebook/running.json || { echo "something was left running"; exit 1; }
+
+      # docs/DEVELOPING.md sends a person to nodejs.org for Node 24; this downloads that same Node, with no cache.
+      - name: "Node 24 from nodejs.org"
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: "Without Homebrew or ffmpeg: npm run check says what to do"
+        run: |
+          . "$RUNNER_TEMP/opensourcebook-helpers.sh"
+          PATH="$(bare_path)" npm run check > check-no-ffmpeg.txt 2>&1 || true
+          cat check-no-ffmpeg.txt
+          summary "npm run check, without Homebrew or ffmpeg, before anything is installed" check-no-ffmpeg.txt
+          grep -q "ffmpeg is missing" check-no-ffmpeg.txt
+          grep -q "brew.sh" check-no-ffmpeg.txt
+          grep -q "ffmpeg.org/download.html" check-no-ffmpeg.txt
+
+      - name: "npm start on this Mac as it comes (no agent, nothing cached)"
+        timeout-minutes: 20
+        run: |
+          . "$RUNNER_TEMP/opensourcebook-helpers.sh"
+          started=$(date +%s)
+          npm start -- --no-open --ports-from 9100 > start.log 2>&1 &
+          echo "LAUNCHER_PID=$!" >> "$GITHUB_ENV"
+          ok=0; wait_for_start start.log $! || ok=1
+          echo "First start took $(( $(date +%s) - started )) seconds." | tee -a "$GITHUB_STEP_SUMMARY"
+          summary "npm start on a clean Mac with no agent" start.log
+          exit $ok
+
+      - name: "No agent signed in: Open Sourcebook starts and says the chat can't answer"
+        run: |
+          grep -E "Claude Code|Codex|OpenCode|coding agent" start.log | tee agent-lines.txt
+          grep -q "No coding agent is ready" agent-lines.txt
+          grep -q "Open Sourcebook is running" start.log
+
+      - name: Each of the four programs answers
+        run: |
+          . "$RUNNER_TEMP/opensourcebook-helpers.sh"
+          npm run status | tee status.txt
+          summary "npm run status" status.txt
+          for p in "Agent connector" "Video scenes" "Engine" "Web app"; do grep -E "^  $p +up " status.txt || { echo "$p does not answer"; exit 1; }; done
+
+      - name: The browser for videos was downloaded, once
+        run: |
+          grep "Downloading the browser that draws videos" start.log
+          bin=$(find ~/Library/Caches/opensourcebook-scenes/chrome-headless-shell -name chrome-headless-shell -type f | head -1)
+          test -n "$bin" || { echo "no browser in ~/Library/Caches/opensourcebook-scenes"; exit 1; }
+          du -sh ~/Library/Caches/opensourcebook-scenes | tee -a "$GITHUB_STEP_SUMMARY"
+          if [ -d services/scenes/node_modules/.remotion/chrome-headless-shell ]; then echo "a second copy was left in node_modules"; exit 1; fi
+
+      - name: Ctrl-C stops everything and leaves nothing running
+        run: |
+          . "$RUNNER_TEMP/opensourcebook-helpers.sh"
+          pids=$(recorded_pids)
+          kill -INT "$LAUNCHER_PID"
+          for i in $(seq 1 30); do kill -0 "$LAUNCHER_PID" 2>/dev/null || break; sleep 1; done
+          tail -3 start.log
+          sleep 2
+          nothing_left $pids
+
+      - name: "Claude Code installed but not signed in: npm run check says how to sign in"
+        run: |
+          . "$RUNNER_TEMP/opensourcebook-helpers.sh"
+          npm install -g @anthropic-ai/claude-code > /dev/null 2>&1
+          claude --version
+          npm run check > check-not-signed-in.txt 2>&1 || true
+          cat check-not-signed-in.txt
+          summary "npm run check, Claude Code installed and not signed in" check-not-signed-in.txt
+          grep -q "not signed in" check-not-signed-in.txt
+
+      - name: "Without ffmpeg and with an agent not signed in: Open Sourcebook still starts, says so, and opensourcebook stop stops it"
+        timeout-minutes: 5
+        run: |
+          . "$RUNNER_TEMP/opensourcebook-helpers.sh"
+          PATH="$(bare_path)" npm start -- --no-open --ports-from 9100 > start-again.log 2>&1 &
+          launcher=$!
+          ok=0; wait_for_start start-again.log $launcher || ok=1
+          summary "npm start again, without Homebrew or ffmpeg, Claude Code not signed in" start-again.log
+          if [ $ok = 0 ]; then
+            grep -q "ffmpeg is missing" start-again.log
+            pids=$(recorded_pids)
+            node cli/opensourcebook.mjs stop | tee stop.txt
+            for i in $(seq 1 30); do kill -0 "$launcher" 2>/dev/null || break; sleep 1; done
+            sleep 2
+            nothing_left $pids
+          else
+            kill -INT "$launcher" 2>/dev/null || true
+            exit 1
+          fi
+
+      - name: Logs
+        if: failure()
+        run: tail -n 60 .opensourcebook/logs/*.log || true

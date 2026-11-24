@@ -1,0 +1,72 @@
+/* A guide on the player's screen (stage.css): notes to keep, read like a page. Its own tools
+   (Change it, Print, Done changing) sit at the top right; printed, only the page goes. */
+.gstage .pstage-in { gap: var(--space-12); width: min(100%, 720px); }
+.gtools { display: flex; justify-content: flex-end; flex-wrap: wrap; gap: var(--space-8); }
+.gtools .obtn { padding: 6px 12px; font-size: var(--fs-caption); line-height: var(--lh-caption); font-weight: 650; }
+.gdone { padding: 6px 14px; border: 0; border-radius: var(--r-pill); background: var(--primarySoft); color: var(--primaryText); font: inherit; font-size: var(--fs-caption); line-height: var(--lh-caption); font-weight: 700; cursor: pointer; }
+.gdone:disabled { opacity: .6; cursor: default; }
+
+.gpage { padding: var(--space-24) 26px var(--space-40); border-radius: 16px; background: var(--surface); box-shadow: var(--shadow-card); color: var(--text); }
+.ghead h2 { margin: 0; font-size: 22px; line-height: 28px; font-weight: 750; letter-spacing: -.01em; overflow-wrap: anywhere; }
+.gabout { margin: var(--space-4) 0 0; color: var(--mutedText); font-size: var(--fs-caption); line-height: var(--lh-caption); }
+.gnote { margin: var(--space-8) 0 0; color: var(--mutedText); font-size: var(--fs-caption); line-height: var(--lh-caption); font-style: italic; }
+
+.gsec { margin: var(--space-24) 0 0; }
+.gsec h3 { margin: 0 0 var(--space-12); color: var(--mutedText); font-size: var(--fs-label); line-height: var(--lh-label); font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.gsec ul { display: flex; flex-direction: column; gap: var(--space-12); margin: 0; padding: 0; list-style: none; }
+.gpt { margin: 0; font-family: var(--font-serif); font-size: 17px; line-height: 27px; overflow-wrap: anywhere; }
+.gpt .pcites { font-family: var(--font); }
+.gterm { font-weight: 700; }
+.gterm::after { content: "."; }
+/* What the maker added beyond the sources, and what the person wrote: each says so, quietly. */
+.gpt.bg { color: var(--mutedText); }
+.gpt.yours { margin: 0 -6px; padding: 6px; border-radius: var(--r-8); background: var(--accentSoft); }
+.gwhose { margin-left: 6px; font-family: var(--font); color: var(--mutedText); font-size: 11px; line-height: 16px; font-weight: 700; white-space: nowrap; }
+.gpt.yours .gwhose { color: var(--accentText); }
+
+.gsources { margin: var(--space-32) 0 0; padding: var(--space-12) 0 0 var(--space-20); border-top: 1px solid var(--border); color: var(--mutedText); font-size: var(--fs-caption); line-height: var(--lh-caption); }
+.gsources li { margin-bottom: var(--space-4); }
+.gsources q { margin-left: var(--space-4); }
+.gend { height: 1px; }
+
+/* Changing it: the same page, a point opened in place. */
+.gedit { display: flex; flex-direction: column; gap: var(--space-12); }
+.gfield { display: flex; flex-direction: column; gap: var(--space-4); color: var(--mutedText); font-size: var(--fs-label); line-height: var(--lh-label); font-weight: 650; }
+.gedit input, .gedit textarea { width: 100%; box-sizing: border-box; padding: var(--space-8) 10px; border: 1px solid var(--borderStrong); border-radius: var(--r-8); background: var(--surface); color: var(--text); font: inherit; font-size: var(--fs-body); font-weight: 400; }
+.gedit textarea { resize: vertical; font-family: var(--font-serif); line-height: 1.5; }
+.gsecedit { margin: 0; padding: 0; border: 0; display: flex; flex-direction: column; gap: var(--space-8); }
+.grow { display: flex; align-items: center; gap: var(--space-8); flex-wrap: wrap; }
+.grow-gap { flex: 1; }
+.gheading { flex: 1; min-width: 0; font-weight: 700; }
+.gmini { display: inline-grid; place-items: center; width: 32px; height: 32px; padding: 0; border: 0; border-radius: 50%; background: none; color: var(--text); cursor: pointer; }
+.gmini:hover:not(:disabled) { background: var(--fill); }
+.gmini:disabled { opacity: .35; cursor: default; }
+.gmini .ico { width: 18px; height: 18px; }
+.gptbtn { display: block; width: 100%; margin: 0 -6px; padding: 6px; border: 0; border-radius: var(--r-8); background: none; color: var(--text); font-family: var(--font-serif); font-size: 17px; line-height: 27px; text-align: left; cursor: pointer; }
+.gptbtn:hover, .gptbtn:focus-visible { background: var(--fill); }
+.gempty { color: var(--mutedText); font-style: italic; }
+.gptedit { display: flex; flex-direction: column; gap: var(--space-8); padding: var(--space-12) 14px; border: 2px solid var(--primary); border-radius: var(--r-12); }
+.gtermin { max-width: none; font-weight: 700 !important; }
+.gptnote { margin: 0; color: var(--mutedText); font-size: var(--fs-label); line-height: var(--lh-label); }
+.gptedit .pbtn, .gptedit .obtn { padding: 6px 14px; font-size: var(--fs-caption); line-height: var(--lh-caption); font-weight: 650; }
+.glink { align-self: flex-start; padding: 0; border: 0; background: none; color: var(--primaryText); font: inherit; font-size: var(--fs-caption); font-weight: 650; cursor: pointer; }
+.glink:hover { text-decoration: underline; }
+.gproblem { margin: 0; color: var(--danger); font-size: var(--fs-caption); }
+
+@container (max-width: 520px) {
+  .gstage .pstage-in { padding-left: var(--space-12); padding-right: var(--space-12); }
+  .gpage { padding: var(--space-20) var(--space-16) var(--space-32); }
+}
+
+/* Printed: only the guide being printed, black on white, the marks as plain numbers. */
+@media print {
+  html.gprint body { background: #fff; }
+  html.gprint body * { visibility: hidden; }
+  html.gprint [data-printing], html.gprint [data-printing] * { visibility: visible; }
+  html.gprint [data-printing] { position: absolute; inset: 0 auto auto 0; width: 100%; max-width: none; margin: 0; padding: 0; border: 0; border-radius: 0; box-shadow: none; background: #fff; color: #000; }
+  html.gprint [data-printing] .gpt.yours { background: none; }
+  html.gprint [data-printing] .pcite { border: 0; background: none; color: #000; vertical-align: super; font-size: 0.7em; }
+  html.gprint [data-printing] .gsec { break-inside: auto; }
+  html.gprint [data-printing] .gsec h3 { break-after: avoid; }
+  html.gprint [data-printing] .gpt { break-inside: avoid; }
+}

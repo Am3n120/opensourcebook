@@ -1,0 +1,20 @@
+{
+  "name": "opensourcebook",
+  "version": "0.1.0",
+  "description": "Installs Open Sourcebook on this computer and starts it: an open-source app that helps you understand and explain what you have to read, with cited answers, quizzes, audio and short videos made from your own sources.",
+  "license": "MIT",
+  "type": "module",
+  "homepage": "https://opensourcebook.app",
+  "bin": {
+    "opensourcebook": "bin/opensourcebook.mjs"
+  },
+  "files": [
+    "bin",
+    "lib",
+    "source.json",
+    "README.md"
+  ],
+  "scripts": {
+    "test": "node --test test/*.test.mjs"
+  }
+}

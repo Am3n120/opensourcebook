@@ -1,0 +1,948 @@
+{
+  "about": "How each kind of quiz question grades a response. The engine (kinds) and the web player (quizGrade) are both tested on these cases, so they score the same.",
+  "cases": [
+    {
+      "name": "order right",
+      "question": {
+        "id": "q1",
+        "kind": "order",
+        "topic": "t",
+        "prompt": "?",
+        "points": 1,
+        "feedback": {
+          "correct": "",
+          "incorrect": ""
+        },
+        "cites": [],
+        "items": [
+          "egg",
+          "larva",
+          "pupa",
+          "adult"
+        ],
+        "shown": [
+          2,
+          0,
+          3,
+          1
+        ]
+      },
+      "response": {
+        "order": [
+          0,
+          1,
+          2,
+          3
+        ]
+      },
+      "fraction": 1,
+      "answered": true
+    },
+    {
+      "name": "order one swap",
+      "question": {
+        "id": "q1",
+        "kind": "order",
+        "topic": "t",
+        "prompt": "?",
+        "points": 1,
+        "feedback": {
+          "correct": "",
+          "incorrect": ""
+        },
+        "cites": [],
+        "items": [
+          "egg",
+          "larva",
+          "pupa",
+          "adult"
+        ],
+        "shown": [
+          2,
+          0,
+          3,
+          1
+        ]
+      },
+      "response": {
+        "order": [
+          1,
+          0,
+          2,
+          3
+        ]
+      },
+      "fraction": 0.3333333333333333,
+      "answered": true
+    },
+    {
+      "name": "order reversed",
+      "question": {
+        "id": "q1",
+        "kind": "order",
+        "topic": "t",
+        "prompt": "?",
+        "points": 1,
+        "feedback": {
+          "correct": "",
+          "incorrect": ""
+        },
+        "cites": [],
+        "items": [
+          "egg",
+          "larva",
+          "pupa",
+          "adult"
+        ],
+        "shown": [
+          2,
+          0,
+          3,
+          1
+        ]
+      },
+      "response": {
+        "order": [
+          3,
+          2,
+          1,
+          0
+        ]
+      },
+      "fraction": 0,
+      "answered": true
+    },
+    {
+      "name": "order not a whole order",
+      "question": {
+        "id": "q1",
+        "kind": "order",
+        "topic": "t",
+        "prompt": "?",
+        "points": 1,
+        "feedback": {
+          "correct": "",
+          "incorrect": ""
+        },
+        "cites": [],
+        "items": [
+          "egg",
+          "larva",
+          "pupa",
+          "adult"
+        ],
+        "shown": [
+          2,
+          0,
+          3,
+          1
+        ]
+      },
+      "response": {
+        "order": [
+          0,
+          0,
+          1,
+          2
+        ]
+      },
+      "fraction": 0,
+      "answered": false
+    },
+    {
+      "name": "order no response",
+      "question": {
+        "id": "q1",
+        "kind": "order",
+        "topic": "t",
+        "prompt": "?",
+        "points": 1,
+        "feedback": {
+          "correct": "",
+          "incorrect": ""
+        },
+        "cites": [],
+        "items": [
+          "egg",
+          "larva",
+          "pupa",
+          "adult"
+        ],
+        "shown": [
+          2,
+          0,
+          3,
+          1
+        ]
+      },
+      "response": null,
+      "fraction": 0,
+      "answered": false
+    },
+    {
+      "name": "match all",
+      "question": {
+        "id": "q1",
+        "kind": "match",
+        "topic": "t",
+        "prompt": "?",
+        "points": 1,
+        "feedback": {
+          "correct": "",
+          "incorrect": ""
+        },
+        "cites": [],
+        "pairs": [
+          {
+            "left": "mitosis",
+            "right": "two same cells"
+          },
+          {
+            "left": "meiosis",
+            "right": "four different cells"
+          },
+          {
+            "left": "binary fission",
+            "right": "one cell splits in bacteria"
+          }
+        ],
+        "rights": [
+          2,
+          0,
+          1
+        ]
+      },
+      "response": {
+        "matches": [
+          0,
+          1,
+          2
+        ]
+      },
+      "fraction": 1,
+      "answered": true
+    },
+    {
+      "name": "match one",
+      "question": {
+        "id": "q1",
+        "kind": "match",
+        "topic": "t",
+        "prompt": "?",
+        "points": 1,
+        "feedback": {
+          "correct": "",
+          "incorrect": ""
+        },
+        "cites": [],
+        "pairs": [
+          {
+            "left": "mitosis",
+            "right": "two same cells"
+          },
+          {
+            "left": "meiosis",
+            "right": "four different cells"
+          },
+          {
+            "left": "binary fission",
+            "right": "one cell splits in bacteria"
+          }
+        ],
+        "rights": [
+          2,
+          0,
+          1
+        ]
+      },
+      "response": {
+        "matches": [
+          0,
+          2,
+          1
+        ]
+      },
+      "fraction": 0.3333333333333333,
+      "answered": true
+    },
+    {
+      "name": "match partly picked",
+      "question": {
+        "id": "q1",
+        "kind": "match",
+        "topic": "t",
+        "prompt": "?",
+        "points": 1,
+        "feedback": {
+          "correct": "",
+          "incorrect": ""
+        },
+        "cites": [],
+        "pairs": [
+          {
+            "left": "mitosis",
+            "right": "two same cells"
+          },
+          {
+            "left": "meiosis",
+            "right": "four different cells"
+          },
+          {
+            "left": "binary fission",
+            "right": "one cell splits in bacteria"
+          }
+        ],
+        "rights": [
+          2,
+          0,
+          1
+        ]
+      },
+      "response": {
+        "matches": [
+          0,
+          null
+        ]
+      },
+      "fraction": 0.3333333333333333,
+      "answered": true
+    },
+    {
+      "name": "match nothing picked",
+      "question": {
+        "id": "q1",
+        "kind": "match",
+        "topic": "t",
+        "prompt": "?",
+        "points": 1,
+        "feedback": {
+          "correct": "",
+          "incorrect": ""
+        },
+        "cites": [],
+        "pairs": [
+          {
+            "left": "mitosis",
+            "right": "two same cells"
+          },
+          {
+            "left": "meiosis",
+            "right": "four different cells"
+          },
+          {
+            "left": "binary fission",
+            "right": "one cell splits in bacteria"
+          }
+        ],
+        "rights": [
+          2,
+          0,
+          1
+        ]
+      },
+      "response": {
+        "matches": [
+          null,
+          null,
+          null
+        ]
+      },
+      "fraction": 0,
+      "answered": false
+    },
+    {
+      "name": "label right (case aside)",
+      "question": {
+        "id": "q1",
+        "kind": "label",
+        "topic": "t",
+        "prompt": "?",
+        "points": 1,
+        "feedback": {
+          "correct": "",
+          "incorrect": ""
+        },
+        "cites": [],
+        "picture": {
+          "url": "/v1/assets/abc123"
+        },
+        "marks": [
+          {
+            "mark": "A",
+            "answer": "nucleus"
+          },
+          {
+            "mark": "B",
+            "answer": "cell wall"
+          }
+        ],
+        "extra": [
+          "ribosome"
+        ],
+        "names": [
+          "ribosome",
+          "Cell wall",
+          "nucleus"
+        ]
+      },
+      "response": {
+        "labels": [
+          2,
+          1
+        ]
+      },
+      "fraction": 1,
+      "answered": true
+    },
+    {
+      "name": "label one wrong",
+      "question": {
+        "id": "q1",
+        "kind": "label",
+        "topic": "t",
+        "prompt": "?",
+        "points": 1,
+        "feedback": {
+          "correct": "",
+          "incorrect": ""
+        },
+        "cites": [],
+        "picture": {
+          "url": "/v1/assets/abc123"
+        },
+        "marks": [
+          {
+            "mark": "A",
+            "answer": "nucleus"
+          },
+          {
+            "mark": "B",
+            "answer": "cell wall"
+          }
+        ],
+        "extra": [
+          "ribosome"
+        ],
+        "names": [
+          "ribosome",
+          "Cell wall",
+          "nucleus"
+        ]
+      },
+      "response": {
+        "labels": [
+          0,
+          1
+        ]
+      },
+      "fraction": 0.5,
+      "answered": true
+    },
+    {
+      "name": "label nothing",
+      "question": {
+        "id": "q1",
+        "kind": "label",
+        "topic": "t",
+        "prompt": "?",
+        "points": 1,
+        "feedback": {
+          "correct": "",
+          "incorrect": ""
+        },
+        "cites": [],
+        "picture": {
+          "url": "/v1/assets/abc123"
+        },
+        "marks": [
+          {
+            "mark": "A",
+            "answer": "nucleus"
+          },
+          {
+            "mark": "B",
+            "answer": "cell wall"
+          }
+        ],
+        "extra": [
+          "ribosome"
+        ],
+        "names": [
+          "ribosome",
+          "Cell wall",
+          "nucleus"
+        ]
+      },
+      "response": {
+        "labels": []
+      },
+      "fraction": 0,
+      "answered": false
+    },
+    {
+      "name": "graph same line other points",
+      "question": {
+        "id": "q1",
+        "kind": "graph",
+        "topic": "t",
+        "prompt": "?",
+        "points": 1,
+        "feedback": {
+          "correct": "",
+          "incorrect": ""
+        },
+        "cites": [],
+        "axes": {
+          "x": {
+            "min": 0,
+            "max": 10,
+            "step": 1
+          },
+          "y": {
+            "min": 0,
+            "max": 50,
+            "step": 5
+          }
+        },
+        "line": [
+          [
+            0,
+            10
+          ],
+          [
+            4,
+            30
+          ]
+        ]
+      },
+      "response": {
+        "points": [
+          [
+            1,
+            15
+          ],
+          [
+            3,
+            25
+          ]
+        ]
+      },
+      "fraction": 1,
+      "answered": true
+    },
+    {
+      "name": "graph the written points",
+      "question": {
+        "id": "q1",
+        "kind": "graph",
+        "topic": "t",
+        "prompt": "?",
+        "points": 1,
+        "feedback": {
+          "correct": "",
+          "incorrect": ""
+        },
+        "cites": [],
+        "axes": {
+          "x": {
+            "min": 0,
+            "max": 10,
+            "step": 1
+          },
+          "y": {
+            "min": 0,
+            "max": 50,
+            "step": 5
+          }
+        },
+        "line": [
+          [
+            0,
+            10
+          ],
+          [
+            4,
+            30
+          ]
+        ]
+      },
+      "response": {
+        "points": [
+          [
+            4,
+            30
+          ],
+          [
+            0,
+            10
+          ]
+        ]
+      },
+      "fraction": 1,
+      "answered": true
+    },
+    {
+      "name": "graph wrong slope",
+      "question": {
+        "id": "q1",
+        "kind": "graph",
+        "topic": "t",
+        "prompt": "?",
+        "points": 1,
+        "feedback": {
+          "correct": "",
+          "incorrect": ""
+        },
+        "cites": [],
+        "axes": {
+          "x": {
+            "min": 0,
+            "max": 10,
+            "step": 1
+          },
+          "y": {
+            "min": 0,
+            "max": 50,
+            "step": 5
+          }
+        },
+        "line": [
+          [
+            0,
+            10
+          ],
+          [
+            4,
+            30
+          ]
+        ]
+      },
+      "response": {
+        "points": [
+          [
+            0,
+            10
+          ],
+          [
+            4,
+            35
+          ]
+        ]
+      },
+      "fraction": 0,
+      "answered": true
+    },
+    {
+      "name": "graph one point twice",
+      "question": {
+        "id": "q1",
+        "kind": "graph",
+        "topic": "t",
+        "prompt": "?",
+        "points": 1,
+        "feedback": {
+          "correct": "",
+          "incorrect": ""
+        },
+        "cites": [],
+        "axes": {
+          "x": {
+            "min": 0,
+            "max": 10,
+            "step": 1
+          },
+          "y": {
+            "min": 0,
+            "max": 50,
+            "step": 5
+          }
+        },
+        "line": [
+          [
+            0,
+            10
+          ],
+          [
+            4,
+            30
+          ]
+        ]
+      },
+      "response": {
+        "points": [
+          [
+            0,
+            10
+          ],
+          [
+            0,
+            10
+          ]
+        ]
+      },
+      "fraction": 0,
+      "answered": true
+    },
+    {
+      "name": "graph one point only",
+      "question": {
+        "id": "q1",
+        "kind": "graph",
+        "topic": "t",
+        "prompt": "?",
+        "points": 1,
+        "feedback": {
+          "correct": "",
+          "incorrect": ""
+        },
+        "cites": [],
+        "axes": {
+          "x": {
+            "min": 0,
+            "max": 10,
+            "step": 1
+          },
+          "y": {
+            "min": 0,
+            "max": 50,
+            "step": 5
+          }
+        },
+        "line": [
+          [
+            0,
+            10
+          ],
+          [
+            4,
+            30
+          ]
+        ]
+      },
+      "response": {
+        "points": [
+          [
+            0,
+            10
+          ]
+        ]
+      },
+      "fraction": 0,
+      "answered": false
+    },
+    {
+      "name": "graph upright line",
+      "question": {
+        "id": "q1",
+        "kind": "graph",
+        "topic": "t",
+        "prompt": "?",
+        "points": 1,
+        "feedback": {
+          "correct": "",
+          "incorrect": ""
+        },
+        "cites": [],
+        "axes": {
+          "x": {
+            "min": -5,
+            "max": 5,
+            "step": 1
+          },
+          "y": {
+            "min": -5,
+            "max": 5,
+            "step": 1
+          }
+        },
+        "line": [
+          [
+            2,
+            -3
+          ],
+          [
+            2,
+            4
+          ]
+        ]
+      },
+      "response": {
+        "points": [
+          [
+            2,
+            0
+          ],
+          [
+            2,
+            -5
+          ]
+        ]
+      },
+      "fraction": 1,
+      "answered": true
+    },
+    {
+      "name": "graph upright line missed",
+      "question": {
+        "id": "q1",
+        "kind": "graph",
+        "topic": "t",
+        "prompt": "?",
+        "points": 1,
+        "feedback": {
+          "correct": "",
+          "incorrect": ""
+        },
+        "cites": [],
+        "axes": {
+          "x": {
+            "min": -5,
+            "max": 5,
+            "step": 1
+          },
+          "y": {
+            "min": -5,
+            "max": 5,
+            "step": 1
+          }
+        },
+        "line": [
+          [
+            2,
+            -3
+          ],
+          [
+            2,
+            4
+          ]
+        ]
+      },
+      "response": {
+        "points": [
+          [
+            2,
+            0
+          ],
+          [
+            3,
+            -5
+          ]
+        ]
+      },
+      "fraction": 0,
+      "answered": true
+    },
+    {
+      "name": "complete right, number forms",
+      "question": {
+        "id": "q1",
+        "kind": "complete",
+        "topic": "t",
+        "prompt": "?",
+        "points": 1,
+        "feedback": {
+          "correct": "",
+          "incorrect": ""
+        },
+        "cites": [],
+        "lines": [
+          "v = d / t",
+          "v = 120 / [[4]]",
+          "v = [[30|thirty]] km/h"
+        ]
+      },
+      "response": {
+        "gaps": [
+          "4.0",
+          "Thirty"
+        ]
+      },
+      "fraction": 1,
+      "answered": true
+    },
+    {
+      "name": "complete with unit typed",
+      "question": {
+        "id": "q1",
+        "kind": "complete",
+        "topic": "t",
+        "prompt": "?",
+        "points": 1,
+        "feedback": {
+          "correct": "",
+          "incorrect": ""
+        },
+        "cites": [],
+        "lines": [
+          "v = d / t",
+          "v = 120 / [[4]]",
+          "v = [[30|thirty]] km/h"
+        ]
+      },
+      "response": {
+        "gaps": [
+          "4",
+          "30 km/h"
+        ]
+      },
+      "fraction": 1,
+      "answered": true
+    },
+    {
+      "name": "complete half",
+      "question": {
+        "id": "q1",
+        "kind": "complete",
+        "topic": "t",
+        "prompt": "?",
+        "points": 1,
+        "feedback": {
+          "correct": "",
+          "incorrect": ""
+        },
+        "cites": [],
+        "lines": [
+          "v = d / t",
+          "v = 120 / [[4]]",
+          "v = [[30|thirty]] km/h"
+        ]
+      },
+      "response": {
+        "gaps": [
+          "4",
+          "40"
+        ]
+      },
+      "fraction": 0.5,
+      "answered": true
+    },
+    {
+      "name": "complete blank",
+      "question": {
+        "id": "q1",
+        "kind": "complete",
+        "topic": "t",
+        "prompt": "?",
+        "points": 1,
+        "feedback": {
+          "correct": "",
+          "incorrect": ""
+        },
+        "cites": [],
+        "lines": [
+          "v = d / t",
+          "v = 120 / [[4]]",
+          "v = [[30|thirty]] km/h"
+        ]
+      },
+      "response": {
+        "gaps": [
+          "",
+          ""
+        ]
+      },
+      "fraction": 0,
+      "answered": false
+    }
+  ]
+}

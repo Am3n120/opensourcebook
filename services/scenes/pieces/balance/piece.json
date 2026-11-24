@@ -1,0 +1,11 @@
+{
+  "about": "A balance scale whose beam tips by the real sums as things drop into its two pans, each as it is named: weighing up two sides, which outweighs which, evidence for and against, a trade-off, keeping both sides equal.",
+  "tags": ["balance", "scale", "weigh", "weighing up", "tip", "tipping", "outweigh", "heavier", "lighter", "trade-off", "two sides", "evidence", "equilibrium", "equal", "fair", "justice", "costs and benefits", "which side wins"],
+  "params": {
+    "left": { "default": "One", "about": "things in the left pan, split by |" },
+    "right": { "default": "Two|Three", "about": "things in the right pan, split by |" },
+    "leftWeights": { "default": "1", "about": "how heavy each left thing is, split by commas" },
+    "rightWeights": { "default": "1,1", "about": "how heavy each right thing is, split by commas" },
+    "when": { "default": "", "about": "moments each thing drops in, left ones first then right; else when its name is said, or one after another" }
+  }
+}

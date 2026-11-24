@@ -1,0 +1,11 @@
+{
+  "about": "A page of a document with the passage that matters written out and highlighted line by line as it is read, the rest of the page as grey lines, and a note beside it: a clause of a contract, a line of a law, a finding in a paper, a sentence in a letter.",
+  "tags": ["document", "page", "highlight", "highlighted", "passage", "clause", "contract", "law", "article", "paper", "letter", "text", "fine print", "reading", "source", "excerpt", "terms", "find in the text", "underline"],
+  "params": {
+    "title": { "default": "", "about": "the document's heading" },
+    "passage": { "default": "The passage that matters.", "about": "the words highlighted" },
+    "where": { "default": "0.45", "about": "how far down the page the passage sits, 0 to 1" },
+    "note": { "default": "", "about": "a note written beside the passage" },
+    "when": { "default": "", "about": "moments the highlighting starts and the note arrives; else when they are said, or one after another" }
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "about": "A shaded spectrum between two ends with things pinned where they sit along it, each arriving as it is named: positions between two poles, degrees of something, from one extreme to the other.",
+  "tags": ["spectrum", "scale", "range", "between", "from to", "extremes", "poles", "positions", "degree", "continuum", "left and right", "more or less", "how much", "where on", "opinions", "acid and base", "formal and informal", "gradient"],
+  "params": {
+    "ends": { "default": "Less|More", "about": "the two ends' names, split by |" },
+    "labels": { "default": "First|Second", "about": "the things placed, split by |" },
+    "positions": { "default": "0.3,0.7", "about": "where each sits, from 0 (first end) to 1 (second end), or percentages" },
+    "when": { "default": "", "about": "moments each thing is pinned; else when its name is said, or one after another" }
+  }
+}

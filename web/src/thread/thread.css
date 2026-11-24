@@ -1,0 +1,104 @@
+/* The thread on a made thing (Thread.tsx): beside the thing in the Studio, a sheet over the lower part on a phone. */
+.thread { --thread-w: 320px; display: flex; flex-direction: column; min-height: 0; background: var(--surface); color: var(--text); font-size: 14.5px; }
+.thread.side { flex: 0 0 var(--thread-w); width: var(--thread-w); height: 100%; border-left: 1px solid rgb(var(--edge) / .08); }
+.thread.sheet {
+  position: fixed; z-index: 40; left: 0; right: 0; bottom: 0; top: auto; height: min(62dvh, 640px);
+  border: 0; border-top: 1px solid var(--borderStrong); border-radius: 18px 18px 0 0; box-shadow: 0 -8px 32px rgb(15 23 42 / .28);
+  padding-bottom: env(safe-area-inset-bottom); animation: thread-up .22s var(--ease, ease-out); transition: transform .18s var(--ease, ease-out);
+}
+@keyframes thread-up { from { transform: translateY(100%); } to { transform: none; } }
+@media (prefers-reduced-motion: reduce) { .thread.sheet { animation: none; transition: none; } }
+
+.thread .thd { position: relative; display: flex; align-items: flex-start; gap: 8px; padding: 14px 12px 10px 16px; border-bottom: 1px solid var(--border); touch-action: none; }
+.thread.sheet .thd { padding-top: 18px; cursor: grab; }
+.thread .grab { position: absolute; top: 7px; left: 50%; width: 40px; height: 4px; margin-left: -20px; border-radius: 4px; background: var(--border); }
+.thread .tht { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 2px; }
+.thread .tht b { font-size: 15px; line-height: 20px; }
+.thread .tht .link, .thread .tht small { align-self: flex-start; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 550; }
+.thread .tclose { flex: 0 0 auto; width: 44px; height: 44px; margin: -8px -6px -8px 0; border: 0; border-radius: var(--r-pill); display: grid; place-items: center; background: none; color: var(--muted); }
+.thread .tclose:hover { background: var(--fill); color: var(--text); }
+.thread .tclose .ico { width: 16px; height: 16px; }
+
+.thread .tlist { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; display: flex; flex-direction: column; gap: 12px; padding: 14px 14px 8px; }
+.thread .tnote { margin: auto 4px; color: var(--mutedText); font-size: var(--fs-caption); line-height: var(--lh-caption); text-align: center; }
+.thread .tme { align-self: flex-end; display: flex; flex-direction: column; align-items: flex-end; gap: 4px; max-width: 88%; }
+.thread .tme + .tme, .thread .tai + .tme { margin-top: 6px; }
+.thread .m { max-width: 100%; font-size: 14.5px; line-height: 1.5; }
+.thread .me { padding: 8px 13px; border-radius: 16px; background: var(--fill); box-shadow: none; }
+.thread .tat { border: 0; padding: 2px 8px; border-radius: var(--r-pill); background: none; color: var(--primaryText, var(--primary)); font-size: 12px; line-height: 16px; font-weight: 600; }
+.thread .tat:not(:disabled):hover { background: var(--fill); }
+.thread .tat:disabled { color: var(--muted); }
+.thread .tai { display: flex; flex-direction: column; gap: 6px; }
+/* A reply drawn as the chat draws it, a little smaller. */
+.thread .reply .m.ai { font-size: 14.5px; line-height: 1.55; }
+.thread .reply .ai > .blk + .blk { margin-top: 8px; }
+.thread .reply .ai .hd3 { font-size: 15px; line-height: 21px; }
+.thread .tfail { font-size: 13.5px; }
+.thread .tmade { color: var(--mutedText); font-size: var(--fs-caption); }
+
+.thread .tmoment { font-size: 12px; line-height: 16px; color: var(--mutedText); font-weight: 500; }
+.thread .tform { display: flex; flex-direction: column; gap: 4px; padding: 8px 12px 12px; }
+.thread .tbox { display: flex; flex-direction: column; gap: 4px; padding: 8px 10px 6px 14px; border: 1px solid var(--borderStrong); border-radius: 16px; background: var(--surface); }
+.thread .tbox:focus-within { border-color: var(--primary); }
+/* 16px so a phone does not zoom in on it. */
+.thread .tarea { min-height: 28px; max-height: 120px; resize: none; border: 0; outline: 0; background: none; padding: 2px 0; color: var(--text); font: inherit; font-size: 14px; line-height: 22px; field-sizing: content; }
+@media (max-width: 960px) { .thread .tarea { font-size: 16px; } }
+.thread .tarea::placeholder { color: var(--mutedText); }
+.thread .tfoot { display: flex; align-items: center; gap: 8px; }
+.thread .tsaved { flex: 1; min-width: 0; font-size: 11px; line-height: 15px; color: var(--mutedText); }
+.thread .tfoot .link { flex: none; font-size: 11px; line-height: 15px; }
+.thread .tsend { flex: 0 0 auto; width: 36px; height: 36px; border: 0; border-radius: var(--r-pill); display: grid; place-items: center; background: var(--primary); color: var(--onPrimary); }
+.thread .tsend:disabled { background: var(--fill); color: var(--muted); }
+.thread .tsend .ico { width: 16px; height: 16px; }
+.thread .terr { color: var(--accentText, var(--mutedText)); font-size: 12.5px; padding: 0 4px; }
+
+/* The quiet way to ask from a spot, in a player's slot (under a quiz's explanation). */
+.askhere { display: inline-flex; align-items: center; gap: 6px; margin-top: 10px; min-height: 36px; padding: 6px 12px 6px 10px; border: 1px solid var(--border); border-radius: var(--r-pill); background: var(--surface); color: var(--mutedText); font-size: 13px; line-height: 18px; font-weight: 600; }
+.askhere:hover { color: var(--text); border-color: var(--mutedText); }
+.askhere .ico { width: 15px; height: 15px; }
+
+/* The button with the count, over the Studio's player and in the feed's line. */
+.tbtn { position: relative; display: grid; place-items: center; border: 0; border-radius: var(--r-pill); }
+.tbtn .ico { width: 16px; height: 16px; }
+.tbtn .tcount { position: absolute; top: -4px; right: -6px; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px; background: var(--primary); color: var(--onPrimary); font-size: 11px; line-height: 18px; font-weight: 700; text-align: center; font-variant-numeric: tabular-nums; }
+
+/* A chat message that was written in a thread: what it was about, and a way back there. */
+.tmark { align-self: flex-end; display: inline-flex; align-items: center; gap: 5px; max-width: 82%; margin-bottom: -8px; padding: 2px 6px; border: 0; background: none; color: var(--mutedText); font-size: 12px; line-height: 16px; font-weight: 600; text-align: right; }
+.tmark .ico { flex: 0 0 auto; width: 13px; height: 13px; }
+button.tmark:hover { color: var(--text); text-decoration: underline; text-underline-offset: 2px; }
+
+/* A count on a row of the Studio's list. */
+.tsmall { display: inline-flex; align-items: center; gap: 3px; color: var(--mutedText); font-size: 12px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.tsmall .ico { width: 13px; height: 13px; }
+
+/* In the Studio: the thread opens beside the playing thing, the column widening by its width, so the thing keeps its size. */
+.immerse.threading { display: flex; }
+.immerse.threading .feed9 { flex: 1 1 auto; }
+.app3.playing:has(.immerse.threading) { grid-template-columns: 200px minmax(0, 1fr) calc((100vh - 66px) * 9 / 16 + 320px); }
+.app3.playing.nosrc:has(.immerse.threading) { grid-template-columns: 48px minmax(0, 1fr) calc((100vh - 66px) * 9 / 16 + 320px); }
+@media (min-width: 961px) and (max-width: 1280px) {
+  .app3.playing:has(.immerse.threading) { grid-template-columns: 200px minmax(300px, 1fr) calc(min(calc((100vh - 66px) * 9 / 16), 30vw) + 320px); }
+  .app3.playing.nosrc:has(.immerse.threading) { grid-template-columns: 48px minmax(300px, 1fr) calc(min(calc((100vh - 66px) * 9 / 16), 34vw) + 320px); }
+}
+
+/* The feed's Talk button: its count on the icon. */
+.ptalk .picon { position: relative; display: grid; place-items: center; }
+.ptalk .tcount { position: absolute; top: -6px; right: -12px; min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px; background: var(--primary); color: var(--onPrimary); font-size: 11px; line-height: 18px; font-weight: 700; text-align: center; }
+
+/* Remaking one scene, at the foot of the thread: the small pill, the note asked for, then the scene being made. */
+.thread .tremake { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; }
+.thread .tremake:empty { display: none; }
+.thread .tremake-go { cursor: pointer; }
+.thread .tremake-go:hover:not(:disabled) { color: var(--text); border-color: var(--borderStrong); }
+.thread .tremake-box { align-self: stretch; display: flex; flex-direction: column; gap: 8px; padding: 10px 12px; border: 1px solid var(--border); border-radius: var(--r-12); background: var(--surface); }
+.thread .tremake-box label { display: flex; flex-direction: column; gap: 6px; }
+.thread .tremake-box b { font-size: 13px; line-height: 18px; font-weight: 600; }
+.thread .tremake-box textarea { resize: none; min-height: 44px; padding: 6px 10px; border: 1px solid var(--borderStrong); border-radius: 10px; background: none; color: var(--text); font: inherit; font-size: 14px; line-height: 20px; }
+.thread .tremake-box textarea:focus { outline: 0; border-color: var(--primary); }
+.thread .tremake-box textarea::placeholder { color: var(--mutedText); }
+@media (max-width: 960px) { .thread .tremake-box textarea { font-size: 16px; } }
+.thread .tremake-row { display: flex; align-items: center; justify-content: flex-end; gap: 12px; }
+.thread .tremake-row .link { font-size: 13px; }
+.thread .tremake-said { margin: 0; color: var(--mutedText); font-size: 13px; line-height: 19px; }
+.thread .tremake .remaking { align-self: stretch; }
+.thread .tremake .terr { padding: 0; }

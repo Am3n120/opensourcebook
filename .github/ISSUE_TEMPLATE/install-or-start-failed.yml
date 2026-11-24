@@ -1,0 +1,49 @@
+name: Install or start failed
+description: Open Sourcebook did not install, or `npm start` stopped or never opened the app.
+labels: ["install"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you. Run `npm run check` first: it says in plain words what this computer is missing, and its output is the most useful thing you can paste here.
+  - type: input
+    id: system
+    attributes:
+      label: Your system
+      description: For example macOS 15 on an Apple chip, Ubuntu 24.04, Windows 11.
+    validations:
+      required: true
+  - type: input
+    id: node
+    attributes:
+      label: Node version
+      description: The output of `node --version`. Open Sourcebook needs 24 or newer.
+    validations:
+      required: true
+  - type: dropdown
+    id: agent
+    attributes:
+      label: Which agent you use
+      multiple: true
+      options:
+        - Claude Code
+        - Codex
+        - OpenCode
+        - A model API key, no agent
+        - None yet
+    validations:
+      required: true
+  - type: textarea
+    id: check
+    attributes:
+      label: Output of `npm run check`
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: The command you ran, what you expected and what you saw. If a program failed, the last lines of its log in `.opensourcebook/logs/` help. Remove anything private first.
+    validations:
+      required: true

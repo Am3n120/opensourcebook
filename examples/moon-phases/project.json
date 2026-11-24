@@ -1,0 +1,182 @@
+{
+  "opensourcebook": "project",
+  "version": 1,
+  "project": {
+    "title": "Why the Moon has phases"
+  },
+  "sources": [
+    {
+      "key": "s1",
+      "kind": "text",
+      "title": "Why the Moon has phases",
+      "text": "# Why the Moon has phases\n\nThe Moon makes no light of its own. What we see is sunlight bouncing off its surface. At every moment the Sun lights exactly half of the Moon, the half that faces the Sun, and the other half is in darkness.\n\n## What changes, and what does not\n\nThe lit half is always there. What changes over a month is how much of that lit half faces the Earth. The Moon goes around the Earth about once every 29.5 days measured from one new moon to the next, and as it moves, our view of the lit half shifts from none of it to all of it and back again.\n\nA common mistake is to think the phases come from the Earth's shadow falling on the Moon. They do not. The Earth's shadow reaches the Moon only during a lunar eclipse, which can happen only at full moon and does not happen every month, because the Moon's orbit is tilted by about five degrees to the Earth's orbit around the Sun.\n\n## The cycle in order\n\n1. **New moon.** The Moon sits roughly between the Earth and the Sun. Its lit half faces away from us, so we see almost nothing, and it is up in the daytime sky near the Sun.\n2. **Waxing crescent.** A thin sliver appears on the side facing the setting Sun. Waxing means the lit part we see is growing.\n3. **First quarter.** About a week after new moon, we see half of the disc lit. It is called a quarter because the Moon has gone a quarter of the way around its orbit.\n4. **Waxing gibbous.** More than half is lit, and the lit part keeps growing.\n5. **Full moon.** The Earth sits roughly between the Sun and the Moon, so the whole lit half faces us. A full moon rises around sunset and sets around sunrise.\n6. **Waning gibbous, last quarter, waning crescent.** The same shapes come back in reverse as the lit part we see shrinks, until the next new moon.\n\n## A way to check it yourself\n\nStand in a dark room with one lamp on the far wall and hold a ball at arm's length. Turn slowly in a circle. When the ball is between you and the lamp you see its dark side, a new moon. When the lamp is behind you, you see the whole lit face, a full moon. In between, you see crescents and half discs, without any shadow of your head ever touching the ball.\n\n## Two numbers worth knowing\n\nThe Moon takes about 27.3 days to go once around the Earth measured against the stars. The phases repeat every 29.5 days, a little longer, because the Earth has moved along its own orbit in the meantime, so the Moon has to travel a bit further to line up with the Sun again."
+    }
+  ],
+  "chats": [
+    {
+      "key": "c1",
+      "title": "Why does the Moon have phases? Is it the Earth's shadow?",
+      "messages": [
+        {
+          "role": "user",
+          "content": {
+            "text": "Why does the Moon have phases? Is it the Earth's shadow?"
+          }
+        },
+        {
+          "role": "assistant",
+          "content": {
+            "text": "No, the Earth's shadow does not cause the phases. They happen because the Sun always lights half of the Moon, and as the Moon orbits, we see more or less of that lit half.\n\n- The Moon makes no light of its own. We see sunlight bouncing off it, and the half facing the Sun is always lit.\n- Over about 29.5 days, the amount of that lit half facing Earth shifts from none of it to all of it and back again.\n- Earth's shadow reaches the Moon only in a lunar eclipse. That happens only at full moon, and not every month, because the Moon's orbit is tilted by about five degrees.\n- You can check this with a ball and a lamp in a dark room: you get crescents and half discs without your head's shadow ever touching the ball.",
+            "pieces": [
+              {
+                "kind": "text",
+                "text": "No, the Earth's shadow does not cause the phases. They happen because the Sun always lights half of the Moon, and as the Moon orbits, we see more or less of that lit half.",
+                "cites": [
+                  0
+                ]
+              },
+              {
+                "kind": "list",
+                "ordered": false,
+                "items": [
+                  {
+                    "text": "The Moon makes no light of its own. We see sunlight bouncing off it, and the half facing the Sun is always lit.",
+                    "cites": [
+                      1
+                    ]
+                  },
+                  {
+                    "text": "Over about 29.5 days, the amount of that lit half facing Earth shifts from none of it to all of it and back again.",
+                    "cites": [
+                      2
+                    ]
+                  },
+                  {
+                    "text": "Earth's shadow reaches the Moon only in a lunar eclipse. That happens only at full moon, and not every month, because the Moon's orbit is tilted by about five degrees.",
+                    "cites": [
+                      3
+                    ]
+                  },
+                  {
+                    "text": "You can check this with a ball and a lamp in a dark room: you get crescents and half discs without your head's shadow ever touching the ball.",
+                    "cites": [
+                      4
+                    ]
+                  }
+                ],
+                "text": "- The Moon makes no light of its own. We see sunlight bouncing off it, and the half facing the Sun is always lit.\n- Over about 29.5 days, the amount of that lit half facing Earth shifts from none of it to all of it and back again.\n- Earth's shadow reaches the Moon only in a lunar eclipse. That happens only at full moon, and not every month, because the Moon's orbit is tilted by about five degrees.\n- You can check this with a ball and a lamp in a dark room: you get crescents and half discs without your head's shadow ever touching the ball.",
+                "cites": []
+              }
+            ],
+            "cites": [
+              {
+                "source": "s1",
+                "quote": "A common mistake is to think the phases come from the Earth's shadow falling on the Moon. They do not."
+              },
+              {
+                "source": "s1",
+                "quote": "The Moon makes no light of its own."
+              },
+              {
+                "source": "s1",
+                "quote": "The Moon goes around the Earth about once every 29.5 days measured from one new moon to the next, and as it moves, our view of the lit half shifts from none of it to all of it and back again."
+              },
+              {
+                "source": "s1",
+                "quote": "The Earth's shadow reaches the Moon only during a lunar eclipse, which can happen only at full moon and does not happen every month, because the Moon's orbit is tilted by about five degrees to the Earth's orbit around the Sun."
+              },
+              {
+                "source": "s1",
+                "quote": "In between, you see crescents and half discs, without any shadow of your head ever touching the ball."
+              }
+            ],
+            "stepLines": [
+              {
+                "text": "Searched Why the Moon has phases for “Moon phases cause Earth's shadow”",
+                "steps": 1,
+                "state": "done"
+              },
+              {
+                "text": "Wrote the reply",
+                "steps": 1,
+                "state": "done"
+              },
+              {
+                "text": "Looked at your sources",
+                "steps": 1,
+                "state": "done"
+              }
+            ]
+          }
+        },
+        {
+          "role": "user",
+          "content": {
+            "text": "Why do the phases repeat every 29.5 days if the Moon goes around the Earth in 27.3?"
+          }
+        },
+        {
+          "role": "assistant",
+          "content": {
+            "text": "Because the Earth moves along its own orbit around the Sun while the Moon circles it. After one full turn against the stars (27.3 days), the Moon still has to travel a bit further to line up with the Sun again, which stretches the cycle to 29.5 days.\n\n- The 27.3 days is measured against the stars: one trip around the Earth.\n- The 29.5 days is measured from one new moon to the next, which depends on where the Sun is, not the stars.",
+            "pieces": [
+              {
+                "kind": "text",
+                "text": "Because the Earth moves along its own orbit around the Sun while the Moon circles it. After one full turn against the stars (27.3 days), the Moon still has to travel a bit further to line up with the Sun again, which stretches the cycle to 29.5 days.",
+                "cites": [
+                  0
+                ]
+              },
+              {
+                "kind": "list",
+                "ordered": false,
+                "items": [
+                  {
+                    "text": "The 27.3 days is measured against the stars: one trip around the Earth.",
+                    "cites": [
+                      1
+                    ]
+                  },
+                  {
+                    "text": "The 29.5 days is measured from one new moon to the next, which depends on where the Sun is, not the stars.",
+                    "cites": [
+                      2
+                    ]
+                  }
+                ],
+                "text": "- The 27.3 days is measured against the stars: one trip around the Earth.\n- The 29.5 days is measured from one new moon to the next, which depends on where the Sun is, not the stars.",
+                "cites": []
+              }
+            ],
+            "cites": [
+              {
+                "source": "s1",
+                "quote": "The phases repeat every 29.5 days, a little longer, because the Earth has moved along its own orbit in the meantime, so the Moon has to travel a bit further to line up with the Sun again."
+              },
+              {
+                "source": "s1",
+                "quote": "The Moon takes about 27.3 days to go once around the Earth measured against the stars."
+              },
+              {
+                "source": "s1",
+                "quote": "The Moon goes around the Earth about once every 29.5 days measured from one new moon to the next, and as it moves, our view of the lit half shifts from none of it to all of it and back again."
+              }
+            ],
+            "stepLines": [
+              {
+                "text": "Searched Why the Moon has phases for “27.3 days orbit 29.5 days phases Earth moves around Sun”",
+                "steps": 1,
+                "state": "done"
+              },
+              {
+                "text": "Wrote the reply",
+                "steps": 1,
+                "state": "done"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

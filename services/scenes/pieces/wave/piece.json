@@ -1,0 +1,15 @@
+{
+  "about": "A travelling wave computed from its rule, with its wavelength and amplitude marked, that can stretch, shrink or grow as the words say, and optionally a second wave with the two added together: sound, light, water, signals, interference.",
+  "tags": ["wave", "waves", "oscillation", "vibration", "frequency", "wavelength", "amplitude", "sound", "light", "signal", "ripple", "sine", "periodic", "interference", "superposition", "add waves", "pitch", "loudness"],
+  "params": {
+    "wavelength": { "default": "0.5", "about": "wavelengths in turn, as shares of the width, split by commas" },
+    "amplitude": { "default": "0.8", "about": "heights in turn, from 0 to 1 of the room, split by commas" },
+    "speed": { "default": "1", "about": "how fast it travels" },
+    "second": { "default": "0", "about": "a second wave's wavelength (share of the width), drawn under it with their sum; 0 for none" },
+    "lengthName": { "default": "wavelength", "about": "the words on the wavelength mark" },
+    "heightName": { "default": "amplitude", "about": "the words on the height mark" },
+    "sumName": { "default": "together", "about": "the words over the sum of two waves" },
+    "marks": { "default": "1", "about": "0 leaves the wavelength and height unmarked" },
+    "when": { "default": "", "about": "moments each change of wavelength or height begins; else spread out" }
+  }
+}

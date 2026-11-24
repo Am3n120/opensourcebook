@@ -1,0 +1,10 @@
+{
+  "about": "A word built from its parts: each part arrives as a tile with its meaning beneath, then the tiles slide together into the whole word with what it means: roots, prefixes and suffixes, compounds, how a term was made.",
+  "tags": ["word parts", "roots", "root", "prefix", "suffix", "etymology", "word origin", "morphology", "compound word", "how a word is made", "building a word", "greek", "latin", "meaning of parts", "vocabulary", "spelling", "word formation", "breaks down"],
+  "params": {
+    "parts": { "default": "tele|scope", "about": "the parts in order, split by |" },
+    "meanings": { "default": "far|look", "about": "what each part means, split by |" },
+    "whole": { "default": "", "about": "what the whole word means, under it once joined" },
+    "when": { "default": "", "about": "moments each part arrives, then the moment they join; else when they are said, or one after another" }
+  }
+}

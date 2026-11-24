@@ -1,0 +1,11 @@
+{
+  "about": "A truth table worked out for real: every combination of the inputs filled in row by row, and each output column computed from its rule (and, or, not, xor, implies) with the true cells ringed: logic, conditions, when a rule holds.",
+  "tags": ["truth table", "logic", "boolean", "and", "or", "not", "xor", "implies", "true", "false", "conditions", "logic gates", "propositions", "if then", "rules", "every case", "combinations", "computing"],
+  "params": {
+    "inputs": { "default": "A|B", "about": "the input names, up to four, split by |" },
+    "outputs": { "default": "A and B|A or B", "about": "rules in the inputs' names with not, and, or, xor, implies and brackets, split by |" },
+    "true": { "default": "T", "about": "how true is written, such as T, 1 or yes" },
+    "false": { "default": "F", "about": "how false is written, such as F, 0 or no" },
+    "when": { "default": "", "about": "moments each row is filled; else one after another" }
+  }
+}

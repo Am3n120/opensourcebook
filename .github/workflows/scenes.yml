@@ -1,0 +1,38 @@
+name: scenes
+
+on:
+  push:
+    paths:
+      - "services/scenes/**"
+      - "common/**"
+      - ".github/workflows/scenes.yml"
+  pull_request:
+    paths:
+      - "services/scenes/**"
+      - "common/**"
+      - ".github/workflows/scenes.yml"
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: services/scenes
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: services/scenes/package-lock.json
+      - run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - run: npm ci
+      - run: npm run typecheck
+      # The headless Chrome the service measures, builds and renders with.
+      - run: npm run browser
+      - run: npm run test:engine
+        timeout-minutes: 10
+      # The runner has 2 cores: the service counts them and draws one frame at a time, with nothing set by hand.
+      - run: npm run test:service
+        timeout-minutes: 20

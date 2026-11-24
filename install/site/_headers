@@ -1,0 +1,29 @@
+# Headers for the files in this folder, in the plain "path, then indented headers" form
+# that static hosts read from a file named _headers at the site root.
+
+# The two install scripts are read by curl and PowerShell, and by people in a browser.
+# They must arrive as plain text, never as a download or a web page, and a fix to one
+# must reach everyone within minutes.
+/install
+  Content-Type: text/plain; charset=utf-8
+  Cache-Control: public, max-age=300, must-revalidate
+  X-Content-Type-Options: nosniff
+
+/install.ps1
+  Content-Type: text/plain; charset=utf-8
+  Cache-Control: public, max-age=300, must-revalidate
+  X-Content-Type-Options: nosniff
+
+# The page: always checked for a newer copy before it is shown.
+/
+  Cache-Control: public, max-age=0, must-revalidate
+
+/index.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Everything: the page loads nothing from anywhere else, and this holds it to that.
+/*
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: no-referrer
+  X-Frame-Options: DENY
+  Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'

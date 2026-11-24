@@ -1,0 +1,30 @@
+{
+  "title": "Why the Moon has phases",
+  "brief": "Explain why the Moon seems to change shape over a month, and correct the idea that Earth's shadow causes it.",
+  "assumes": [],
+  "targetSeconds": 55,
+  "style": "auto",
+  "passages": [
+    {
+      "id": "m1",
+      "sourceId": "sky-notes",
+      "sourceTitle": "Notes on the night sky",
+      "locator": "The Moon, 1",
+      "text": "The Moon makes no light of its own. We see it only because sunlight falls on it and bounces back to us. At every moment the Sun lights exactly half of the Moon, the half that faces the Sun, while the other half is in darkness."
+    },
+    {
+      "id": "m2",
+      "sourceId": "sky-notes",
+      "sourceTitle": "Notes on the night sky",
+      "locator": "The Moon, 2",
+      "text": "The Moon travels around the Earth about once every twenty-nine and a half days. As it moves, we look at its lit half from a different angle. When the Moon is between the Earth and the Sun, its lit half faces away from us and we see a new moon. When the Earth is between them, we see the whole lit half: a full moon. In between we see part of the lit half: a crescent, a half moon, or a gibbous moon."
+    },
+    {
+      "id": "m3",
+      "sourceId": "sky-notes",
+      "sourceTitle": "Notes on the night sky",
+      "locator": "The Moon, 3",
+      "text": "A common mistake is to think that the phases are caused by the Earth's shadow falling on the Moon. The Earth's shadow only reaches the Moon during a lunar eclipse, which happens a few times a year at most, and only at full moon. The everyday phases come from the angle at which we view the Moon's sunlit half."
+    }
+  ]
+}

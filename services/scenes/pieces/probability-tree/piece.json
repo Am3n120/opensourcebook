@@ -1,0 +1,10 @@
+{
+  "about": "A probability tree that grows branch by branch as each outcome is said, with the chance on every branch and each whole path's chance worked out by multiplying along it: two-stage chances, tests and false alarms, weather and plans, repeated draws.",
+  "tags": ["probability", "probability tree", "tree diagram", "chance", "odds", "likelihood", "outcomes", "branches", "conditional", "multiply", "two stages", "events", "risk", "test result", "false positive", "statistics", "expected", "possibilities"],
+  "params": {
+    "first": { "default": "A:0.5|B:0.5", "about": "first outcomes and their chances, as name:chance split by |" },
+    "second": { "default": "Yes:0.5|No:0.5", "about": "second outcomes under every first one, or one set per first outcome split by ;" },
+    "highlight": { "default": "", "about": "one path to pick out, as First>Second" },
+    "when": { "default": "", "about": "moments each first branch, then each second branch, grows; else when they are said, or one after another" }
+  }
+}

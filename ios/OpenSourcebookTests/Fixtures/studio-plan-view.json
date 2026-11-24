@@ -1,0 +1,154 @@
+{
+ "plan": {
+  "id": "dfc6feef-8fed-4836-836e-32d560fb7cbf",
+  "projectId": "0b53b8ea-ddbc-4c59-9b00-c097cfcbaf4a",
+  "version": 1,
+  "title": "Real run",
+  "status": "failed",
+  "createdAt": "2026-11-12T18:22:37.974Z",
+  "updatedAt": "2026-11-12T18:50:41.049Z",
+  "kickedOffAt": "2026-11-12T18:22:43.983Z",
+  "budgetUsd": 1.5
+ },
+ "stages": [],
+ "items": [
+  {
+   "id": "895482e3-aafa-4749-a3db-13d8623ab868",
+   "level": 0,
+   "ord": 0,
+   "type": "byte",
+   "title": "B1 photosynthesis auto",
+   "enabled": true,
+   "status": "failed",
+   "done": false,
+   "prompt": "",
+   "settings": {
+    "depth": "auto"
+   },
+   "sources": [
+    {
+     "sourceId": "473260e8-d8e8-49e0-b33c-82a51e091b60"
+    }
+   ]
+  },
+  {
+   "id": "375e56ed-045c-45d1-8a20-11649e1dcd59",
+   "level": 0,
+   "ord": 1,
+   "type": "byte",
+   "title": "B2 transformer standard",
+   "enabled": true,
+   "status": "done",
+   "outputId": "e472c379-d502-4d19-98dd-6f8a248636dc",
+   "done": false,
+   "prompt": "Explain the core idea for a curious reader who knows basic machine learning.",
+   "settings": {
+    "depth": "standard"
+   },
+   "sources": [
+    {
+     "sourceId": "62163f5a-a918-4d42-a825-a0680d16a0c6"
+    }
+   ]
+  },
+  {
+   "id": "08ec8551-b6dd-4154-83cb-8ac6b9fc30ba",
+   "level": 0,
+   "ord": 2,
+   "type": "byte",
+   "title": "B3 printing press light",
+   "enabled": true,
+   "status": "done",
+   "outputId": "7768ce3d-7624-4bc7-9e3b-3f91bcd9d0b9",
+   "done": false,
+   "prompt": "",
+   "settings": {
+    "depth": "light"
+   },
+   "sources": [
+    {
+     "sourceId": "b8fc6093-bb6f-48cb-b71e-845c56297859"
+    }
+   ]
+  },
+  {
+   "id": "fd015be8-09c8-4197-bd0f-a845010ed95c",
+   "level": 0,
+   "ord": 3,
+   "type": "quiz",
+   "title": "Q1 photosynthesis harder",
+   "enabled": true,
+   "status": "done",
+   "outputId": "e7f1a750-5a6b-4891-a915-53879cf7a4b8",
+   "done": false,
+   "prompt": "",
+   "settings": {
+    "questions": 8,
+    "kinds": [
+     "choice"
+    ],
+    "difficulty": "harder",
+    "feedback": "afterEach"
+   },
+   "sources": [
+    {
+     "sourceId": "473260e8-d8e8-49e0-b33c-82a51e091b60"
+    }
+   ]
+  },
+  {
+   "id": "eff9e737-7603-4637-bf5d-ac5a87c4b1c0",
+   "level": 0,
+   "ord": 4,
+   "type": "quiz",
+   "title": "Q2 transformer mixed",
+   "enabled": true,
+   "status": "done",
+   "outputId": "3abb0e77-80e7-4af4-be75-02273af1d859",
+   "done": false,
+   "prompt": "",
+   "settings": {
+    "questions": 6,
+    "kinds": [
+     "choice",
+     "worked"
+    ],
+    "difficulty": "standard"
+   },
+   "sources": [
+    {
+     "sourceId": "62163f5a-a918-4d42-a825-a0680d16a0c6"
+    }
+   ]
+  },
+  {
+   "id": "29cb5853-5c12-447a-8fb3-157a9042c508",
+   "level": 0,
+   "ord": 5,
+   "type": "quiz",
+   "title": "Q3 printing press auto easier",
+   "enabled": true,
+   "status": "done",
+   "outputId": "8889ff17-36ba-4f4d-8eed-90fd50fff716",
+   "done": false,
+   "prompt": "",
+   "settings": {
+    "questions": 0,
+    "difficulty": "easier",
+    "feedback": "atEnd"
+   },
+   "sources": [
+    {
+     "sourceId": "b8fc6093-bb6f-48cb-b71e-845c56297859"
+    }
+   ]
+  }
+ ],
+ "edges": [],
+ "counts": {
+  "total": 6,
+  "done": 0
+ },
+ "estimateUsd": 0,
+ "issues": []
+}

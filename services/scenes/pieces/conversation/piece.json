@@ -1,0 +1,8 @@
+{
+  "about": "A conversation in speech bubbles, left and right, each line arriving as it is said with its speaker named: a dialogue in another language, an interview, a negotiation, an exchange between two people or sides, a scene from a story.",
+  "tags": ["conversation", "dialogue", "dialog", "chat", "speech bubbles", "talk", "said", "exchange", "interview", "two people", "question and answer", "messages", "phrases", "language learning", "role play", "story", "speakers", "reply"],
+  "params": {
+    "lines": { "default": "A: Hello|B: Hi there", "about": "lines as Speaker: words, split by |; the first speaker is on the left" },
+    "when": { "default": "", "about": "moments each line arrives; else when its words are said, or one after another" }
+  }
+}

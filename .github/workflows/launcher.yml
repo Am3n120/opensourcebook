@@ -1,0 +1,108 @@
+name: launcher
+
+on:
+  push:
+    paths:
+      - "cli/**"
+      - "package.json"
+      - "package-lock.json"
+      - "engine/**"
+      - "web/**"
+      - "services/agent-connector/**"
+      - "services/scenes/**"
+      - ".github/workflows/launcher.yml"
+  pull_request:
+    paths:
+      - "cli/**"
+      - "package.json"
+      - "package-lock.json"
+      - "engine/**"
+      - "web/**"
+      - "services/agent-connector/**"
+      - "services/scenes/**"
+      - ".github/workflows/launcher.yml"
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+
+  # The one command on a fresh checkout with no agent and no keys: it installs, makes the secrets, sets up the local
+  # database, downloads Chrome, builds the engine and the web app, starts every program from its build, and each one
+  # answers its health route. Then Ctrl-C stops them all. A second start reuses the build, and --dev starts the
+  # watching dev servers instead.
+  start:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: |
+            engine/package-lock.json
+            web/package-lock.json
+            services/agent-connector/package-lock.json
+            services/scenes/package-lock.json
+      - run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - run: npm run check
+      - name: Start Open Sourcebook and ask each program if it is up
+        timeout-minutes: 20
+        run: |
+          npm start -- --no-open > start.log 2>&1 &
+          for i in $(seq 1 900); do
+            if grep -q "Open Sourcebook is running" start.log; then break; fi
+            if grep -q "Stopped" start.log; then break; fi
+            sleep 1
+          done
+          cat start.log
+          grep -q "Getting Open Sourcebook ready" start.log
+          npm run status
+          # The engine's and the web app's own processes: the runtime and its runner, no dev server, watcher or bundler.
+          for id in engine web; do
+            group=$(node -p "JSON.parse(require('fs').readFileSync('.opensourcebook/running.json','utf8')).children.find((c) => c.id === '$id').pid")
+            ps -eo pgid=,args= | awk -v g="$group" '$1 == g' | tee "$id.ps"
+            if grep -E "wrangler.js dev|scripts/dev.ts|vite.js|esbuild" "$id.ps"; then echo "$id runs a dev server, a watcher or a bundler"; exit 1; fi
+          done
+      - name: Ctrl-C stops everything
+        run: .github/scripts/stop-opensourcebook.sh start.log
+      - name: A second start reuses the build
+        timeout-minutes: 5
+        run: |
+          npm start -- --no-open > again.log 2>&1 &
+          for i in $(seq 1 240); do
+            if grep -q "Open Sourcebook is running" again.log; then break; fi
+            if grep -q "Stopped" again.log; then break; fi
+            sleep 1
+          done
+          cat again.log
+          if grep -q "Getting Open Sourcebook ready" again.log; then echo "the build was made again"; exit 1; fi
+          npm run status
+          .github/scripts/stop-opensourcebook.sh again.log
+      - name: --dev starts the watching dev servers
+        timeout-minutes: 5
+        run: |
+          npm start -- --no-open --dev > dev.log 2>&1 &
+          for i in $(seq 1 240); do
+            if grep -q "Open Sourcebook is running" dev.log; then break; fi
+            if grep -q "Stopped" dev.log; then break; fi
+            sleep 1
+          done
+          cat dev.log
+          npm run status
+          pgrep -f "scripts/dev.ts" > /dev/null
+          .github/scripts/stop-opensourcebook.sh dev.log
+      - name: Logs
+        if: failure()
+        run: tail -n 40 .opensourcebook/logs/*.log || true

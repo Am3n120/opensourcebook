@@ -1,0 +1,12 @@
+/* A scene being made again, under the thing's row (Made here, the chat) or at the foot of its thread. */
+.remaking { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.mhrow + .remaking, .made .remaking { margin-top: 8px; }
+
+/* Over the player, under its top bar: the new one is ready, with Play. */
+.rready { position: absolute; z-index: 6; top: 64px; left: 50%; transform: translateX(-50%); display: flex; align-items: center; gap: 10px; max-width: calc(100% - 32px); padding: 6px 6px 6px 14px; border: 1px solid var(--border); border-radius: var(--r-pill); background: var(--surface); color: var(--text); box-shadow: 0 6px 24px rgb(15 23 42 / .28); font-size: var(--fs-caption); line-height: var(--lh-caption); font-weight: 600; white-space: nowrap; animation: rready-in .2s var(--ease, ease-out); }
+@keyframes rready-in { from { opacity: 0; transform: translate(-50%, -6px); } to { opacity: 1; transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .rready { animation: none; } }
+/* The state's word keeps its width, and the rest wraps in a narrow column (the thread) instead of being cut. */
+.remaking .making-st .w { flex: none; }
+.remaking .making-tx .making-st { white-space: normal; align-items: baseline; }
+.remaking .making-tx .making-st .dot { align-self: center; }

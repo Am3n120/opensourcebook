@@ -1,0 +1,11 @@
+{
+  "about": "Tanks joined by pipes whose amounts flow from one to another by a rate each pipe gives, stepped for real so the levels and numbers move as they would: money between accounts, water between reservoirs, people between groups as an illness spreads, stock and supply, energy changing form.",
+  "tags": ["stocks and flows", "flow", "flows", "tanks", "containers", "transfer", "moves between", "rate", "accumulate", "drain", "fill", "system", "model", "epidemic", "susceptible", "infected", "recovered", "money flow", "conservation", "dynamics"],
+  "params": {
+    "stocks": { "default": "A|B", "about": "the tanks' names, up to four, split by |" },
+    "amounts": { "default": "100,0", "about": "what each holds at the start, split by commas" },
+    "flows": { "default": "A>B:0.3", "about": "pipes as From>To:rate or From>To:rate:word, split by |; rate is the share of From that moves each second" },
+    "unit": { "default": "", "about": "written after the amounts" },
+    "when": { "default": "", "about": "the moment the flows start; else at once" }
+  }
+}

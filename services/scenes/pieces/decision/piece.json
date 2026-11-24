@@ -1,0 +1,9 @@
+{
+  "about": "A decision tree read top to bottom, questions branching by their answers into further questions or outcomes, with one path lighting up as the voice follows it: diagnosis, eligibility, troubleshooting, a legal test, choosing what to do.",
+  "tags": ["decision", "decision tree", "flowchart", "flow chart", "branch", "branching", "if then", "yes or no", "questions", "choose", "choice", "diagnosis", "troubleshooting", "eligibility", "test", "rules", "what to do", "algorithm"],
+  "params": {
+    "steps": { "default": "Question?>yes:One outcome|Question?>no:Another outcome", "about": "branches as Question>answer:where it leads, split by |; the first question is the top" },
+    "path": { "default": "", "about": "the answers the voice follows from the top, split by |; that path lights up" },
+    "when": { "default": "", "about": "moments the top question, then each step of the path, light up; else when they are said" }
+  }
+}

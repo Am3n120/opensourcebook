@@ -1,0 +1,37 @@
+/* The screen a player fills: its own content and controls only, on a wash of its format's
+   colour (look.ts). The back, title, talk, done and full view float over its top from outside,
+   so its content starts below them (--player-top), and the thin progress line lies on its foot. */
+.pstage {
+  container-type: inline-size;
+  position: relative; display: flex; flex-direction: column; flex: 1; min-height: 0; width: 100%;
+  overflow-y: auto; scrollbar-width: thin;
+  background: radial-gradient(120% 70% at 50% 20%, var(--stage-tint, var(--fill)), var(--bg) 75%);
+  color: var(--text);
+}
+.pstage-in {
+  display: flex; flex-direction: column; gap: var(--space-16); flex: 1; min-height: 0;
+  width: min(100%, 640px); margin: 0 auto; box-sizing: border-box;
+  padding: var(--player-top, 70px) 22px 26px;
+}
+.pstage-gap { flex: 1; }
+
+/* The line over the content: where the person is, on the left; a count or a way on, on the right. */
+.pline { display: flex; align-items: center; gap: var(--space-8); min-height: 28px; color: var(--mutedText); font-size: var(--fs-label); line-height: var(--lh-label); font-variant-numeric: tabular-nums; }
+.pline .grow { flex: 1; }
+.pline .good { color: var(--successText); }
+.pline .warn { color: var(--accentText); }
+.pline .obtn { background: transparent; border-color: var(--borderStrong); color: var(--text); padding: 5px 10px; }
+.plink { padding: 0; border: 0; background: none; color: var(--primaryText); font: inherit; font-weight: 650; cursor: pointer; }
+.plink:hover { text-decoration: underline; }
+
+/* What kind of card or question it is, in the format's words. */
+.pkind { align-self: flex-start; padding: 3px 10px; border: 1px solid var(--border); border-radius: var(--r-pill); color: var(--mutedText); font-size: var(--fs-label); line-height: var(--lh-label); }
+
+/* The way on at the foot: one wide button, or two side by side. */
+.pstage-foot { display: grid; grid-template-columns: minmax(0, 1fr); gap: 10px; }
+.pstage-foot.two { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+.pstage-foot .pbtn, .pstage-foot .obtn { width: 100%; padding: 14px var(--space-16); font-size: 15px; line-height: 20px; font-weight: 650; }
+.pstage-foot .obtn { background: transparent; border-color: var(--borderStrong); color: var(--text); }
+.pstage-foot .obtn:hover { border-color: var(--mutedText); }
+/* Not yet possible (nothing answered): a quiet button whose words still read, in either theme, not a faded violet. */
+.pstage-foot .pbtn:disabled { opacity: 1; background: var(--fill); color: var(--mutedText); }

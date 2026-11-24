@@ -1,0 +1,124 @@
+/* The pickers opened from a make sheet or a Settings cell: who makes it, and
+   the style. A dialog on a wide screen; under 640px a sheet from the bottom.
+   Tokens only. */
+
+.picker-layer { position: fixed; inset: 0; z-index: 70; display: grid; place-items: center; padding: var(--space-16); }
+.picker-scrim { position: absolute; inset: 0; background: var(--scrim); }
+.picker {
+  position: relative; display: flex; flex-direction: column; min-width: 0; max-width: 100%; max-height: calc(100vh - 32px);
+  background: var(--surface); color: var(--text); border: 1px solid var(--borderStrong); border-radius: 14px;
+  box-shadow: 0 12px 32px rgb(0 0 0 / .35);
+}
+.picker-grab { display: none; }
+.picker-head { display: flex; align-items: flex-start; gap: var(--space-8); padding: 14px var(--space-16) 10px; border-bottom: 1px solid var(--border); }
+.picker-head > div { flex: 1; min-width: 0; }
+.picker-head h2 { margin: 0; font-size: 14px; line-height: 20px; font-weight: 700; }
+.picker-head p { margin: 2px 0 0; font-size: var(--fs-label); line-height: var(--lh-label); color: var(--mutedText); }
+.picker-head .ib { margin: -4px -6px 0 0; }
+.picker-body { flex: 1; min-height: 0; overflow-y: auto; }
+.picker-note { margin: 0; padding: 0 var(--space-16) 4px; font-size: var(--fs-label); line-height: var(--lh-label); color: var(--mutedText); }
+.picker-foot { display: flex; justify-content: flex-end; gap: var(--space-8); padding: 10px 14px; border-top: 1px solid var(--border); }
+.picker-foot .obtn { padding: 6px 12px; font-size: var(--fs-caption); line-height: var(--lh-caption); }
+.picker-foot .pbtn { padding: 6px 12px; }
+
+/* Who makes it */
+.maker-picker { width: 560px; }
+.mk-grid { display: grid; grid-template-columns: 170px minmax(0, 1fr); min-height: 0; }
+.mk-rail { display: flex; flex-direction: column; gap: 2px; padding: var(--space-8); border-right: 1px solid var(--border); }
+.mk-rail button {
+  display: flex; align-items: center; gap: var(--space-8); padding: var(--space-8); border: 0; border-radius: var(--r-8);
+  background: none; color: var(--mutedText); font: inherit; font-size: var(--fs-caption); line-height: var(--lh-caption); text-align: left; cursor: pointer;
+}
+.mk-rail button:hover { background: var(--fill); color: var(--text); }
+.mk-rail button.on { background: var(--fill); color: var(--text); font-weight: 600; }
+.mk-off { width: 16px; height: 16px; display: grid; place-items: center; border: 1px dashed var(--borderStrong); border-radius: 4px; color: var(--muted); }
+.mk-off .ico { width: 10px; height: 10px; }
+.mk-main { padding: 10px var(--space-12) var(--space-12); display: flex; flex-direction: column; gap: var(--space-12); min-width: 0; }
+.mk-sec { display: flex; flex-direction: column; gap: var(--space-4); }
+.mk-lbl { font-size: var(--fs-label); line-height: var(--lh-label); font-weight: 600; color: var(--mutedText); }
+.mk-models { display: flex; flex-direction: column; gap: var(--space-4); }
+.mk-model {
+  display: flex; align-items: center; gap: 10px; padding: var(--space-8) 10px; border: 1px solid var(--border); border-radius: 10px;
+  background: none; color: var(--text); font: inherit; text-align: left; cursor: pointer;
+}
+.mk-model:hover { border-color: var(--borderStrong); }
+.mk-model.on { border-color: var(--primary); background: var(--primaryGhost); }
+.mk-name { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.mk-name b { font-size: var(--fs-caption); line-height: var(--lh-caption); font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.mk-name span { font-size: 11px; line-height: 15px; color: var(--mutedText); }
+.mk-time { flex: none; font-size: var(--fs-label); line-height: var(--lh-label); color: var(--text); white-space: nowrap; }
+.mk-time.muted { color: var(--mutedText); }
+.mk-main .seg button { padding: 6px var(--space-8); font-size: var(--fs-caption); line-height: var(--lh-caption); white-space: nowrap; }
+.mk-effort { align-self: flex-start; min-width: 160px; font-size: var(--fs-caption); }
+.mk-say, .mk-empty { margin: 0; padding: var(--space-4) 0; font-size: var(--fs-caption); line-height: var(--lh-caption); color: var(--mutedText); }
+.mk-say p, .mk-empty p { margin: 0 0 var(--space-8); }
+.mk-empty { padding: var(--space-16); }
+.mk-say a, .mk-empty a { color: var(--primaryText); font-weight: 600; }
+.mk-retry { padding: 0; border: 0; background: none; color: var(--primaryText); font: inherit; font-weight: 600; cursor: pointer; }
+
+/* The style */
+.style-picker { width: 800px; }
+/* The style dialog keeps one size and one place, held from the top: a card's More never moves it, and its body scrolls inside. */
+.picker.style-picker { align-self: start; height: min(440px, calc(100vh - 64px)); margin-top: min(12vh, 96px); }
+.style-picker .picker-note { padding-top: 10px; border-top: 1px solid var(--border); }
+.style-picker .picker-head { border-bottom: 0; padding-top: 18px; }
+.style-picker .picker-head h2 { font-size: 16px; line-height: 22px; }
+.style-picker .picker-foot { border-top: 0; padding: 10px var(--space-16) var(--space-16); }
+.st-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; padding: 0 var(--space-16) 10px; align-items: start; }
+.st-card {
+  display: flex; flex-direction: column; border: 1px solid var(--border); border-radius: 14px; background: var(--bg); color: var(--text); overflow: hidden;
+}
+.st-card:hover { border-color: var(--borderStrong); }
+.st-card.on { border-color: var(--primary); box-shadow: 0 0 0 1px var(--primary); background: var(--primaryGhost); }
+.st-pick {
+  display: flex; flex-direction: column; gap: var(--space-8); padding: var(--space-8); border: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer;
+}
+.st-pick b { padding: 0 var(--space-4); font-size: var(--fs-caption); line-height: var(--lh-caption); font-weight: 700; }
+.st-say {
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 6; height: 90px; overflow: hidden;
+  margin-bottom: var(--space-4); padding: 0 var(--space-4); font-size: 11px; line-height: 15px; color: var(--mutedText);
+}
+/* The whole text scrolls in the same six lines, so the card keeps its height and no picture moves. */
+.st-say.whole { display: block; overflow-y: auto; overscroll-behavior: contain; }
+.st-more { align-self: flex-start; margin: -6px 0 var(--space-8) var(--space-12); padding: 0; border: 0; background: none; color: var(--primaryText); font: inherit; font-size: 11px; line-height: 15px; font-weight: 600; cursor: pointer; }
+/* The picture's box has its final size from the start (a 16:10 tile), and the picture fills it when it lands. */
+.st-thumb { position: relative; display: block; flex: none; width: 100%; aspect-ratio: 16 / 10; border-radius: 9px; overflow: hidden; background: var(--fill); }
+.st-thumb.pic img { position: absolute; inset: 0; }
+.st-thumb img, .st-row-thumb img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.st-thumb.none, .st-row-thumb.none { display: grid; place-items: center; background: none; border: 1px dashed var(--borderStrong); color: var(--primaryText); }
+.st-thumb.none .ico { width: 22px; height: 22px; }
+
+.st-row {
+  display: flex; align-items: center; gap: 10px; width: 100%; padding: 6px 10px 6px 6px; border: 1px solid var(--borderStrong); border-radius: 10px;
+  background: var(--bg); color: var(--text); font: inherit; text-align: left; cursor: pointer;
+}
+.st-row:hover { border-color: var(--primary); }
+.st-row-thumb { flex: none; display: block; width: 54px; height: 34px; border-radius: 6px; overflow: hidden; background: var(--fill); }
+.st-row-thumb.none .ico { width: 16px; height: 16px; }
+.st-row b { flex: 1; min-width: 0; font-size: var(--fs-caption); line-height: var(--lh-caption); font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.st-change { flex: none; font-size: var(--fs-label); line-height: var(--lh-label); color: var(--mutedText); }
+
+@media (max-width: 640px) {
+  .picker-layer { place-items: end stretch; padding: 0; }
+  .picker.style-picker { align-self: end; height: calc(100vh - 64px); margin-top: 0; }
+  .picker {
+    width: 100%; max-height: calc(100vh - 64px); border: 0; border-top: 1px solid var(--borderStrong);
+    border-radius: 22px 22px 0 0;
+  }
+  .picker-grab { display: block; align-self: center; width: 40px; height: 4px; margin-top: 10px; border-radius: var(--r-pill); background: var(--borderStrong); }
+  .picker-head { padding: var(--space-8) var(--space-8) 10px var(--space-16); }
+  .picker-head h2, .style-picker .picker-head h2 { font-size: 18px; line-height: 24px; }
+  .picker-head .ib { width: 44px; height: 44px; margin: -8px 0 0; }
+  .picker-cancel { display: none; }
+  .picker-foot, .style-picker .picker-foot { padding: var(--space-12) var(--space-16) calc(24px + env(safe-area-inset-bottom, 0px)); }
+  .picker-foot .pbtn { width: 100%; padding: 13px var(--space-16); font-size: 15px; line-height: 20px; }
+
+  .mk-grid { grid-template-columns: minmax(0, 1fr); }
+  .mk-rail { flex-direction: row; overflow-x: auto; border-right: 0; border-bottom: 1px solid var(--border); padding: var(--space-8) var(--space-16); }
+  .mk-rail button { flex: none; padding: var(--space-8) var(--space-12); border: 1px solid var(--border); border-radius: var(--r-pill); }
+  .mk-rail button.on { border-color: var(--borderStrong); }
+  .mk-main { padding: var(--space-12) var(--space-16); }
+  .mk-model { padding: 10px var(--space-12); min-height: 48px; }
+
+  .st-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}

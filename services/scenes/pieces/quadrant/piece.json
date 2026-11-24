@@ -1,0 +1,13 @@
+{
+  "about": "Two axes crossing into four named quadrants, with things dropped where they sit on both measures as each is named: urgent and important, cost and benefit, risk and reward, any two qualities at once.",
+  "tags": ["quadrant", "2x2", "two by two", "matrix", "four boxes", "axes", "two measures", "plot", "scatter", "positioning", "map", "priorities", "urgent", "important", "risk", "reward", "cost", "benefit", "classify"],
+  "params": {
+    "axes": { "default": "low|high|low|high", "about": "the ends of the axes: left|right|bottom|top" },
+    "quadrants": { "default": "", "about": "the quadrants' names: top-left|top-right|bottom-left|bottom-right" },
+    "labels": { "default": "", "about": "the things placed, split by |" },
+    "x": { "default": "", "about": "each thing's place across, 0 to 1, split by commas" },
+    "y": { "default": "", "about": "each thing's place up, 0 to 1, split by commas" },
+    "highlight": { "default": "", "about": "a quadrant's name to shade" },
+    "when": { "default": "", "about": "moments each thing arrives; else when its name is said, or one after another" }
+  }
+}

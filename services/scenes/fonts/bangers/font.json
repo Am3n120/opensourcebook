@@ -1,0 +1,14 @@
+{
+  "family": "Bangers",
+  "licence": "SIL Open Font License 1.1",
+  "licenceFiles": [
+    "OFL.txt"
+  ],
+  "source": "https://github.com/google/fonts/tree/main/ofl/bangers",
+  "faces": [
+    {
+      "file": "Bangers-Regular.ttf",
+      "weight": 400
+    }
+  ]
+}

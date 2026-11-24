@@ -1,0 +1,20 @@
+/* "Open on your phone": the pairing code, three steps, and the caution. */
+.pd { width: min(100%, 560px); max-height: calc(100dvh - 32px); overflow-y: auto; padding: var(--space-20); border-radius: 18px; background: var(--surface); color: var(--text); box-shadow: 0 0 0 1px rgb(var(--edge) / .06), 0 18px 48px rgb(15 23 42 / .18); font-size: var(--fs-caption); line-height: var(--lh-caption); }
+.pd-h { display: flex; align-items: center; justify-content: space-between; margin-bottom: var(--space-16); }
+.pd-h h2 { margin: 0; font-size: 17px; line-height: 24px; }
+.pd-main { display: flex; flex-wrap: wrap; gap: var(--space-20); align-items: flex-start; }
+/* The code stays black on white in both themes, so a camera reads it. */
+.pd-qr { flex: none; width: 200px; height: 200px; border-radius: var(--r-12); background: #fff; image-rendering: pixelated; }
+.pd-qr.none { display: grid; place-items: center; padding: var(--space-12); background: var(--fill); color: var(--mutedText); text-align: center; }
+.pd-side { flex: 1; min-width: 240px; display: flex; flex-direction: column; gap: var(--space-8); }
+.pd-side ol { margin: 0; padding-left: 18px; display: flex; flex-direction: column; gap: 6px; }
+.pd-note { margin: 0; color: var(--mutedText); font-size: var(--fs-label); line-height: var(--lh-label); }
+.pd-note.err { color: var(--danger); margin-top: var(--space-8); }
+.pd-off { display: flex; flex-direction: column; align-items: flex-start; gap: var(--space-12); }
+.pd-acts { display: flex; flex-wrap: wrap; gap: var(--space-8); margin-top: var(--space-4); }
+.pd-acts .soft { background: var(--primarySoft); border-color: transparent; color: var(--primaryText); }
+.pd-warn { margin: var(--space-16) 0 0; padding: 10px 12px; border-radius: var(--r-12); background: var(--accentSoft); color: var(--accentText); font-size: var(--fs-label); line-height: var(--lh-label); }
+.pd-foot { display: flex; align-items: center; justify-content: space-between; gap: var(--space-12); margin-top: var(--space-16); padding-top: var(--space-12); border-top: 1px solid var(--border); color: var(--mutedText); font-size: var(--fs-label); }
+.pd-foot a { color: var(--primaryText); font-weight: 600; text-decoration: none; }
+.pd-foot a:hover { text-decoration: underline; }
+@media (max-width: 640px) { .pd-qr { margin: 0 auto; } }

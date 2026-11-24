@@ -1,0 +1,18 @@
+{
+  "family": "Cabin Sketch",
+  "licence": "SIL Open Font License 1.1",
+  "licenceFiles": [
+    "OFL.txt"
+  ],
+  "source": "https://github.com/google/fonts/tree/main/ofl/cabinsketch",
+  "faces": [
+    {
+      "file": "CabinSketch-Regular.ttf",
+      "weight": 400
+    },
+    {
+      "file": "CabinSketch-Bold.ttf",
+      "weight": 700
+    }
+  ]
+}

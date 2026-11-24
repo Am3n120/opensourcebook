@@ -1,0 +1,15 @@
+{
+  "about": "A loop that repeats until it passes: a tall loop with the steps down its side and a check under it, a marker going round once per try, each try counted and marked beside it, and the way out opening beside the check on the last: repeat until it works, try again until it passes, practise until right, test and fix, a process with a loop back.",
+  "tags": ["loop", "repeat until", "until it works", "try again", "retry", "again and again", "iterate", "iteration", "rounds", "attempts", "trial and error", "test and fix", "practise", "keep going until", "loop back", "way out", "check", "cycle with an exit", "feedback loop", "count"],
+  "params": {
+    "steps": { "default": "Try|Look at the result", "about": "the steps of each round, in order round the ring, split by |" },
+    "check": { "default": "Passes?", "about": "the question asked at the end of each round" },
+    "rounds": { "default": "3", "about": "how many rounds it takes; the last one passes (1 to 8)" },
+    "notes": { "default": "", "about": "what each round's check found, split by |, shown with its mark in the middle" },
+    "again": { "default": "no", "about": "the word for going round again" },
+    "done": { "default": "yes", "about": "the word on the way out" },
+    "exit": { "default": "Done", "about": "what comes after the loop, below it" },
+    "counter": { "default": "Round", "about": "the word before the round number in the middle (Try, Draft, Year); empty for no count" },
+    "when": { "default": "", "about": "moments each round reaches the check, then the moment it goes out; else when each round's note (or again, done) is said, or one after another" }
+  }
+}

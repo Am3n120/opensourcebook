@@ -1,0 +1,87 @@
+/* A plan in the right panel, and the sheet that asks for one. Tokens only. */
+
+.plp { display: flex; flex-direction: column; min-height: 0; min-width: 0; height: 100%; background: var(--surface); border: 1px solid var(--borderStrong); border-radius: 16px; overflow: hidden; }
+.plp-head { display: flex; flex-direction: column; gap: 10px; padding: 10px 14px 12px 8px; border-bottom: 1px solid var(--border); }
+.plp-top { display: flex; align-items: center; gap: var(--space-8); min-width: 0; }
+.plp-top h2 { flex: 1; min-width: 0; margin: 0; font-size: 16px; line-height: 22px; font-weight: 700; overflow-wrap: anywhere; }
+.plp-top .making-st { flex: none; }
+.plp-sub { padding-left: 38px; display: flex; flex-direction: column; gap: var(--space-8); min-width: 0; }
+.plp-line { margin: 0; flex: 1; min-width: 0; font-size: var(--fs-label); line-height: 16px; color: var(--mutedText); }
+.plp-line b { color: var(--text); font-weight: 600; }
+.plp-row { display: flex; align-items: center; gap: var(--space-8); }
+.plp-acts { display: flex; flex-wrap: wrap; gap: var(--space-8); }
+.plp-bar { margin-top: 2px; }
+.plp-defaults { display: flex; align-items: center; gap: 10px; padding: var(--space-8) 10px; border: 1px solid var(--border); border-radius: 10px; background: var(--bg); }
+.plp-defaults > span { flex: 1; min-width: 0; font-size: var(--fs-label); line-height: 16px; color: var(--mutedText); }
+.plp-defaults b { color: var(--text); font-weight: 600; }
+.plp-catchup { display: flex; align-items: center; gap: 10px; padding: 10px var(--space-12); border: 1px solid var(--accentBorder); border-radius: var(--r-12); background: var(--accentSoft); }
+.plp-catchup > span { flex: 1; min-width: 0; font-size: var(--fs-label); line-height: 17px; color: var(--accentText); }
+
+.plp-body { flex: 1; min-height: 0; overflow-y: auto; padding: var(--space-12); display: flex; flex-direction: column; gap: 14px; }
+.plp-empty, .plp-note { margin: 0; font-size: var(--fs-label); line-height: 16px; color: var(--mutedText); }
+.plp-note a { color: var(--primaryText); font-weight: 600; }
+.plp-stage { display: flex; flex-direction: column; gap: 6px; }
+.plp-lbl { display: flex; align-items: baseline; gap: var(--space-8); font-size: var(--fs-label); line-height: var(--lh-label); font-weight: 600; color: var(--mutedText); }
+.plp-lbl > span:first-child { flex: 1; min-width: 0; }
+.plp-day { flex: none; font-weight: 500; }
+.plp-day.done { color: var(--successText); }
+.plp-day.missed { color: var(--danger); }
+.plp-day.today { color: var(--accentText); }
+
+.plp-item { display: flex; flex-direction: column; border: 1px solid var(--border); border-radius: var(--r-12); background: var(--surface); min-width: 0; }
+.plp-item.made { border-color: transparent; background: none; }
+.plp-item.wait { border-style: dashed; border-color: var(--borderStrong); background: none; }
+.plp-item.open { border-color: var(--primary); background: var(--primaryGhost); }
+.plp-item.off .plp-nm b, .plp-item.off .ftile { opacity: .6; }
+.plp-it { display: flex; align-items: center; gap: 10px; padding: 10px var(--space-12) 10px 10px; min-width: 0; }
+.plp-nm { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+.plp-nm b { font-size: var(--fs-caption); line-height: var(--lh-caption); font-weight: 600; color: var(--text); overflow-wrap: anywhere; }
+.plp-nm span { font-size: var(--fs-label); line-height: 16px; color: var(--mutedText); overflow-wrap: anywhere; }
+.plp-tick { flex: none; width: 18px; height: 18px; display: grid; place-items: center; padding: 0; border: 1.5px solid var(--borderStrong); border-radius: 5px; background: none; color: var(--onPrimary); cursor: pointer; }
+.plp-tick.on { background: var(--primary); border-color: var(--primary); }
+.plp-tick .ico { width: 12px; height: 12px; }
+.plp-tick[disabled] { cursor: default; }
+.plp-issue { margin: 0; padding: 0 var(--space-12) 10px 38px; font-size: var(--fs-label); line-height: 16px; color: var(--accentText); }
+.plp-link { margin-left: 6px; padding: 0; border: 0; background: none; font: inherit; font-weight: 600; color: var(--primaryText); text-decoration: underline; cursor: pointer; }
+.plp-link.danger { margin: 0; color: var(--danger); text-decoration: none; }
+/* A plan's lines are long; in the panel the progress words wrap instead of being cut. */
+.plp-body .making-tx .making-st { white-space: normal; overflow: visible; }
+.plp-choice { display: flex; justify-content: flex-end; padding-top: 6px; }
+
+.plp-ed { display: flex; flex-direction: column; gap: 10px; padding: 0 var(--space-12) var(--space-12) 38px; min-width: 0; }
+.plp-two { display: grid; grid-template-columns: minmax(0, 1fr) 120px; gap: 10px; }
+.plp-f { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.plp-f > span:first-child, .plp-f > label:first-child { font-size: var(--fs-label); line-height: var(--lh-label); font-weight: 600; color: var(--mutedText); }
+.plp-f .ipt { width: 100%; font-size: var(--fs-caption); }
+.plp-f textarea.ipt { resize: vertical; min-height: 56px; }
+.plp-f small { font-size: var(--fs-label); line-height: 16px; color: var(--mutedText); }
+.plp-edf { display: flex; align-items: center; gap: var(--space-8); }
+.plp-edf .sp, .plp-ft .sp { flex: 1; }
+.plp-add { border: 1px solid var(--border); border-radius: var(--r-12); padding: var(--space-12); }
+
+.plp-foot { display: flex; flex-direction: column; gap: var(--space-8); padding: var(--space-12) var(--space-16) var(--space-16); border-top: 1px solid var(--border); }
+.plp-ft { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: var(--space-8); }
+.plp-ft .obtn { padding: 7px var(--space-12); font-size: var(--fs-caption); line-height: var(--lh-caption); }
+.plp-go { display: inline-flex; align-items: center; gap: var(--space-8); margin-left: auto; }
+.plp-notime { font-size: var(--fs-label); line-height: 16px; color: var(--mutedText); white-space: nowrap; }
+
+/* The sheet that asks for a plan */
+.plp-mark { flex: none; width: 28px; height: 28px; display: grid; place-items: center; border-radius: var(--r-8); background: var(--primarySoft); color: var(--primaryText); }
+.plp-mark .ico { width: 15px; height: 15px; }
+.plp-writer { margin: 0; padding: 10px var(--space-12); border: 1px solid var(--border); border-radius: var(--r-12); background: var(--bg); font-size: var(--fs-label); line-height: 16px; color: var(--mutedText); }
+.plp-writer b { color: var(--text); font-weight: 600; }
+.plp-after { margin: 0; font-size: var(--fs-label); line-height: 16px; color: var(--mutedText); }
+
+@media (max-width: 960px) {
+  .plp { border-radius: 22px 22px 0 0; border-bottom: 0; }
+  .plp-sub { padding-left: 0; }
+  .plp-ed { padding-left: var(--space-12); }
+  .plp-issue { padding-left: var(--space-12); }
+}
+@media (max-width: 640px) {
+  .plp-two { grid-template-columns: minmax(0, 1fr); }
+  .plp-ft { flex-wrap: wrap; }
+  .plp-go { flex-basis: 100%; order: 3; }
+  .plp-go .pbtn { flex: 1; padding: 13px var(--space-16); font-size: 15px; line-height: 20px; }
+  .plp-f textarea.ipt, .plp-f .ipt { font-size: 16px; }
+}

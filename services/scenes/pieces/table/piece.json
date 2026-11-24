@@ -1,0 +1,10 @@
+{
+  "about": "A table that fills in cell by cell as each row (or column) is said, with ticks and crosses for yes and no and one row picked out: comparing things on several features, results, a timetable, a grid of cases.",
+  "tags": ["table", "grid", "compare features", "comparison table", "rows and columns", "matrix", "chart", "yes and no", "ticks", "checklist", "features", "properties", "results", "data table", "timetable", "cases", "fill in", "spreadsheet"],
+  "params": {
+    "rows": { "default": "Thing|One|Two;A|yes|no;B|no|yes", "about": "rows split by ;, cells by |; the first row is the header; yes and no become ✓ and ✗" },
+    "fill": { "default": "rows", "about": "rows or columns: which way the table fills" },
+    "highlight": { "default": "", "about": "a row (by its first cell) or a cell to pick out" },
+    "when": { "default": "", "about": "moments each row (or column) fills; else when its first cell is said, or one after another" }
+  }
+}

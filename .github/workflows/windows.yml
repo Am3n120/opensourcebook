@@ -1,0 +1,189 @@
+name: windows
+
+# Open Sourcebook has not been run on Windows yet. This runs what needs no signed-in coding agent on a GitHub-hosted
+# Windows machine: each program's own checks, one job each, and then the one command, npm start, with each program
+# asked whether it is up and then stopped. A red job here says what to fix next for Windows; it does not block a
+# pull request on its own. What still needs a real Windows computer: a signed-in agent making something (a chat
+# answer, a quiz, a video), sound, the browser opening by itself, and the terminal's QR code.
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "cli/**"
+      - "common/**"
+      - "package.json"
+      - "package-lock.json"
+      - "engine/**"
+      - "web/**"
+      - "services/agent-connector/**"
+      - "services/scenes/**"
+      - ".github/workflows/windows.yml"
+  pull_request:
+    paths:
+      - "cli/**"
+      - "common/**"
+      - "package.json"
+      - "package-lock.json"
+      - "engine/**"
+      - "web/**"
+      - "services/agent-connector/**"
+      - "services/scenes/**"
+      - ".github/workflows/windows.yml"
+
+concurrency:
+  group: windows-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  launcher:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    steps:
+      - run: git config --global core.autocrlf false
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: package-lock.json
+      - run: npm ci
+      - run: npm run typecheck
+      # Some tests of stopping Open Sourcebook wait on signals Windows does not have, so a stuck file ends here rather than at the job's limit.
+      - run: npm test
+        timeout-minutes: 8
+
+  engine:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: engine
+    steps:
+      - run: git config --global core.autocrlf false
+        working-directory: .
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: engine/package-lock.json
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+
+  web:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: web
+    steps:
+      - run: git config --global core.autocrlf false
+        working-directory: .
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: web/package-lock.json
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+
+  connector:
+    runs-on: windows-latest
+    timeout-minutes: 15
+    defaults:
+      run:
+        working-directory: services/agent-connector
+    steps:
+      - run: git config --global core.autocrlf false
+        working-directory: .
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: services/agent-connector/package-lock.json
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+
+  scenes:
+    runs-on: windows-latest
+    timeout-minutes: 40
+    defaults:
+      run:
+        working-directory: services/scenes
+    steps:
+      - run: git config --global core.autocrlf false
+        working-directory: .
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: services/scenes/package-lock.json
+      - name: ffmpeg
+        working-directory: .
+        shell: bash
+        run: command -v ffmpeg || choco install ffmpeg -y --no-progress
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run browser
+      - run: npm run test:engine
+        timeout-minutes: 10
+      - run: npm run test:service
+        timeout-minutes: 25
+
+  # The one command on a fresh Windows checkout with no agent and no keys, then each program asked if it is up, then
+  # `opensourcebook stop` (Windows has no Ctrl-C to send from a script), and nothing Open Sourcebook started is left running.
+  start:
+    runs-on: windows-latest
+    timeout-minutes: 40
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - run: git config --global core.autocrlf false
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: |
+            engine/package-lock.json
+            web/package-lock.json
+            services/agent-connector/package-lock.json
+            services/scenes/package-lock.json
+      - name: ffmpeg
+        run: command -v ffmpeg || choco install ffmpeg -y --no-progress
+      - run: npm run check
+      - name: Start Open Sourcebook and ask each program if it is up
+        timeout-minutes: 25
+        run: |
+          npm start -- --no-open > start.log 2>&1 &
+          launcher=$!
+          for i in $(seq 1 1200); do
+            if grep -q "Open Sourcebook is running" start.log; then break; fi
+            if grep -q "Stopped" start.log; then break; fi
+            kill -0 "$launcher" 2>/dev/null || break
+            sleep 1
+          done
+          cat start.log
+          grep -q "Open Sourcebook is running" start.log
+          npm run status | tee status.txt
+          for p in "Agent connector" "Video scenes" "Engine" "Web app"; do grep -E "^  $p +up " status.txt || { echo "$p does not answer"; exit 1; }; done
+      - name: opensourcebook stop stops everything
+        run: |
+          node cli/opensourcebook.mjs stop
+          for i in $(seq 1 30); do test -e .opensourcebook/running.json || break; sleep 1; done
+          sleep 3
+          tail -5 start.log
+          if tasklist | grep -iE "workerd|chrome-headless-shell"; then echo "something of Open Sourcebook is still running"; exit 1; fi
+      - name: Logs
+        if: failure()
+        run: tail -n 60 .opensourcebook/logs/*.log || true

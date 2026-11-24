@@ -1,0 +1,148 @@
+// The engine in the video: one compiled scene for the whole story, and the end card drawn on the same surface.
+import React, { useEffect, useMemo, useState } from "react";
+import { AbsoluteFill, cancelRender, continueRender, delayRender, staticFile, useCurrentFrame } from "remotion";
+import { evaluate } from "../engine/core/evaluate.ts";
+import type { Resolved, Scene, Theme, Value } from "../engine/core/types.ts";
+import { SceneView } from "../engine/render/SceneView.tsx";
+import { Surface } from "../engine/style/draw.tsx";
+import type { Clip } from "../schemas/project.ts";
+import { CARD, cardLines, LEADING, type CardLine } from "./end-card.ts";
+
+// Image sources in a scene are files in the project folder, which is Remotion's public dir.
+const served = (v: Value): Value => (typeof v === "string" && v && !/^(https?:|data:|blob:|\/)/.test(v) ? staticFile(v) : v);
+
+export function serveImages(scene: Scene): Scene {
+  const images = scene.nodes.some((n) => n.kind === "image" && typeof n.props.src === "string");
+  const tracks = scene.tracks.some((t) => t.prop === "src");
+  if (!images && !tracks) return scene;
+  return {
+    ...scene,
+    nodes: scene.nodes.map((n) => (n.kind === "image" && typeof n.props.src === "string" ? { ...n, props: { ...n.props, src: served(n.props.src) } } : n)),
+    tracks: scene.tracks.map((t) => (t.prop === "src" ? { ...t, keys: t.keys.map((k) => ({ ...k, value: served(k.value) })) } : t)),
+  };
+}
+
+export function imageSources(scene: Scene): string[] {
+  const sources = new Set<string>();
+  for (const n of scene.nodes) if (n.kind === "image" && typeof n.props.src === "string" && n.props.src) sources.add(n.props.src);
+  for (const t of scene.tracks) if (t.prop === "src") for (const k of t.keys) if (typeof k.value === "string" && k.value) sources.add(k.value);
+  return [...sources];
+}
+
+// An SVG image paints whenever it arrives, which could be after a frame is captured. Every image is decoded before the
+// first frame and kept for the life of the tab, so an image that leaves and comes back paints from memory.
+const kept = new Map<string, HTMLImageElement>();
+const decoded = (sources: string[]) =>
+  Promise.all(
+    sources.map((src) => {
+      const img = kept.get(src) ?? new Image();
+      kept.set(src, img);
+      img.src = src;
+      return img.decode().catch(() => {
+        throw new Error(`scene image ${src} did not load`);
+      });
+    }),
+  );
+
+// The scene comes in the clip, or from a JSON file in the project folder (large scenes are kept out of the props, see
+// pipeline/stages/render.ts). Frames wait until it and its images are in.
+function useScene(clip: Clip, file?: string): Scene | null {
+  const inline = useMemo(() => (clip.scene ? serveImages(clip.scene) : null), [clip.scene]);
+  const [loaded, setLoaded] = useState<Scene | null>(null);
+  const [handle] = useState(() => (inline && !imageSources(inline).length ? null : delayRender(file ? `loading scene ${file}` : "loading scene images")));
+  useEffect(() => {
+    if (handle === null) return;
+    const scene: Promise<Scene> = inline
+      ? Promise.resolve(inline)
+      : !file
+        ? Promise.reject(new Error(`engine clip ${clip.shotId} has no scene and no scene file`))
+        : fetch(staticFile(file))
+            .then((r) => {
+              if (!r.ok) throw new Error(`scene file ${file}: ${r.status}`);
+              return r.json() as Promise<Scene>;
+            })
+            .then(serveImages);
+    scene
+      .then((s) => decoded(imageSources(s)).then(() => s))
+      .then((s) => {
+        setLoaded(s);
+        continueRender(handle);
+      })
+      .catch(cancelRender);
+  }, [inline, file, handle, clip.shotId]);
+  return inline ?? loaded;
+}
+
+// Images on screen at this frame: shown through every group above them.
+function showing(scene: Scene, frame: number): string[] {
+  const out = new Set<string>();
+  const walk = (r: Resolved, seen: number) => {
+    const o = seen * Number(r.props.opacity ?? 1);
+    if (o <= 0.2) return;
+    if (r.kind === "image" && typeof r.props.src === "string") out.add(r.props.src);
+    for (const c of r.children) walk(c, o);
+  };
+  for (const r of evaluate(scene, frame)) walk(r, 1);
+  return [...out];
+}
+
+// The source line of each real image while it is on screen, low and small under the captions, in the scene's ink.
+const ImageCredit: React.FC<{ scene: Scene; theme: Theme; frame: number; credits: Record<string, string> }> = ({ scene, theme, frame, credits }) => {
+  const byServed = useMemo(() => new Map(Object.entries(credits).map(([file, text]) => [served(file), text])), [credits]);
+  const lines = [...new Set(showing(scene, frame).flatMap((src) => byServed.get(src) ?? []))];
+  if (!lines.length) return null;
+  const c = theme.colors;
+  return (
+    <div style={{ position: "absolute", left: 90, right: 160, top: 1822, textAlign: "center", fontFamily: theme.fonts.body, fontSize: 22, lineHeight: 1.25, color: c.ink, opacity: 0.75, WebkitTextStroke: `5px ${c.paper}`, paintOrder: "stroke fill" }}>
+      {lines.join(" · ")}
+    </div>
+  );
+};
+
+export const EngineShot: React.FC<{ clip: Clip; sceneFile?: string; imageCredits?: Record<string, string> }> = ({ clip, sceneFile, imageCredits }) => {
+  const frame = useCurrentFrame();
+  const scene = useScene(clip, sceneFile);
+  if (!scene) return <AbsoluteFill style={{ backgroundColor: clip.theme!.colors.paper }} />;
+  return (
+    <AbsoluteFill>
+      <SceneView scene={scene} theme={clip.theme!} frame={frame} />
+      {imageCredits && Object.keys(imageCredits).length > 0 && <ImageCredit scene={scene} theme={clip.theme!} frame={frame} credits={imageCredits} />}
+    </AbsoluteFill>
+  );
+};
+
+// The end card in the scene's style: its surface, title font and colors. Read on a phone in a few seconds with no
+// voice, so it says little, in large words laid out beforehand to fit its box (end-card.ts), and it is on screen from
+// its first frame: a card that faded in was half legible on the frames a viewer first saw.
+export const EngineCredits: React.FC<{ clip: Clip }> = ({ clip }) => {
+  const theme: Theme = clip.theme!;
+  const c = theme.colors;
+  // The headings are set as the style sets a title (its case and letter spacing), with the style's caption rule under
+  // them when it has one, so the card is the style's last page rather than a plain list.
+  const title = theme.design?.roles.title;
+  const ruleName = theme.design?.elements.caption.rule;
+  const rule = ruleName && ruleName !== "none" ? c[ruleName] : c.accent;
+  const upper = (title?.case ?? theme.style?.type.case) === "upper";
+  const tracking = `${theme.style?.type.tracking ?? 0}em`;
+  const lines = useMemo(() => cardLines(clip.credits!, upper), [clip.credits, upper]);
+  const bold = theme.style?.type.bold ?? 700;
+  const look = (l: CardLine): React.CSSProperties =>
+    l.role === "title"
+      ? { fontFamily: theme.fonts.title, fontWeight: bold, color: c[title?.color ?? "ink"] ?? c.ink, textTransform: upper ? "uppercase" : "none", letterSpacing: tracking }
+      : l.role === "heading"
+        ? { fontFamily: theme.fonts.title, fontWeight: bold, color: c.accent, textTransform: upper ? "uppercase" : "none", letterSpacing: tracking }
+        : { fontFamily: theme.fonts.body, fontWeight: l.role === "source" ? 700 : 400, color: c.ink, opacity: l.role === "source" ? 1 : 0.85 };
+  return (
+    <AbsoluteFill style={{ backgroundColor: c.paper }}>
+      {theme.style && <Surface style={theme.style} color={c.paper!} theme={theme} width={1080} height={1920} />}
+      <AbsoluteFill style={{ top: CARD.top, height: CARD.height, left: CARD.left, width: CARD.width, justifyContent: "center", alignItems: "center", textAlign: "center", overflow: "hidden" }}>
+        {lines.map((l, i) => (
+          <React.Fragment key={i}>
+            <div style={{ ...look(l), fontSize: l.size, lineHeight: LEADING, whiteSpace: "nowrap", marginBottom: l.role === "heading" && l.gap ? 0 : l.gap }}>{l.text}</div>
+            {l.role === "heading" && l.gap > 0 && <div style={{ width: 140, height: 7, background: rule, margin: `10px auto ${l.gap}px`, borderRadius: 4, opacity: 0.85 }} />}
+          </React.Fragment>
+        ))}
+      </AbsoluteFill>
+    </AbsoluteFill>
+  );
+};

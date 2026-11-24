@@ -1,0 +1,9 @@
+{
+  "about": "A hierarchy as an indented tree, each thing under the one it belongs to, joined by branch lines and arriving as it is named: classifications, families, organisations, parts of parts, kinds and sub-kinds.",
+  "tags": ["tree", "hierarchy", "classification", "categories", "kinds", "types", "family tree", "organisation", "org chart", "parts of", "belongs to", "taxonomy", "branches", "subcategories", "nested", "structure", "breakdown", "outline"],
+  "params": {
+    "links": { "default": "Whole>Part A|Whole>Part B|Part A>Piece 1|Part A>Piece 2", "about": "parent>child pairs, split by |; the first parent is the root" },
+    "highlight": { "default": "", "about": "names drawn in the accent, split by |" },
+    "when": { "default": "", "about": "moments each row arrives, top to bottom; else when its name is said, or one after another" }
+  }
+}

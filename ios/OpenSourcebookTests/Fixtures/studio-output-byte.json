@@ -1,0 +1,299 @@
+{
+ "output": {
+  "id": "7768ce3d-7624-4bc7-9e3b-3f91bcd9d0b9",
+  "type": "byte",
+  "title": "The Printing Press",
+  "summary": "A machine that applies pressure to transfer ink onto paper — invented by Johannes Gutenberg around 1440 and the start of mass communication in Europe.",
+  "projectId": "0b53b8ea-ddbc-4c59-9b00-c097cfcbaf4a",
+  "planId": "dfc6feef-8fed-4836-836e-32d560fb7cbf",
+  "itemId": "08ec8551-b6dd-4154-83cb-8ac6b9fc30ba",
+  "schemaVersion": 2,
+  "costUsd": 0.072992,
+  "createdAt": "2026-11-12T18:31:36.860Z",
+  "updatedAt": "2026-11-12T18:31:36.860Z",
+  "payload": {
+   "schemaVersion": 2,
+   "id": "a612b234-43e4-4a95-a788-fee1bd3ff452",
+   "title": "The Printing Press",
+   "subtitle": "Gutenberg's machine, how it worked, and what it changed",
+   "sourceKind": "article",
+   "sourceDomain": "en.wikipedia.org",
+   "author": "Contributors to Wikimedia projects",
+   "tags": [
+    "en.wikipedia.org",
+    "history",
+    "printing",
+    "technology",
+    "Gutenberg",
+    "media"
+   ],
+   "excerpt": "A machine that applies pressure to transfer ink onto paper — invented by Johannes Gutenberg around 1440 and the start of mass communication in Europe.",
+   "depth": "light",
+   "requestedDepth": "light",
+   "bits": [
+    {
+     "id": "b1",
+     "kind": "plain",
+     "section": "A machine that presses ink",
+     "blocks": [
+      {
+       "type": "heading",
+       "text": "A machine that presses ink"
+      },
+      {
+       "type": "text",
+       "text": "A printing press applies pressure to transfer ink onto **paper, cloth, or a similar material**. It replaced the older method of rubbing paper by hand to pick up ink."
+      },
+      {
+       "type": "definition",
+       "term": "Printing press",
+       "definition": "A machine that applies pressure to transfer ink onto paper, cloth, or a similar material; invented by the German goldsmith Johannes Gutenberg around 1440.",
+       "source": "Printing press, Wikipedia"
+      }
+     ],
+     "cites": [
+      {
+       "sourceId": "b8fc6093-bb6f-48cb-b71e-845c56297859",
+       "spot": "passage",
+       "chunkId": "45783c0d-3d3e-4591-a505-3e21105a9523",
+       "locator": {
+        "charStart": 0,
+        "charEnd": 1873
+       },
+       "quote": "A printing press is a machine that applies pressure to transfer ink onto a surface made of paper, cloth, or a similar material.",
+       "block": 1
+      },
+      {
+       "sourceId": "b8fc6093-bb6f-48cb-b71e-845c56297859",
+       "spot": "passage",
+       "chunkId": "45783c0d-3d3e-4591-a505-3e21105a9523",
+       "locator": {
+        "charStart": 0,
+        "charEnd": 1873
+       },
+       "quote": "It marked a significant improvement on earlier methods, in which the paper was rubbed by hand to transfer applied ink to the printing surface.",
+       "block": 1
+      },
+      {
+       "sourceId": "b8fc6093-bb6f-48cb-b71e-845c56297859",
+       "spot": "passage",
+       "chunkId": "45783c0d-3d3e-4591-a505-3e21105a9523",
+       "locator": {
+        "charStart": 0,
+        "charEnd": 1873
+       },
+       "quote": "The printing press was invented by the German goldsmith Johannes Gutenberg around 1440",
+       "block": 2
+      }
+     ]
+    },
+    {
+     "id": "b2",
+     "kind": "plain",
+     "section": "Four existing technologies, one system",
+     "blocks": [
+      {
+       "type": "heading",
+       "text": "Four existing technologies, one system"
+      },
+      {
+       "type": "text",
+       "text": "Gutenberg's press was an integration, not a single invention. He took four technologies already in use and built them into one working system."
+      },
+      {
+       "type": "bullets",
+       "items": [
+        "Screw press — direct pressure on a flat plane; already used for wine and oil.",
+        "Movable type — individual reusable characters; East Asian versions were relatively inefficient.",
+        "Codex — the book format, in use since the Roman Empire.",
+        "Papermaking — mechanized production; water-powered mills by 1282."
+       ]
+      }
+     ],
+     "cites": [
+      {
+       "sourceId": "b8fc6093-bb6f-48cb-b71e-845c56297859",
+       "spot": "passage",
+       "chunkId": "5f1bcd1c-04e3-4fe2-a158-39a47a3ac926",
+       "locator": {
+        "charStart": 1874,
+        "charEnd": 3570
+       },
+       "quote": "Gutenberg invented the movable-type printing press around 1440, utilizing four existing technologies: the screw press, movable type, the codex book format, and mechanized paper production.",
+       "block": 1
+      },
+      {
+       "sourceId": "b8fc6093-bb6f-48cb-b71e-845c56297859",
+       "spot": "passage",
+       "chunkId": "5f1bcd1c-04e3-4fe2-a158-39a47a3ac926",
+       "locator": {
+        "charStart": 1874,
+        "charEnd": 3570
+       },
+       "quote": "Gutenberg integrated these four technologies into a single working system",
+       "block": 2
+      },
+      {
+       "sourceId": "b8fc6093-bb6f-48cb-b71e-845c56297859",
+       "spot": "passage",
+       "chunkId": "5f1bcd1c-04e3-4fe2-a158-39a47a3ac926",
+       "locator": {
+        "charStart": 1874,
+        "charEnd": 3570
+       },
+       "quote": "The first factor, the screw press, permitted direct pressure to be applied on a flat plane.",
+       "block": 2
+      },
+      {
+       "sourceId": "b8fc6093-bb6f-48cb-b71e-845c56297859",
+       "spot": "passage",
+       "chunkId": "2a765079-7342-438f-9582-c1397bb2ea48",
+       "locator": {
+        "charStart": 3571,
+        "charEnd": 5295
+       },
+       "quote": "Movable type is the typographical principle of writing a text from individual reusable characters.",
+       "block": 2
+      },
+      {
+       "sourceId": "b8fc6093-bb6f-48cb-b71e-845c56297859",
+       "spot": "passage",
+       "chunkId": "2a765079-7342-438f-9582-c1397bb2ea48",
+       "locator": {
+        "charStart": 3571,
+        "charEnd": 5295
+       },
+       "quote": "The codex book format also dated to the Roman Empire",
+       "block": 2
+      },
+      {
+       "sourceId": "b8fc6093-bb6f-48cb-b71e-845c56297859",
+       "spot": "passage",
+       "chunkId": "39efecc3-9346-4535-9994-64fd9c40d6ca",
+       "locator": {
+        "charStart": 5296,
+        "charEnd": 7145
+       },
+       "quote": "Water-powered paper mills were in usage by 1282",
+       "block": 2
+      }
+     ]
+    },
+    {
+     "id": "b3",
+     "kind": "plain",
+     "section": "Four existing technologies, one system",
+     "blocks": [
+      {
+       "type": "heading",
+       "text": "A market waiting for books"
+      },
+      {
+       "type": "text",
+       "text": "The press did not create demand from nothing. Late medieval Europe already had conditions that made a commercial print shop viable."
+      },
+      {
+       "type": "bullets",
+       "items": [
+        "Urban middle class grew alongside trade and commerce.",
+        "Universities, growing since the twelfth century, increased demand for books.",
+        "Hand-copying was slow and expensive.",
+        "By the fifteenth century, manuscript supply was much less than demand."
+       ]
+      },
+      {
+       "type": "text",
+       "text": "Gutenberg's contribution was the integration — plus his own hand mold for casting type and an oil-based ink suited to metal type."
+      }
+     ],
+     "cites": [
+      {
+       "sourceId": "b8fc6093-bb6f-48cb-b71e-845c56297859",
+       "spot": "passage",
+       "chunkId": "5f1bcd1c-04e3-4fe2-a158-39a47a3ac926",
+       "locator": {
+        "charStart": 1874,
+        "charEnd": 3570
+       },
+       "quote": "The urban middle class grew alongside trade and commerce, while the growing number of universities since the twelfth century had increased demand for books.",
+       "block": 2
+      },
+      {
+       "sourceId": "b8fc6093-bb6f-48cb-b71e-845c56297859",
+       "spot": "passage",
+       "chunkId": "5f1bcd1c-04e3-4fe2-a158-39a47a3ac926",
+       "locator": {
+        "charStart": 1874,
+        "charEnd": 3570
+       },
+       "quote": "Hand-copying was slow and expensive, and by the fifteenth century, the supply of manuscripts was much less than the demand.",
+       "block": 2
+      },
+      {
+       "sourceId": "b8fc6093-bb6f-48cb-b71e-845c56297859",
+       "spot": "passage",
+       "chunkId": "5f1bcd1c-04e3-4fe2-a158-39a47a3ac926",
+       "locator": {
+        "charStart": 1874,
+        "charEnd": 3570
+       },
+       "quote": "including a hand mold for casting type and an oil-based ink suited to metal type",
+       "block": 3
+      }
+     ]
+    }
+   ]
+  },
+  "citations": [
+   {
+    "sourceId": "b8fc6093-bb6f-48cb-b71e-845c56297859",
+    "chunkId": "45783c0d-3d3e-4591-a505-3e21105a9523",
+    "locator": {
+     "charStart": 0,
+     "charEnd": 1873
+    },
+    "quote": "A printing press is a machine that applies pressure to transfer ink onto a surface made of paper, cloth, or a similar material.",
+    "anchor": "bits[0].blocks[1]"
+   },
+   {
+    "sourceId": "b8fc6093-bb6f-48cb-b71e-845c56297859",
+    "chunkId": "45783c0d-3d3e-4591-a505-3e21105a9523",
+    "locator": {
+     "charStart": 0,
+     "charEnd": 1873
+    },
+    "quote": "It marked a significant improvement on earlier methods, in which the paper was rubbed by hand to transfer applied ink to the printing surface.",
+    "anchor": "bits[0].blocks[1]"
+   },
+   {
+    "sourceId": "b8fc6093-bb6f-48cb-b71e-845c56297859",
+    "chunkId": "45783c0d-3d3e-4591-a505-3e21105a9523",
+    "locator": {
+     "charStart": 0,
+     "charEnd": 1873
+    },
+    "quote": "The printing press was invented by the German goldsmith Johannes Gutenberg around 1440",
+    "anchor": "bits[0].blocks[2]"
+   },
+   {
+    "sourceId": "b8fc6093-bb6f-48cb-b71e-845c56297859",
+    "chunkId": "5f1bcd1c-04e3-4fe2-a158-39a47a3ac926",
+    "locator": {
+     "charStart": 1874,
+     "charEnd": 3570
+    },
+    "quote": "Gutenberg invented the movable-type printing press around 1440, utilizing four existing technologies: the screw press, movable type, the codex book format, and mechanized paper production.",
+    "anchor": "bits[1].blocks[1]"
+   }
+  ],
+  "settings": {
+   "depth": "light",
+   "exemplarSummaries": []
+  },
+  "sources": [
+   {
+    "sourceId": "b8fc6093-bb6f-48cb-b71e-845c56297859"
+   }
+  ]
+ }
+}

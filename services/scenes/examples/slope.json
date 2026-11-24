@@ -1,0 +1,30 @@
+{
+  "title": "Why the slope of x² is 2x",
+  "brief": "Show where the derivative of x squared comes from: the slope of a secant line, and what happens to it as the second point slides onto the first.",
+  "assumes": ["what a graph of y = x² looks like", "slope as rise over run"],
+  "targetSeconds": 60,
+  "style": "auto",
+  "passages": [
+    {
+      "id": "d1",
+      "sourceId": "calc-notes",
+      "sourceTitle": "Calculus notes, week 2",
+      "locator": "Slopes of curves, 1",
+      "text": "A straight line has one slope everywhere, but a curve such as y = x² is steeper in some places than in others. To speak of the slope of a curve at a point, we first take a second point on the curve and draw the straight line through both. This line is called a secant line, and its slope is the rise between the two points divided by the run between them."
+    },
+    {
+      "id": "d2",
+      "sourceId": "calc-notes",
+      "sourceTitle": "Calculus notes, week 2",
+      "locator": "Slopes of curves, 2",
+      "text": "Take the point (x, x²) and a second point a small step h further along, at (x + h, (x + h)²). The rise is (x + h)² − x², which expands to 2xh + h². The run is h. So the slope of the secant line is (2xh + h²) / h, which simplifies to 2x + h."
+    },
+    {
+      "id": "d3",
+      "sourceId": "calc-notes",
+      "sourceTitle": "Calculus notes, week 2",
+      "locator": "Slopes of curves, 3",
+      "text": "Now let the second point slide toward the first, so that h shrinks toward zero. The secant line turns and settles on the tangent line, the line that just touches the curve at the point. Its slope, 2x + h, settles on 2x. This limit is the derivative: the slope of y = x² at any x is 2x. At x = 3, for example, the curve climbs with slope 6."
+    }
+  ]
+}

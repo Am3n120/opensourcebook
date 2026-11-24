@@ -1,0 +1,77 @@
+/* Activity: what the agents are doing and what each run took (Activity.tsx). Tokens only, from design/tokens.css. */
+.act { display: flex; flex-direction: column; gap: var(--space-24); max-width: 1180px; padding-top: var(--space-24); padding-bottom: var(--space-40); }
+.act .sx-back { margin-bottom: calc(-1 * var(--space-8)); align-self: flex-start; }
+.act-head { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--space-16); flex-wrap: wrap; }
+.act-head h1 { margin: 0; font-size: 26px; line-height: 32px; letter-spacing: -.02em; color: var(--text); }
+.act-head p { margin: 4px 0 0; color: var(--mutedText); font-size: 13.5px; line-height: 20px; }
+
+.act-totals { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-12); }
+.act-total { display: flex; flex-direction: column; gap: var(--space-8); padding: var(--space-12) var(--space-16); }
+.act-total-l { font-size: var(--fs-label); line-height: var(--lh-label); font-weight: 600; color: var(--mutedText); }
+.act-total dl { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--space-12); margin: 0; }
+.act-total dt { font-size: var(--fs-label); line-height: var(--lh-label); color: var(--mutedText); }
+.act-total dd { margin: 2px 0 0; font-size: 18px; line-height: 24px; font-weight: 650; color: var(--text); font-variant-numeric: tabular-nums; }
+
+.act-filters { display: flex; flex-wrap: wrap; gap: var(--space-8); }
+.act-filters .ipt { font: inherit; font-size: var(--fs-caption); font-weight: 600; }
+
+.act-sec { display: flex; flex-direction: column; gap: var(--space-12); }
+.act-sec h2 { margin: 0; font-size: 17px; line-height: 24px; color: var(--text); }
+.act-quiet { margin: 0; color: var(--mutedText); font-size: var(--fs-caption); line-height: var(--lh-caption); }
+.act-sec .notice { margin: 0; }
+.act-sec .notice a { color: inherit; font-weight: 600; }
+
+.act-making { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: var(--space-12); }
+.act-mk { display: flex; flex-direction: column; gap: 6px; }
+.act-mk-meta { display: flex; align-items: center; justify-content: space-between; gap: var(--space-8); padding: 0 var(--space-4); font-size: var(--fs-label); line-height: var(--lh-label); color: var(--mutedText); min-width: 0; }
+.act-mk-meta > span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.act-tablewrap { padding: 0; overflow-x: auto; }
+.act-table { width: 100%; border-collapse: collapse; font-size: var(--fs-caption); line-height: var(--lh-caption); color: var(--text); }
+.act-table th { text-align: left; font-size: var(--fs-label); line-height: var(--lh-label); font-weight: 600; color: var(--mutedText); padding: 10px var(--space-12); border-bottom: 1px solid var(--border); white-space: nowrap; }
+.act-table td { padding: 10px var(--space-12); vertical-align: top; border-bottom: 1px solid var(--border); }
+.act-table tbody tr:last-child td { border-bottom: 0; }
+.act-table .num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.act-when { white-space: nowrap; color: var(--mutedText); }
+.act-what { min-width: 220px; }
+.act-what-in { display: flex; align-items: flex-start; gap: 10px; }
+.act-two { display: inline-flex; flex-direction: column; min-width: 0; }
+.act-two > b, .act-two > a { font-weight: 600; color: var(--text); }
+.act-two > a { text-decoration: none; }
+.act-two > a:hover { color: var(--primaryText); text-decoration: underline; }
+.act-two > span { color: var(--mutedText); font-size: var(--fs-label); line-height: var(--lh-label); }
+.act-two > .act-strong { color: var(--text); font-size: var(--fs-caption); line-height: var(--lh-caption); }
+.act-none { color: var(--mutedText); }
+.act-ph { display: none; }
+.act-end { font-weight: 600; white-space: nowrap; }
+.act-end.done { color: var(--successText); }
+.act-end.stopped { color: var(--mutedText); }
+.act-end.failed { color: var(--danger); }
+.act-more { display: flex; justify-content: center; }
+
+/* A phone: each turn is a stacked row, its numbers said in words. */
+@media (max-width: 640px) {
+  .act { gap: var(--space-20); padding-top: var(--space-16); }
+  .act-head h1 { font-size: 22px; line-height: 28px; }
+  .act-totals { grid-template-columns: minmax(0, 1fr); }
+  .act-total dl { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .act-making { grid-template-columns: minmax(0, 1fr); }
+  .act-filters .ipt { flex: 1 1 140px; }
+  .act-tablewrap { overflow: visible; }
+  .act-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .act-table, .act-table tbody { display: block; }
+  .act-table tr { display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 0; padding: var(--space-12); border-bottom: 1px solid var(--border); }
+  .act-table tbody tr:last-child { border-bottom: 0; }
+  .act-table td { display: inline; padding: 0; border: 0; color: var(--mutedText); font-size: var(--fs-label); line-height: var(--lh-label); }
+  .act-table td.act-what { order: -2; flex: 1 0 100%; min-width: 0; margin-bottom: 6px; color: var(--text); font-size: var(--fs-caption); line-height: var(--lh-caption); }
+  .act-table td.act-when { order: -1; }
+  .act-table td:not(.act-what):not(:last-child)::after { content: " · "; white-space: pre; color: var(--mutedText); }
+  .act-table td.act-when::after { content: " · "; }
+  .act-table .num { text-align: left; }
+  .act-table td:not(.act-what) .act-two { display: inline; }
+  .act-table td:not(.act-what) .act-two > * { display: inline; color: var(--mutedText); font-size: inherit; line-height: inherit; font-weight: 400; }
+  .act-table td:not(.act-what) .act-two > * + *::before { content: ", "; }
+  .act-table td:not(.act-what) .act-two > b { color: var(--text); font-weight: 600; }
+  .act-ph { display: inline; }
+  .act-dt { display: none; }
+}

@@ -1,0 +1,18 @@
+{
+  "family": "Jost",
+  "licence": "SIL Open Font License 1.1",
+  "licenceFiles": [
+    "OFL.txt"
+  ],
+  "source": "https://github.com/google/fonts/tree/main/ofl/jost",
+  "faces": [
+    {
+      "file": "Jost[wght].ttf",
+      "weight": [
+        100,
+        900
+      ],
+      "sizeAdjust": "105%"
+    }
+  ]
+}

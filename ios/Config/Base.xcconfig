@@ -1,0 +1,51 @@
+// Shared build settings for every Open Sourcebook target and configuration.
+// Machine-specific values (engine endpoint, client token) go in
+// ios/Config/Local.xcconfig, which is git-ignored. Copy Local.xcconfig.example.
+// Local.xcconfig is included at the end of this file, so its values override
+// every default set here.
+
+// A Local.xcconfig from before the rename may still set RE_BUNDLE_ID_PREFIX
+// or RE_APP_GROUP; they are honoured, so that copy keeps its ids.
+OPENSOURCEBOOK_BUNDLE_ID_PREFIX = $(RE_BUNDLE_ID_PREFIX:default=app.opensourcebook)
+OPENSOURCEBOOK_APP_GROUP = $(RE_APP_GROUP:default=group.app.opensourcebook)
+
+// Your own Apple team id goes in Local.xcconfig (DEVELOPMENT_TEAM = ...).
+DEVELOPMENT_TEAM =
+CODE_SIGN_STYLE = Automatic
+
+SDKROOT = iphoneos
+IPHONEOS_DEPLOYMENT_TARGET = 17.0
+TARGETED_DEVICE_FAMILY = 1,2
+SWIFT_VERSION = 5.0
+
+MARKETING_VERSION = 1.0
+CURRENT_PROJECT_VERSION = 1
+
+ALWAYS_SEARCH_USER_PATHS = NO
+CLANG_ENABLE_MODULES = YES
+ENABLE_STRICT_OBJC_MSGSEND = YES
+ENABLE_USER_SCRIPT_SANDBOXING = YES
+LD_RUNPATH_SEARCH_PATHS = $(inherited) @executable_path/Frameworks
+SWIFT_EMIT_LOC_STRINGS = YES
+
+// Info.plist is generated. Xcode copies only the INFOPLIST_KEY_* names it
+// knows, so the custom keys (engine settings, app group) live in a small
+// partial plist that Xcode merges into the generated one. The share
+// extension sets its own INFOPLIST_FILE.
+GENERATE_INFOPLIST_FILE = YES
+INFOPLIST_FILE = Config/OpenSourcebook-Info.plist
+INFOPLIST_KEY_CFBundleDisplayName = Open Sourcebook
+INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES
+INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES
+INFOPLIST_KEY_UILaunchScreen_Generation = YES
+INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight
+INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight
+INFOPLIST_KEY_NSMicrophoneUsageDescription = Open Sourcebook uses the microphone to record audio you want to capture.
+
+// Engine connection. Empty by default: a fresh build has generation disabled
+// until the values are set in Local.xcconfig or pasted into Profile.
+ENGINE_BASE_URL =
+ENGINE_CLIENT_TOKEN =
+
+// Last, so anything set in Local.xcconfig wins over the defaults above.
+#include? "Local.xcconfig"

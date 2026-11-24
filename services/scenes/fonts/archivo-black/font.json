@@ -1,0 +1,14 @@
+{
+  "family": "Archivo Black",
+  "licence": "SIL Open Font License 1.1",
+  "licenceFiles": [
+    "OFL.txt"
+  ],
+  "source": "https://github.com/google/fonts/tree/main/ofl/archivoblack",
+  "faces": [
+    {
+      "file": "ArchivoBlack-Regular.ttf",
+      "weight": 900
+    }
+  ]
+}

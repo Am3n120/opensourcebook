@@ -1,0 +1,52 @@
+/* Audio: the words fill the screen in a reading face, the controls sit at the bottom, the chrome's line
+   under them. Drawn under the chrome's bar on the app's own colours, tinted with the shape's colour. */
+.astage {
+  --a-tone: var(--pc-tone, var(--primary));
+  position: relative; flex: 1; min-height: 0; height: 100%; display: flex; flex-direction: column;
+  padding-top: calc(var(--chrome-top, 0px) + 10px);
+  background: radial-gradient(120% 70% at 50% 20%, color-mix(in srgb, var(--a-tone) 16%, var(--bg)), var(--bg) 75%);
+  color: var(--text);
+}
+.pc-slot > .astage { position: absolute; inset: 0; }
+
+/* The words scroll by themselves, so the controls stay put. */
+.ascript { flex: 1; min-height: 0; width: 100%; max-width: 680px; margin: 0 auto; overflow-y: auto; overscroll-behavior: contain; padding: 0 var(--space-24) var(--space-32); scrollbar-width: thin; }
+.anote { margin: 0 0 var(--space-12); color: var(--mutedText); font-size: var(--fs-caption); line-height: var(--lh-caption); font-style: italic; }
+.apart { margin: 0 0 14px; }
+.apart h4 { margin: var(--space-8) 0 14px; color: color-mix(in srgb, var(--a-tone) 70%, var(--text)); font-size: var(--fs-label); line-height: var(--lh-label); font-weight: 650; letter-spacing: .01em; }
+.apart p { margin: 0; color: var(--mutedText); font-family: var(--font-serif); font-size: 21px; line-height: 32px; overflow-wrap: anywhere; }
+/* What the maker added beyond the sources: quieter, slanted, and said to be background. */
+.apart.bg p { font-style: italic; font-size: 17px; line-height: 26px; }
+.apart .pcites { vertical-align: 3px; font-family: var(--font); }
+.asent { border-radius: var(--r-4); cursor: pointer; transition: color var(--dur-quick) var(--ease-out); }
+.asent:hover { color: var(--text); }
+.asent:focus-visible { outline: 2px solid var(--a-tone); outline-offset: 1px; }
+.asent.on { color: var(--text); }
+.aword { border-radius: var(--r-4); padding: 0 1px; transition: background var(--dur-quick) var(--ease-out); }
+.aword.on { background: color-mix(in srgb, var(--a-tone) 28%, transparent); }
+@media (prefers-reduced-motion: reduce) { .asent, .aword { transition: none; } }
+.aabout { margin-top: var(--space-16); font-family: var(--font); }
+.aabout:empty { display: none; }
+
+/* Time, back 15, play, forward 15, speed. */
+.actrl { flex: none; display: flex; align-items: center; justify-content: center; gap: var(--space-16); padding: var(--space-12) var(--space-20) calc(22px + env(safe-area-inset-bottom)); }
+.aclock { width: 40px; color: var(--mutedText); font-size: var(--fs-label); line-height: var(--lh-label); font-variant-numeric: tabular-nums; }
+.abtn { display: grid; place-items: center; width: 44px; height: 44px; padding: 0; border: 0; border-radius: 50%; background: none; color: var(--text); cursor: pointer; }
+.abtn:hover { background: var(--fill); }
+.abtn .ico { width: 20px; height: 20px; }
+.afwd .ico { transform: scaleX(-1); }
+.aplay { display: grid; place-items: center; width: 56px; height: 56px; padding: 0; border: 0; border-radius: 50%; background: var(--text); color: var(--bg); cursor: pointer; }
+.aplay:hover { opacity: .9; }
+.aplay .ico { width: 22px; height: 22px; stroke-width: 2.4; fill: currentColor; }
+.aspeed { min-width: 40px; height: 28px; padding: 0 var(--space-8); border: 1px solid var(--borderStrong); border-radius: var(--r-pill); background: none; color: var(--text); font: inherit; font-size: var(--fs-label); line-height: var(--lh-label); font-weight: 650; font-variant-numeric: tabular-nums; cursor: pointer; }
+.aspeed:hover { border-color: var(--mutedText); }
+.anone { display: block; margin: 0 var(--space-24) var(--space-24); padding: var(--space-24) var(--space-16); text-align: center; height: auto; }
+
+/* Outside a chrome the line is its own, along the bottom edge, in the shape's colour. */
+.astage > .pc-line { --pc-tone: var(--a-tone); }
+
+@media (max-width: 600px) {
+  .actrl { gap: var(--space-12); }
+}
+/* In a feed of its own it is one screen like the others. */
+.pplay .astage, .screen9 .astage { height: 100%; }

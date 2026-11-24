@@ -1,0 +1,13 @@
+{
+  "about": "A real map as the stage: the land drawn quietly, then each place lit as it is said (a country filled in, a city or any point marked with its name and a note), a route drawn from stop to stop, and a strip of time along the bottom when the places have dates: where something happened, a voyage, a trade route, a migration, an empire's spread, how something moved across the world over the years.",
+  "tags": ["map", "world map", "geography", "where", "country", "countries", "city", "cities", "place", "places", "location", "route", "voyage", "expedition", "trade route", "migration", "spread", "empire", "continent", "region", "history", "travel", "map and timeline", "over the years"],
+  "params": {
+    "places": { "default": "Lisbon|Cape Town|Mumbai", "about": "the places in the order they are said, split by |: a country, a city, or any point as Name:latitude,longitude" },
+    "notes": { "default": "", "about": "a short note under each place, split by | (empty ones keep their place)" },
+    "dates": { "default": "", "about": "a date for each place, split by |; given, a strip of time runs along the bottom and follows the places (empty ones keep their place)" },
+    "route": { "default": "0", "about": "1 draws a way from each place to the next as it is reached, for a journey, a route or a spread" },
+    "area": { "default": "", "about": "what the map shows: empty fits the places with room round them; world; a continent or part of one such as Europe or Western Asia; or a box as lat,lon,lat,lon" },
+    "highlight": { "default": "", "about": "places drawn larger in the accent, split by |; else every country lit takes the accent" },
+    "when": { "default": "", "about": "moments each place lights up; else when its name is said, or one after another" }
+  }
+}

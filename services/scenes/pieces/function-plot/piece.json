@@ -1,0 +1,14 @@
+{
+  "about": "A coordinate plane with up to three functions drawn from their rules as they are said, and named points marked with a drop to the axis: a graph of y against x, how a curve bends, where two lines meet, a maximum or a root.",
+  "tags": ["graph", "function", "plot", "coordinate plane", "axes", "x and y", "curve", "parabola", "line", "slope", "equation", "maths", "algebra", "calculus", "intersection", "root", "maximum", "minimum", "exponential", "sine"],
+  "params": {
+    "f": { "default": "x^2 - 2", "about": "up to three rules in x, split by |, such as 2*x + 1 or sin(x); ^ is a power" },
+    "names": { "default": "", "about": "names for the curves, then for the points, split by |; a curve's rule is shown when it has none" },
+    "xmin": { "default": "-3", "about": "the left end of the x axis" },
+    "xmax": { "default": "3", "about": "the right end of the x axis" },
+    "ymin": { "default": "", "about": "the bottom of the y axis; worked out when left empty" },
+    "ymax": { "default": "", "about": "the top of the y axis; worked out when left empty" },
+    "points": { "default": "", "about": "points to mark as \"x y\", split by |" },
+    "when": { "default": "", "about": "moments each curve is drawn, then each point; else when they are said, or one after another" }
+  }
+}

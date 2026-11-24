@@ -1,0 +1,14 @@
+# Copy to .dev.vars for `npm run dev`. Never commit real values.
+# The engine's client token (engine/.dev.vars OPENSOURCEBOOK_CLIENT_TOKEN for a local engine).
+# Only the proxy in worker/index.ts reads it; it never reaches the browser.
+OPENSOURCEBOOK_CLIENT_TOKEN=replace-with-the-engine-client-token
+# The engine the proxy forwards to. `npm run dev` in engine/ serves on 8787.
+ENGINE_URL=http://localhost:8787
+# `npm start` lets only the browser it opened use the engine through this proxy (OPENSOURCEBOOK_BROWSER_KEY, cli/opener.ts).
+# A web app run alone with `npm run dev` has no launcher to let a browser in: this turns that check off, so any
+# program on this computer that reaches the port can use the engine with the token above. Never deploy with it unless
+# the site sits behind a login gate (README, "Deploying").
+OPENSOURCEBOOK_BROWSER_GATE=off
+# Settings > Phone reaches the launcher's phone control (cli/phone.ts); `npm start` sets both.
+# PHONE_URL=http://127.0.0.1:5181
+# PHONE_TOKEN=the PHONE_TOKEN in .opensourcebook/secrets.json

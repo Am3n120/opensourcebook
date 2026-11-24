@@ -1,0 +1,12 @@
+{
+  "about": "One quantity before and after, as two columns that rise on their words, with the change written over an arrow between them (a percentage, a difference or how many times): growth, cuts, effects of a change.",
+  "tags": ["before and after", "before", "after", "then and now", "change", "increase", "decrease", "growth", "drop", "effect", "result", "impact", "percent change", "times more", "compare two", "difference", "rise", "fall"],
+  "params": {
+    "from": { "default": "40", "about": "the value before" },
+    "to": { "default": "65", "about": "the value after" },
+    "labels": { "default": "Before|After", "about": "the two columns' names, split by |" },
+    "unit": { "default": "", "about": "written after the numbers" },
+    "show": { "default": "percent", "about": "how the change is written: percent, difference or times" },
+    "when": { "default": "", "about": "moments the two columns rise; else when their names are said, or one after the other" }
+  }
+}

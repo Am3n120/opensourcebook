@@ -1,0 +1,28 @@
+{
+  "name": "opensourcebook-app",
+  "version": "0.1.0",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "description": "Starts Open Sourcebook on this computer with one command: the engine, the web app, the agent connector and the scenes service.",
+  "bin": {
+    "opensourcebook": "cli/opensourcebook.mjs"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "start": "node cli/opensourcebook.mjs",
+    "check": "node cli/opensourcebook.mjs check",
+    "status": "node cli/opensourcebook.mjs status",
+    "devices": "node cli/opensourcebook.mjs devices",
+    "open": "node cli/opensourcebook.mjs open",
+    "update": "node cli/opensourcebook.mjs update",
+    "test": "node --test cli/test/*.test.ts",
+    "typecheck": "tsc --noEmit -p cli"
+  },
+  "devDependencies": {
+    "@types/node": "^24.19.2",
+    "typescript": "^5.9.2"
+  }
+}

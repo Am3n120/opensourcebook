@@ -1,0 +1,571 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A00000000000000000000021 /* OpenSourcebookShare.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A00000000000000000000014 /* OpenSourcebookShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		A00000000000000000000022 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A00000000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A00000000000000000000019;
+			remoteInfo = OpenSourcebookShare;
+		};
+		A0000000000000000000002E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A00000000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A0000000000000000000000A;
+			remoteInfo = OpenSourcebook;
+		};
+		A00000000000000000000039 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A00000000000000000000001 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A0000000000000000000000A;
+			remoteInfo = OpenSourcebook;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A00000000000000000000020 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				A00000000000000000000021 /* OpenSourcebookShare.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		A00000000000000000000006 /* Base.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Base.xcconfig; sourceTree = "<group>"; };
+		A00000000000000000000007 /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
+		A00000000000000000000008 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
+		A00000000000000000000009 /* OpenSourcebook.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OpenSourcebook.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A00000000000000000000014 /* OpenSourcebookShare.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = OpenSourcebookShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		A00000000000000000000025 /* OpenSourcebookTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OpenSourcebookTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A00000000000000000000030 /* OpenSourcebookUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OpenSourcebookUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		A00000000000000000000017 /* Exceptions for "OpenSourcebookShare" folder in "OpenSourcebookShare" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = A00000000000000000000019 /* OpenSourcebookShare */;
+		};
+		A00000000000000000000018 /* Exceptions for "OpenSourcebook" folder in "OpenSourcebookShare" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				DesignSystem/OpenSourcebookTheme.swift,
+			);
+			target = A00000000000000000000019 /* OpenSourcebookShare */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		A00000000000000000000005 /* OpenSourcebook */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				A00000000000000000000018 /* Exceptions for "OpenSourcebook" folder in "OpenSourcebookShare" target */,
+			);
+			path = OpenSourcebook;
+			sourceTree = "<group>";
+		};
+		A00000000000000000000015 /* Shared */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Shared;
+			sourceTree = "<group>";
+		};
+		A00000000000000000000016 /* OpenSourcebookShare */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				A00000000000000000000017 /* Exceptions for "OpenSourcebookShare" folder in "OpenSourcebookShare" target */,
+			);
+			path = OpenSourcebookShare;
+			sourceTree = "<group>";
+		};
+		A00000000000000000000026 /* OpenSourcebookTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = OpenSourcebookTests;
+			sourceTree = "<group>";
+		};
+		A00000000000000000000031 /* OpenSourcebookUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = OpenSourcebookUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A0000000000000000000000C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A0000000000000000000001B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A0000000000000000000002B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A00000000000000000000036 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A00000000000000000000002 = {
+			isa = PBXGroup;
+			children = (
+				A00000000000000000000005 /* OpenSourcebook */,
+				A00000000000000000000016 /* OpenSourcebookShare */,
+				A00000000000000000000015 /* Shared */,
+				A00000000000000000000026 /* OpenSourcebookTests */,
+				A00000000000000000000031 /* OpenSourcebookUITests */,
+				A00000000000000000000004 /* Config */,
+				A00000000000000000000003 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A00000000000000000000003 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A00000000000000000000009 /* OpenSourcebook.app */,
+				A00000000000000000000014 /* OpenSourcebookShare.appex */,
+				A00000000000000000000025 /* OpenSourcebookTests.xctest */,
+				A00000000000000000000030 /* OpenSourcebookUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A00000000000000000000004 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				A00000000000000000000006 /* Base.xcconfig */,
+				A00000000000000000000007 /* Debug.xcconfig */,
+				A00000000000000000000008 /* Release.xcconfig */,
+			);
+			path = Config;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A0000000000000000000000A /* OpenSourcebook */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A00000000000000000000011 /* Build configuration list for PBXNativeTarget "OpenSourcebook" */;
+			buildPhases = (
+				A0000000000000000000000B /* Sources */,
+				A0000000000000000000000C /* Frameworks */,
+				A0000000000000000000000D /* Resources */,
+				A00000000000000000000020 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A00000000000000000000023 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				A00000000000000000000005 /* OpenSourcebook */,
+				A00000000000000000000015 /* Shared */,
+			);
+			name = OpenSourcebook;
+			packageProductDependencies = (
+			);
+			productName = OpenSourcebook;
+			productReference = A00000000000000000000009 /* OpenSourcebook.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A00000000000000000000019 /* OpenSourcebookShare */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A0000000000000000000001D /* Build configuration list for PBXNativeTarget "OpenSourcebookShare" */;
+			buildPhases = (
+				A0000000000000000000001A /* Sources */,
+				A0000000000000000000001B /* Frameworks */,
+				A0000000000000000000001C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				A00000000000000000000016 /* OpenSourcebookShare */,
+				A00000000000000000000015 /* Shared */,
+			);
+			name = OpenSourcebookShare;
+			packageProductDependencies = (
+			);
+			productName = OpenSourcebookShare;
+			productReference = A00000000000000000000014 /* OpenSourcebookShare.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+		A00000000000000000000024 /* OpenSourcebookTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A00000000000000000000027 /* Build configuration list for PBXNativeTarget "OpenSourcebookTests" */;
+			buildPhases = (
+				A0000000000000000000002A /* Sources */,
+				A0000000000000000000002B /* Frameworks */,
+				A0000000000000000000002C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A0000000000000000000002D /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				A00000000000000000000026 /* OpenSourcebookTests */,
+			);
+			name = OpenSourcebookTests;
+			packageProductDependencies = (
+			);
+			productName = OpenSourcebookTests;
+			productReference = A00000000000000000000025 /* OpenSourcebookTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		A0000000000000000000002F /* OpenSourcebookUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A00000000000000000000032 /* Build configuration list for PBXNativeTarget "OpenSourcebookUITests" */;
+			buildPhases = (
+				A00000000000000000000035 /* Sources */,
+				A00000000000000000000036 /* Frameworks */,
+				A00000000000000000000037 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A00000000000000000000038 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				A00000000000000000000031 /* OpenSourcebookUITests */,
+			);
+			name = OpenSourcebookUITests;
+			packageProductDependencies = (
+			);
+			productName = OpenSourcebookUITests;
+			productReference = A00000000000000000000030 /* OpenSourcebookUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A00000000000000000000001 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 2620;
+				LastUpgradeCheck = 2620;
+				TargetAttributes = {
+					A0000000000000000000000A = {
+						CreatedOnToolsVersion = 26.2;
+					};
+					A00000000000000000000019 = {
+						CreatedOnToolsVersion = 27.2;
+					};
+					A00000000000000000000024 = {
+						CreatedOnToolsVersion = 27.2;
+						TestTargetID = A0000000000000000000000A;
+					};
+					A0000000000000000000002F = {
+						CreatedOnToolsVersion = 27.2;
+						TestTargetID = A0000000000000000000000A;
+					};
+				};
+			};
+			buildConfigurationList = A0000000000000000000000E /* Build configuration list for PBXProject "OpenSourcebook" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A00000000000000000000002;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = A00000000000000000000003 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A0000000000000000000000A /* OpenSourcebook */,
+				A00000000000000000000019 /* OpenSourcebookShare */,
+				A00000000000000000000024 /* OpenSourcebookTests */,
+				A0000000000000000000002F /* OpenSourcebookUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A0000000000000000000000D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A0000000000000000000001C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A0000000000000000000002C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A00000000000000000000037 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A0000000000000000000000B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A0000000000000000000001A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A0000000000000000000002A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A00000000000000000000035 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		A00000000000000000000023 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A00000000000000000000019 /* OpenSourcebookShare */;
+			targetProxy = A00000000000000000000022 /* PBXContainerItemProxy */;
+		};
+		A0000000000000000000002D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A0000000000000000000000A /* OpenSourcebook */;
+			targetProxy = A0000000000000000000002E /* PBXContainerItemProxy */;
+		};
+		A00000000000000000000038 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A0000000000000000000000A /* OpenSourcebook */;
+			targetProxy = A00000000000000000000039 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		A0000000000000000000000F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A00000000000000000000007 /* Debug.xcconfig */;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		A00000000000000000000010 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A00000000000000000000008 /* Release.xcconfig */;
+			buildSettings = {
+			};
+			name = Release;
+		};
+		A00000000000000000000012 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = OpenSourcebook/OpenSourcebook.entitlements;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(OPENSOURCEBOOK_BUNDLE_ID_PREFIX)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		A00000000000000000000013 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = OpenSourcebook/OpenSourcebook.entitlements;
+				PRODUCT_BUNDLE_IDENTIFIER = "$(OPENSOURCEBOOK_BUNDLE_ID_PREFIX)";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		A0000000000000000000001E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = OpenSourcebookShare/OpenSourcebookShare.entitlements;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = OpenSourcebookShare/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "$(OPENSOURCEBOOK_BUNDLE_ID_PREFIX).share";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		A0000000000000000000001F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				APPLICATION_EXTENSION_API_ONLY = YES;
+				CODE_SIGN_ENTITLEMENTS = OpenSourcebookShare/OpenSourcebookShare.entitlements;
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = OpenSourcebookShare/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "$(OPENSOURCEBOOK_BUNDLE_ID_PREFIX).share";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+			};
+			name = Release;
+		};
+		A00000000000000000000028 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "$(OPENSOURCEBOOK_BUNDLE_ID_PREFIX).tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OpenSourcebook.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/OpenSourcebook";
+			};
+			name = Debug;
+		};
+		A0000000000000000000003A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "$(OPENSOURCEBOOK_BUNDLE_ID_PREFIX).tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/OpenSourcebook.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/OpenSourcebook";
+			};
+			name = Release;
+		};
+		A00000000000000000000033 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "$(OPENSOURCEBOOK_BUNDLE_ID_PREFIX).uitests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_TARGET_NAME = OpenSourcebook;
+			};
+			name = Debug;
+		};
+		A0000000000000000000003B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "";
+				PRODUCT_BUNDLE_IDENTIFIER = "$(OPENSOURCEBOOK_BUNDLE_ID_PREFIX).uitests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = 1;
+				TEST_TARGET_NAME = OpenSourcebook;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A0000000000000000000000E /* Build configuration list for PBXProject "OpenSourcebook" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A0000000000000000000000F /* Debug */,
+				A00000000000000000000010 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A00000000000000000000011 /* Build configuration list for PBXNativeTarget "OpenSourcebook" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A00000000000000000000012 /* Debug */,
+				A00000000000000000000013 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A0000000000000000000001D /* Build configuration list for PBXNativeTarget "OpenSourcebookShare" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A0000000000000000000001E /* Debug */,
+				A0000000000000000000001F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A00000000000000000000027 /* Build configuration list for PBXNativeTarget "OpenSourcebookTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A00000000000000000000028 /* Debug */,
+				A0000000000000000000003A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A00000000000000000000032 /* Build configuration list for PBXNativeTarget "OpenSourcebookUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A00000000000000000000033 /* Debug */,
+				A0000000000000000000003B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A00000000000000000000001 /* Project object */;
+}

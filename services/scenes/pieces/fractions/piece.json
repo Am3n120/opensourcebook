@@ -1,0 +1,10 @@
+{
+  "about": "Fraction strips of equal length, each cut into equal parts with its parts shaded as it is said, under a whole bar, with a guide when they come to the same amount: equivalent fractions, comparing fractions, parts of a whole, ratios.",
+  "tags": ["fractions", "fraction", "fraction strips", "fraction bars", "equivalent", "equal", "half", "halves", "thirds", "quarters", "parts", "share", "divide", "ratio", "compare fractions", "maths", "numerator", "denominator"],
+  "params": {
+    "fractions": { "default": "1/2|2/4|4/8", "about": "the fractions, one strip each, split by |" },
+    "whole": { "default": "1", "about": "0 leaves out the whole bar at the top" },
+    "guide": { "default": "1", "about": "0 leaves out the line drawn when all the strips come to the same amount" },
+    "when": { "default": "", "about": "moments each strip is shaded; else when its fraction is said, or one after another" }
+  }
+}

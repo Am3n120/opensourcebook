@@ -1,0 +1,42 @@
+/* A set of flashcards: one card per screen (stage.css), turned over, marked got it or not yet.
+   The words of the card are the screen's main thing: the front large in the book face,
+   the back under a dashed rule. In a review the card sits in a box of its own. */
+.fcnone { margin: 0; color: var(--mutedText); }
+.fcreview { padding: 3px 10px; border-radius: var(--r-pill); background: var(--primarySoft); color: var(--primaryText); font-weight: 700; }
+
+.fcstage { display: flex; flex: 1; min-height: 0; }
+.fccard { position: relative; display: flex; flex-direction: column; gap: var(--space-16); flex: 1; min-width: 0; color: var(--text); }
+.fccard.turns { cursor: pointer; }
+.fccard.boxed { padding: var(--space-20); border: 1px solid var(--border); border-radius: 16px; background: var(--surface); }
+.fccard.back .fcback { animation: fcin var(--dur-quick) var(--ease-out); }
+@keyframes fcin { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .fccard.back .fcback { animation: none; } }
+
+.fchead { display: flex; align-items: center; gap: var(--space-8); min-width: 0; }
+.fcsec { min-width: 0; color: var(--mutedText); font-size: var(--fs-label); font-weight: 700; letter-spacing: .04em; text-transform: uppercase; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+.fcface { font-family: var(--font-serif); font-size: 26px; line-height: 36px; }
+.fcback { padding-top: var(--space-16); border-top: 1px dashed var(--borderStrong); font-size: 17px; line-height: 26px; }
+.fcface .blocks, .fcback .blocks { font-size: inherit; line-height: inherit; }
+.fcface .blocks .bq, .fcface .blocks .bopts { font-family: var(--font); }
+.fclast { margin: auto 0 0; color: var(--mutedText); font-size: var(--fs-label); line-height: var(--lh-label); }
+
+/* A cloze's gap: a line in the set's own colour; once turned over, the words it hid. */
+.bcloze .gap { display: inline-block; min-width: 4.5em; margin: 0 3px; border-bottom: 2px solid var(--stage-ink, var(--primary)); vertical-align: -3px; }
+.bcloze .gap.shown { min-width: 0; margin: 0; padding: 0 3px; border-radius: var(--r-4); border-bottom: 0; background: var(--primarySoft); color: var(--primaryText); font-weight: 650; }
+
+.fcsaid { grid-column: 1 / -1; margin: 0; color: var(--mutedText); font-size: var(--fs-caption); text-align: center; }
+.fcsaid.got { color: var(--successText); }
+.fcsaid.missed { color: var(--danger); }
+
+.fcend { display: flex; flex-direction: column; gap: var(--space-8); flex: 1; }
+.fcend h2 { margin: var(--space-8) 0 0; font-size: var(--fs-title); line-height: var(--lh-title); letter-spacing: var(--tracking-tight); }
+.fcbig { margin: 0; font-size: var(--fs-heading); line-height: var(--lh-heading); font-weight: 600; }
+.fcstand { margin: var(--space-8) 0 0; color: var(--mutedText); }
+.fcstand .good { color: var(--successText); font-weight: 650; }
+.fcwhen { margin: 0; font-weight: 600; }
+.fcrule { margin: 0; color: var(--mutedText); font-size: var(--fs-caption); line-height: var(--lh-caption); }
+
+@container (max-width: 420px) {
+  .fcface { font-size: 24px; line-height: 33px; }
+}

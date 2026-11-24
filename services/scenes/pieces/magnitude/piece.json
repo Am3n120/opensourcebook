@@ -1,0 +1,11 @@
+{
+  "about": "A ladder of powers of ten with things placed at their true size, each arriving as it is named, and the span from smallest to largest: orders of magnitude, scale from tiny to vast, sizes, distances, times, money.",
+  "tags": ["scale", "orders of magnitude", "magnitude", "powers of ten", "log scale", "logarithmic", "tiny", "huge", "vast", "size", "sizes", "how big", "how small", "distance", "range", "from small to large", "compare sizes", "zoom"],
+  "params": {
+    "labels": { "default": "Grain of sand|Person|Mountain", "about": "the things, split by |" },
+    "values": { "default": "0.001,1.7,4000", "about": "each thing's value, in one unit" },
+    "unit": { "default": " m", "about": "the unit, written after the powers of ten" },
+    "span": { "default": "1", "about": "1 marks the span from the smallest to the largest with its factor" },
+    "when": { "default": "", "about": "moments each thing arrives; else when its name is said, or one after another" }
+  }
+}

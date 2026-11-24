@@ -1,0 +1,14 @@
+{
+  "about": "A ranked list with bars whose rows slide into their new order on a word: things sorted by a measure, a league table, how a ranking changed when the numbers changed.",
+  "tags": ["ranking", "rank", "ranked", "order", "reorder", "sort", "sorted", "league table", "top", "most", "least", "biggest", "leaderboard", "who is first", "changes places", "list by size", "position", "standings"],
+  "params": {
+    "labels": { "default": "A|B|C|D", "about": "the things ranked, split by |" },
+    "values": { "default": "4,9,6,2", "about": "each thing's value, in the same order" },
+    "then": { "default": "", "about": "new values; the rows re-rank by them when the cue comes" },
+    "order": { "default": "down", "about": "down puts the largest first, up the smallest" },
+    "unit": { "default": "", "about": "written after the values" },
+    "highlight": { "default": "", "about": "one thing drawn in the accent" },
+    "cue": { "default": "", "about": "a word whose saying starts the reordering" },
+    "when": { "default": "", "about": "moments each row arrives, then the moment it reorders; else when they are said, or one after another" }
+  }
+}

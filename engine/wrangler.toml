@@ -1,0 +1,94 @@
+# Open Sourcebook engine: Cloudflare Worker + Queue + D1 + R2.
+# The worker name and the database id below are placeholders, fine for running
+# Open Sourcebook on your own computer (`npm start`). To deploy under your own Cloudflare
+# account, copy this file to wrangler.local.toml (git-ignored), put your own
+# worker name and database id there, and deploy with
+# `npx wrangler deploy --config wrangler.local.toml`; the launcher also uses
+# wrangler.local.toml when it is there. Secrets are set with
+# `wrangler secret put`, never written here (see .dev.vars.example).
+#
+# The database, bucket and queue names below, and their binding names (RE_JOB_DB,
+# RE_ASSETS, RE_BYTE_QUEUE, RE_HEAVY_QUEUE), are from before the product was
+# called Open Sourcebook. They stay: saved projects and files on a person's
+# computer are kept under them, and a deployer's own wrangler.local.toml repeats
+# them. The worker reads each RE_ name as its OPENSOURCEBOOK_ one (src/old-names.ts).
+name = "opensourcebook-engine"
+main = "src/index.ts"
+compatibility_date = "2026-08-08"
+workers_dev = true
+
+# Skills the person's agent reads (skills/, src/chat/agent/work-skills.ts) are bundled as their text.
+[[rules]]
+type = "Text"
+globs = ["**/*.md"]
+fallthrough = true
+
+[vars]
+# OpenAlex polite pool contact (mailto param); set to the deploying account's address.
+OPENALEX_MAILTO = "set-me@example.com"
+GENERATION_PROVIDER = "router"
+GEMINI_MODEL = "gemini-3.6-flash"
+DEEPSEEK_MODEL = "deepseek-v4-flash"
+# Any OpenRouter model id (https://openrouter.ai/models).
+OPENROUTER_MODEL = "google/gemini-3.6-flash"
+# Must match the dead-letter queue below.
+OPENSOURCEBOOK_JOB_DEAD_LETTER_QUEUE = "re-byte-jobs-dlq"
+OPENSOURCEBOOK_JOB_HEAVY_QUEUE = "re-heavy-jobs"
+
+# Durable job + project state.
+[[d1_databases]]
+binding = "RE_JOB_DB"
+database_name = "re-mvp-engine-jobs"
+# A placeholder: `npx wrangler d1 create re-mvp-engine-jobs` gives your own (put it in wrangler.local.toml).
+database_id = "00000000-0000-0000-0000-000000000000"
+migrations_dir = "migrations"
+
+# Harvested source media (PDF figures, video frames, article images), served at /v1/assets/<id>.
+[[r2_buckets]]
+binding = "RE_ASSETS"
+bucket_name = "re-assets"
+preview_bucket_name = "re-assets-preview"
+
+[[queues.producers]]
+binding = "RE_BYTE_QUEUE"
+queue = "re-byte-jobs"
+
+[[queues.consumers]]
+queue = "re-byte-jobs"
+max_batch_size = 5
+# Seconds a message may wait for a fuller batch. Each plan stage is queued
+# after the one before it, so this wait is paid once per stage; 1 keeps it small.
+max_batch_timeout = 1
+max_retries = 3
+# A message that fails max_retries times lands here instead of vanishing.
+# Create once with `npx wrangler queues create re-byte-jobs-dlq`.
+dead_letter_queue = "re-byte-jobs-dlq"
+
+# Heavy items (a format that says making one uses most of this computer, such
+# as drawing a video) have a line of their own, made one at a time, so nothing
+# quick waits behind them: the local runtime hands a queue's consumer one batch
+# at a time (src/jobs/lanes.ts). A big batch and one consumer keep them one at
+# a time (OPENSOURCEBOOK_JOB_HEAVY_QUEUE runs a batch one job after another). Create once
+# with `npx wrangler queues create re-heavy-jobs` when deploying.
+[[queues.producers]]
+binding = "RE_HEAVY_QUEUE"
+queue = "re-heavy-jobs"
+
+[[queues.consumers]]
+queue = "re-heavy-jobs"
+max_batch_size = 10
+max_batch_timeout = 1
+max_retries = 3
+max_concurrency = 1
+dead_letter_queue = "re-byte-jobs-dlq"
+
+# Dead-letter consumer: marks jobs the queue gave up on as `dead`.
+[[queues.consumers]]
+queue = "re-byte-jobs-dlq"
+max_batch_size = 10
+max_batch_timeout = 5
+max_retries = 3
+
+# Browser Rendering: headless Chromium tier for bot-blocked / JS-heavy pages.
+[browser]
+binding = "BROWSER"

@@ -1,0 +1,9 @@
+{
+  "about": "A sentence set large, with chosen words or phrases bracketed and named underneath as each is said: grammar and parts of speech, how a sentence is built, the key terms of a definition, a line of a law or a poem taken apart.",
+  "tags": ["sentence", "grammar", "parts of speech", "subject", "verb", "object", "annotate", "annotated", "label words", "syntax", "language", "parse", "phrase", "clause", "key terms", "close reading", "word by word", "linguistics", "translation"],
+  "params": {
+    "text": { "default": "The cat sat on the mat", "about": "the sentence" },
+    "marks": { "default": "cat:subject|sat:verb", "about": "words of the sentence and what they are, as words:name, split by |" },
+    "when": { "default": "", "about": "moments each mark is drawn; else when its words are said, or one after another" }
+  }
+}

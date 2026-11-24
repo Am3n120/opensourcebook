@@ -1,0 +1,12 @@
+# The `opensourcebook` command, from your own agent's session
+
+Everything the app does is also a command, so the agent you already work with can drive Open Sourcebook from its own session, in any folder: make a project from your files, ask it questions, make a video, flashcards, a quiz, audio or a guide, plan, start, wait, open or fetch what was made, take a quiz or review cards, and talk back to a made thing. `opensourcebook help` lists every command, `opensourcebook <thing> help` says more, and each takes `--json`.
+
+- `opensourcebook skill install` copies the skill on using the command ([`skills/opensourcebook`](../skills/opensourcebook)) to where Claude Code (`~/.claude/skills/`) and Codex (`~/.agents/skills/`) look for skills (OpenCode reads both). It first lists exactly which folders it will write to and asks before going on. `--yes` skips the question, `--dir <folder>` installs into one folder of your choosing, `opensourcebook skill list` shows what is installed and whether it still leads to this copy, and `opensourcebook skill uninstall` removes exactly what install wrote. If you move or delete the app's folder, run `opensourcebook skill install` again from its new place.
+- `opensourcebook make <shape> <what it is about>` makes one thing at once (`opensourcebook make quiz "five questions on chapter 3" --wait`); `opensourcebook plan make` is for a path through the material.
+- `opensourcebook makers` shows who answers the chat and who makes and reviews each shape, and `opensourcebook makers set`, `set-all` and `review` pick. Activity in the app (Settings > Advanced > See what the agents are doing) shows what the agents are doing and what each run took.
+- `opensourcebook check` only checks the computer, without starting anything: Node, ffmpeg, which agents are installed and signed in, whether videos will have a voice or no sound, Chrome.
+- `opensourcebook status` asks each program of a running copy whether it answers, and `opensourcebook stop` stops it.
+- `opensourcebook open` opens a running copy in this computer's browser. Open Sourcebook lets in only the browser it opened, so another program or another account on this computer cannot use it through the web app's address; typing the address by hand shows how to open it.
+
+**Packs.** A pack is knowledge for one kind of work, such as studying for an exam. `opensourcebook pack list` shows them and `opensourcebook pack on <name>` turns one on for a project; the planner and the agent making the project's things then get the pack's skill.

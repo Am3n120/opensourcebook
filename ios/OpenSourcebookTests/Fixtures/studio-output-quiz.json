@@ -1,0 +1,170 @@
+{
+ "output": {
+  "id": "e7f1a750-5a6b-4891-a915-53879cf7a4b8",
+  "type": "quiz",
+  "title": "Photosynthesis Understanding Check",
+  "summary": "A quiz of 8 questions on Energy storage reversal, Electron donor byproducts, Rhodopsin proton pump, Non-CO2 carbon source and 4 more.",
+  "projectId": "0b53b8ea-ddbc-4c59-9b00-c097cfcbaf4a",
+  "planId": "dfc6feef-8fed-4836-836e-32d560fb7cbf",
+  "itemId": "fd015be8-09c8-4197-bd0f-a845010ed95c",
+  "schemaVersion": 1,
+  "costUsd": 0.030479,
+  "createdAt": "2026-11-12T18:31:12.085Z",
+  "updatedAt": "2026-11-12T18:31:12.085Z",
+  "payload": {
+   "title": "Photosynthesis Understanding Check",
+   "passMark": 0.7,
+   "feedback": "afterEach",
+   "questions": [
+    {
+     "options": [
+      "Photosynthesis stores energy by reducing carbon dioxide to carbohydrates, while cellular respiration releases energy by oxidizing carbohydrates to carbon dioxide.",
+      "Photosynthesis releases energy by oxidizing carbohydrates to carbon dioxide, while cellular respiration stores energy by reducing carbon dioxide to carbohydrates.",
+      "Both photosynthesis and cellular respiration store energy by reducing carbon dioxide to carbohydrates, so neither releases energy.",
+      "Photosynthesis stores energy by oxidizing carbohydrates, while cellular respiration releases energy by reducing carbon dioxide to carbohydrates."
+     ],
+     "answer": 0,
+     "optionFeedback": [
+      "Correct: it matches P1's storage in carbohydrate bonds and P4's photosynthesis-as-reduction / respiration-as-oxidation contrast.",
+      "Wrong: it reverses the passage's redox contrast, making respiration reduce carbon dioxide and photosynthesis oxidize carbohydrate.",
+      "Wrong: P4 says photosynthesis and respiration are opposite processes, not both storing energy by the same reduction.",
+      "Wrong: it treats photosynthesis as carbohydrate oxidation; P4 says photosynthesis reduces carbon dioxide to carbohydrates and respiration oxidizes carbohydrates."
+     ],
+     "id": "q1",
+     "kind": "choice",
+     "topic": "Energy storage reversal",
+     "prompt": "A plant stores energy in sugar made during photosynthesis; later, its cells break down that sugar. Using the reduction-oxidation contrast in the passages, which statement best explains the directions of energy storage and release?",
+     "points": 1,
+     "feedback": {
+      "correct": "P1 says photosynthetic organisms store the converted chemical energy within bonds of organic compounds such as carbohydrates. P4 contrasts photosynthesis as reduction of carbon dioxide to carbohydrates with cellular respiration as oxidation of carbohydrates to carbon dioxide, and it says those nutrients are oxidized to release chemical energy. So storage goes with reduction to carbohydrate, and release goes with oxidation of carbohydrate.",
+      "incorrect": "The passages describe photosynthesis as reduction of carbon dioxide to carbohydrates and respiration as oxidation of carbohydrates to carbon dioxide, with oxidation releasing chemical energy. Answers that swap these directions, or say both processes store energy by the same reduction, contradict that contrast."
+     },
+     "cites": [
+      {
+       "passageId": "4a200fe2-e74d-4be1-9055-bdbcf118008b",
+       "sourceId": "473260e8-d8e8-49e0-b33c-82a51e091b60",
+       "chunkId": "4a200fe2-e74d-4be1-9055-bdbcf118008b",
+       "locator": {
+        "charStart": 0,
+        "charEnd": 1442
+       },
+       "quote": "Photosynthetic organisms store the converted chemical energy within the bonds of intracellular organic compounds (complex compounds containing carbon), typically carbohydrates like sugars (mainly glucose, fructose and sucrose), starches, phytoglycogen and cellulose."
+      },
+      {
+       "passageId": "ed2442cf-6610-4c5b-b39c-0eb96632bd37",
+       "sourceId": "473260e8-d8e8-49e0-b33c-82a51e091b60",
+       "chunkId": "ed2442cf-6610-4c5b-b39c-0eb96632bd37",
+       "locator": {
+        "charStart": 5139,
+        "charEnd": 6381
+       },
+       "quote": "In general outline, photosynthesis is the opposite of cellular respiration: while photosynthesis is a process of reduction of carbon dioxide to carbohydrates, cellular respiration is the oxidation of carbohydrates or other nutrients to carbon dioxide."
+      },
+      {
+       "passageId": "ed2442cf-6610-4c5b-b39c-0eb96632bd37",
+       "sourceId": "473260e8-d8e8-49e0-b33c-82a51e091b60",
+       "chunkId": "ed2442cf-6610-4c5b-b39c-0eb96632bd37",
+       "locator": {
+        "charStart": 5139,
+        "charEnd": 6381
+       },
+       "quote": "These nutrients are oxidized to produce carbon dioxide and water, and to release chemical energy to drive the organism's metabolism."
+      }
+     ]
+    },
+    {
+     "options": [
+      "Oxygenic photosynthesis can strip electrons from water and produce oxygen gas, whereas purple bacteria can split hydrogen sulfide and release sulfur instead of oxygen.",
+      "Oxygenic photosynthesis splits hydrogen sulfide and releases sulfur, whereas purple bacteria strip electrons from water and release oxygen.",
+      "Both oxygenic photosynthesis and purple-bacterial photosynthesis use water as the electron donor and release oxygen.",
+      "Purple bacteria use hydrogen sulfide but release oxygen, while oxygenic photosynthesis uses water but releases elemental sulfur."
+     ],
+     "answer": 0,
+     "optionFeedback": [
+      "Correct: it keeps water with oxygen production in oxygenic photosynthesis and hydrogen sulfide with sulfur release in purple bacteria.",
+      "Wrong: it swaps the electron donors and byproducts between oxygenic photosynthesis and purple bacteria.",
+      "Wrong: the passage distinguishes hydrogen sulfide as a reductant in purple bacteria instead of water, and sulfur instead of oxygen.",
+      "Wrong: it makes purple bacteria release oxygen and oxygenic photosynthesis release sulfur, the reverse of the passage's contrast."
+     ],
+     "id": "q2",
+     "kind": "choice",
+     "topic": "Electron donor byproducts",
+     "prompt": "Which comparison of electron donors and byproducts in oxygenic photosynthesis and purple-bacterial photosynthesis is supported by the passages?",
+     "points": 1,
+     "feedback": {
+      "correct": "P2 says light-dependent reactions can strip electrons from water and produce oxygen gas. It also says purple bacteria use bacteriochlorophyll to split hydrogen sulfide as a reductant instead of water, releasing sulfur instead of oxygen. P4 adds that some anoxygenic bacteria produce elemental sulfur instead of molecular oxygen.",
+      "incorrect": "The passages pair water with oxygen production in oxygenic photosynthesis and pair hydrogen sulfide with sulfur release in purple bacteria. Options that swap these pairs, or say both use water and release oxygen, go against P2 and P4."
+     },
+     "cites": [
+      {
+       "passageId": "a60d9d35-6e69-490a-a17a-e5b871636edb",
+       "sourceId": "473260e8-d8e8-49e0-b33c-82a51e091b60",
+       "chunkId": "a60d9d35-6e69-490a-a17a-e5b871636edb",
+       "locator": {
+        "charStart": 1443,
+        "charEnd": 3236
+       },
+       "quote": "In these light-dependent reactions, some energy is used to strip electrons from suitable substances, such as water, producing oxygen gas."
+      },
+      {
+       "passageId": "a60d9d35-6e69-490a-a17a-e5b871636edb",
+       "sourceId": "473260e8-d8e8-49e0-b33c-82a51e091b60",
+       "chunkId": "a60d9d35-6e69-490a-a17a-e5b871636edb",
+       "locator": {
+        "charStart": 1443,
+        "charEnd": 3236
+       },
+       "quote": "use bacteriochlorophyll to split hydrogen sulfide as a reductant instead of water, releasing sulfur instead of oxygen"
+      },
+      {
+       "passageId": "ed2442cf-6610-4c5b-b39c-0eb96632bd37",
+       "sourceId": "473260e8-d8e8-49e0-b33c-82a51e091b60",
+       "chunkId": "ed2442cf-6610-4c5b-b39c-0eb96632bd37",
+       "locator": {
+        "charStart": 5139,
+        "charEnd": 6381
+       },
+       "quote": "There are also many varieties of anoxygenic photosynthesis, used mostly by bacteria, which consume carbon dioxide but do not release oxygen or which produce elemental sulfur instead of molecular oxygen.[16][17]"
+      }
+     ]
+    }
+   ]
+  },
+  "citations": [
+   {
+    "sourceId": "473260e8-d8e8-49e0-b33c-82a51e091b60",
+    "chunkId": "4a200fe2-e74d-4be1-9055-bdbcf118008b",
+    "locator": {
+     "charStart": 0,
+     "charEnd": 1442
+    },
+    "quote": "Photosynthetic organisms store the converted chemical energy within the bonds of intracellular organic compounds (complex compounds containing carbon), typically carbohydrates like sugars (mainly glucose, fructose and sucrose), starches, phytoglycogen and cellulose.",
+    "anchor": "questions[0]"
+   },
+   {
+    "sourceId": "473260e8-d8e8-49e0-b33c-82a51e091b60",
+    "chunkId": "ed2442cf-6610-4c5b-b39c-0eb96632bd37",
+    "locator": {
+     "charStart": 5139,
+     "charEnd": 6381
+    },
+    "quote": "In general outline, photosynthesis is the opposite of cellular respiration: while photosynthesis is a process of reduction of carbon dioxide to carbohydrates, cellular respiration is the oxidation of carbohydrates or other nutrients to carbon dioxide.",
+    "anchor": "questions[0]"
+   }
+  ],
+  "settings": {
+   "questions": 8,
+   "kinds": [
+    "choice"
+   ],
+   "difficulty": "harder",
+   "passMark": 70,
+   "feedback": "afterEach"
+  },
+  "sources": [
+   {
+    "sourceId": "473260e8-d8e8-49e0-b33c-82a51e091b60"
+   }
+  ]
+ }
+}

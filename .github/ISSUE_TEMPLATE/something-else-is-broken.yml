@@ -1,0 +1,47 @@
+name: Something else is broken
+description: A button, a screen, an answer, a quiz or a byte does not work.
+labels: ["bug"]
+body:
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What you did, what you expected and what you saw. A screenshot helps.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: How to make it happen again
+      placeholder: |
+        1. ...
+        2. ...
+    validations:
+      required: false
+  - type: input
+    id: system
+    attributes:
+      label: Your system
+      description: For example macOS 15 on an Apple chip.
+    validations:
+      required: true
+  - type: dropdown
+    id: agent
+    attributes:
+      label: Which agent you use
+      multiple: true
+      options:
+        - Claude Code
+        - Codex
+        - OpenCode
+        - A model API key, no agent
+        - Not sure
+    validations:
+      required: true
+  - type: textarea
+    id: check
+    attributes:
+      label: Output of `npm run check` (optional)
+      render: text
+    validations:
+      required: false

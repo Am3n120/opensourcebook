@@ -1,0 +1,150 @@
+{
+ "about": "Measured from ElevenLabs word times of real narrated scenes (model eleven_v4, the default voice): words and characters of each scene and seconds from its first character to its last. Numbers only, no text.",
+ "scenes": [
+  {
+   "words": 49,
+   "characters": 367,
+   "seconds": 27.84
+  },
+  {
+   "words": 57,
+   "characters": 309,
+   "seconds": 23.2
+  },
+  {
+   "words": 59,
+   "characters": 389,
+   "seconds": 29.68
+  },
+  {
+   "words": 60,
+   "characters": 389,
+   "seconds": 28.96
+  },
+  {
+   "words": 60,
+   "characters": 401,
+   "seconds": 32.4
+  },
+  {
+   "words": 63,
+   "characters": 335,
+   "seconds": 23.04
+  },
+  {
+   "words": 63,
+   "characters": 395,
+   "seconds": 30.48
+  },
+  {
+   "words": 64,
+   "characters": 377,
+   "seconds": 29.6
+  },
+  {
+   "words": 65,
+   "characters": 384,
+   "seconds": 28.48
+  },
+  {
+   "words": 66,
+   "characters": 372,
+   "seconds": 26
+  },
+  {
+   "words": 66,
+   "characters": 417,
+   "seconds": 33.36
+  },
+  {
+   "words": 67,
+   "characters": 508,
+   "seconds": 38.8
+  },
+  {
+   "words": 68,
+   "characters": 418,
+   "seconds": 31.28
+  },
+  {
+   "words": 70,
+   "characters": 420,
+   "seconds": 30.88
+  },
+  {
+   "words": 74,
+   "characters": 462,
+   "seconds": 33.2
+  },
+  {
+   "words": 74,
+   "characters": 419,
+   "seconds": 33.92
+  },
+  {
+   "words": 75,
+   "characters": 478,
+   "seconds": 36.4
+  },
+  {
+   "words": 76,
+   "characters": 443,
+   "seconds": 33.28
+  },
+  {
+   "words": 77,
+   "characters": 422,
+   "seconds": 29.52
+  },
+  {
+   "words": 77,
+   "characters": 438,
+   "seconds": 31.36
+  },
+  {
+   "words": 77,
+   "characters": 444,
+   "seconds": 33.04
+  },
+  {
+   "words": 78,
+   "characters": 417,
+   "seconds": 35.68
+  },
+  {
+   "words": 81,
+   "characters": 479,
+   "seconds": 34.16
+  },
+  {
+   "words": 82,
+   "characters": 457,
+   "seconds": 31.28
+  },
+  {
+   "words": 83,
+   "characters": 593,
+   "seconds": 44.8
+  },
+  {
+   "words": 85,
+   "characters": 440,
+   "seconds": 32.4
+  },
+  {
+   "words": 90,
+   "characters": 483,
+   "seconds": 33.28
+  },
+  {
+   "words": 108,
+   "characters": 585,
+   "seconds": 46.16
+  },
+  {
+   "words": 109,
+   "characters": 586,
+   "seconds": 44.56
+  }
+ ]
+}

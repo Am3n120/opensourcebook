@@ -1,0 +1,14 @@
+{
+  "family": "Patrick Hand",
+  "licence": "SIL Open Font License 1.1",
+  "licenceFiles": [
+    "OFL.txt"
+  ],
+  "source": "https://github.com/google/fonts/tree/main/ofl/patrickhand",
+  "faces": [
+    {
+      "file": "PatrickHand-Regular.ttf",
+      "weight": 400
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+/* The voice picker (VoicePicker.tsx): a small popover under what was clicked,
+   a bottom sheet under 640px. Tokens only; the look follows the maker picker. */
+.vp-layer { position: fixed; inset: 0; z-index: 70; }
+.vp-scrim { position: absolute; inset: 0; background: transparent; }
+.vp {
+  position: fixed; display: flex; flex-direction: column; width: 340px; max-width: calc(100vw - 24px); min-height: 0;
+  background: var(--surface); color: var(--text); border: 1px solid var(--borderStrong); border-radius: 14px;
+  box-shadow: 0 12px 32px rgb(0 0 0 / .35);
+}
+.vp-grab { display: none; }
+.vp-head { display: flex; align-items: center; justify-content: space-between; padding: 12px 8px 0 var(--space-16); font-size: 14px; line-height: 20px; }
+.vp-x { margin: -2px 0; }
+.vp-quiet { margin: 2px 0 0; padding: 0 var(--space-16) 8px; font-size: var(--fs-label); line-height: var(--lh-label); color: var(--mutedText); }
+.vp-pad { padding-block: 12px; }
+.vp-body { flex: 1; min-height: 0; overflow-y: auto; border-top: 1px solid var(--border); }
+.vp-list, .vp-voices { list-style: none; margin: 0; padding: 0; }
+.vp-list > li + li { border-top: 1px solid var(--border); }
+.vp-svc {
+  font: inherit; display: flex; align-items: center; gap: 10px; width: 100%; padding: 10px var(--space-16); border: 0; background: none;
+  color: inherit; text-align: left; text-decoration: none; cursor: pointer;
+}
+.vp-svc:hover:not([disabled]) { background: var(--fill); }
+.vp-svc[disabled] { cursor: default; }
+.vp-tick { width: 16px; height: 16px; flex: none; display: grid; place-items: center; color: var(--primaryText); }
+.vp-tick .ico, .vp-voice .ico { width: 14px; height: 14px; }
+.vp-who { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+.vp-who b { font-size: 14px; line-height: 20px; font-weight: 600; color: var(--text); }
+.vp-who span { font-size: 12.5px; line-height: 18px; color: var(--mutedText); }
+.vp-svc.off .vp-who b { color: var(--mutedText); }
+.vp-setup { flex: none; font-size: var(--fs-caption); line-height: var(--lh-caption); font-weight: 600; color: var(--accentText); }
+.vp-svc.off:hover .vp-setup { text-decoration: underline; }
+.vp-voices { padding: 0 0 6px 42px; }
+.vp-voices li { display: flex; flex-wrap: wrap; align-items: center; gap: 4px; padding-right: 8px; }
+.vp-fail { flex: 1 1 100%; margin: 0; padding: 0 8px 7px 36px; font-size: var(--fs-label); line-height: var(--lh-label); color: var(--accentText); }
+.vp-voices li.on { background: var(--primaryGhost); }
+.vp-play { width: 28px; height: 28px; flex: none; }
+.vp-play .ico { width: 13px; height: 13px; }
+.vp-voice { font: inherit; flex: 1; min-width: 0; display: flex; align-items: center; gap: 8px; padding: 7px 8px; border: 0; background: none; color: inherit; text-align: left; cursor: pointer; }
+.vp-voice[disabled] { cursor: default; }
+.vp-voice .ico { color: var(--primaryText); flex: none; }
+.vp-voice .vp-who b { font-size: 13.5px; line-height: 19px; }
+.vp-sub { padding: 0 var(--space-16) 10px 42px; margin: 0; }
+.vp-err { margin: 0; padding: 8px var(--space-16); font-size: var(--fs-label); line-height: var(--lh-label); color: var(--danger); }
+.vp-foot { margin: 0; padding: 10px var(--space-16); border-top: 1px solid var(--border); font-size: var(--fs-label); line-height: var(--lh-label); }
+.vp-foot a { color: var(--primaryText); font-weight: 600; text-decoration: none; }
+.vp-foot a:hover { text-decoration: underline; }
+
+@media (max-width: 640px) {
+  .vp-scrim { background: var(--scrim); }
+  .vp {
+    inset: auto 0 0 0 !important; width: 100%; max-width: 100%; max-height: calc(100vh - 64px) !important;
+    border: 0; border-top: 1px solid var(--borderStrong); border-radius: 22px 22px 0 0;
+  }
+  .vp-grab { display: block; align-self: center; width: 40px; height: 4px; margin-top: 10px; border-radius: var(--r-pill); background: var(--borderStrong); }
+  .vp-head { padding: var(--space-8) var(--space-8) 0 var(--space-16); font-size: 18px; line-height: 24px; }
+  .vp-x { width: 44px; height: 44px; }
+  .vp-svc { padding: 14px var(--space-16); }
+  .vp-foot { padding: var(--space-12) var(--space-16) calc(20px + env(safe-area-inset-bottom, 0px)); }
+}

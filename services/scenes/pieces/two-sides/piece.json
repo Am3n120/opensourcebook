@@ -1,0 +1,12 @@
+{
+  "about": "Two columns under their headings, each point arriving with its mark as it is said, and a verdict under both at the end: for and against, pros and cons, advantages and drawbacks, myth and fact, then and now.",
+  "tags": ["for and against", "pros and cons", "advantages", "disadvantages", "drawbacks", "benefits", "costs", "two sides", "argument", "debate", "compare", "contrast", "side by side", "versus", "vs", "myth and fact", "trade-off", "weigh up"],
+  "params": {
+    "sides": { "default": "For|Against", "about": "the two headings, split by |" },
+    "left": { "default": "", "about": "the first side's points, split by |" },
+    "right": { "default": "", "about": "the second side's points, split by |" },
+    "marks": { "default": "plus", "about": "plus (+ and −), check (✓ and ✗) or none" },
+    "verdict": { "default": "", "about": "a line written across both at the end" },
+    "when": { "default": "", "about": "moments for the two headings, then each point in turn (alternating sides); else when they are said" }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "about": "A container (tank, jar, tube or battery) whose contents rise or drain to each level as it is said, with named marks up its side: how full, a reserve, a charge, a dose, a supply running low.",
+  "tags": ["level", "fill", "filling", "full", "empty", "drain", "container", "tank", "jar", "tube", "battery", "charge", "reserve", "supply", "capacity", "water", "liquid", "stock", "how full", "running out"],
+  "params": {
+    "levels": { "default": "0.3,0.8", "about": "levels it goes to in turn, from 0 to 1 (or percentages)" },
+    "start": { "default": "0", "about": "the level it starts at" },
+    "shape": { "default": "tank", "about": "tank, jar, tube or battery" },
+    "marks": { "default": "", "about": "names up the side from empty to full, split by |; name@0.4 puts one at a level" },
+    "showPercent": { "default": "0", "about": "1 writes the level as a percentage under it" },
+    "color": { "default": "highlight", "about": "the contents' colour name, such as highlight or accent" },
+    "when": { "default": "", "about": "moments it moves to each level; else one after another" }
+  }
+}

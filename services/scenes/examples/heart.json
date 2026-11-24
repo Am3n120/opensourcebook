@@ -1,0 +1,37 @@
+{
+  "title": "How the heart moves blood",
+  "brief": "Explain how the heart's four chambers and valves keep blood moving one way, for someone who has never studied biology.",
+  "assumes": ["Blood carries oxygen around the body"],
+  "targetSeconds": 60,
+  "style": "auto",
+  "passages": [
+    {
+      "id": "h1",
+      "sourceId": "heart-notes",
+      "sourceTitle": "Study notes: the heart as a pump",
+      "locator": "Part 1",
+      "text": "The heart is a muscle about the size of a closed fist. Inside it are four hollow chambers. The two upper chambers are the atria, which receive blood coming back to the heart. The two lower chambers are the ventricles, which push blood out of the heart. A wall of muscle called the septum keeps the left side and the right side apart, so blood from the two sides never mixes."
+    },
+    {
+      "id": "h2",
+      "sourceId": "heart-notes",
+      "sourceTitle": "Study notes: the heart as a pump",
+      "locator": "Part 2",
+      "text": "The right side of the heart handles blood that has already given up its oxygen to the body. That blood enters the right atrium, drops into the right ventricle, and is pumped to the lungs. In the lungs it picks up fresh oxygen and lets go of carbon dioxide. The left side then takes this oxygen-rich blood from the lungs into the left atrium and the left ventricle, which pumps it out to the whole body."
+    },
+    {
+      "id": "h3",
+      "sourceId": "heart-notes",
+      "sourceTitle": "Study notes: the heart as a pump",
+      "locator": "Part 3",
+      "text": "Valves are flaps of tissue between the chambers and at the exits of the ventricles. They work like one-way doors: pressure from behind pushes them open, and blood trying to flow backwards pushes them shut. The thump of a heartbeat is the sound of valves closing. Without valves, each squeeze would push blood backwards as well as forwards."
+    },
+    {
+      "id": "h4",
+      "sourceId": "heart-notes",
+      "sourceTitle": "Study notes: the heart as a pump",
+      "locator": "Part 4",
+      "text": "Each beat has two phases. First the atria contract and top up the ventricles. Then the ventricles contract hard, the valves between the chambers snap shut, and blood is forced out to the lungs and the body at the same moment. The left ventricle has the thickest wall of all, because it must push blood all the way to the toes and back."
+    }
+  ]
+}

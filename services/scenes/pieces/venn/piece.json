@@ -1,0 +1,12 @@
+{
+  "about": "Two or three overlapping circles, each arriving as it is named, with what belongs to only one written in its own part and what they share in the overlap: similarities and differences, what two things have in common.",
+  "tags": ["venn", "overlap", "in common", "shared", "similarities", "differences", "compare", "contrast", "both", "sets", "intersection", "alike", "unlike", "same and different", "categories", "belongs to both"],
+  "params": {
+    "sets": { "default": "First|Second", "about": "the two or three sets' names, split by |" },
+    "onlyA": { "default": "", "about": "what belongs only to the first, split by |" },
+    "onlyB": { "default": "", "about": "what belongs only to the second, split by |" },
+    "onlyC": { "default": "", "about": "what belongs only to the third, split by |" },
+    "shared": { "default": "", "about": "what they all share, written in the overlap, split by |" },
+    "when": { "default": "", "about": "moments each set arrives, then the shared part; else when they are said, or one after another" }
+  }
+}

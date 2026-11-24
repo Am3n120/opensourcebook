@@ -1,0 +1,10 @@
+{
+  "name": "Open Sourcebook",
+  "short_name": "Open Sourcebook",
+  "icons": [
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml" }
+  ],
+  "theme_color": "#6C5CE7",
+  "background_color": "#0E1015"
+}

@@ -1,0 +1,69 @@
+# Copy to .dev.vars for `wrangler dev`. Never commit real values.
+# The iOS client sends this token; it is not a provider key.
+OPENSOURCEBOOK_CLIENT_TOKEN=replace-with-a-long-local-client-token
+
+# Optional: a model API key, the second way Open Sourcebook makes bytes and quizzes and
+# answers the chat (the first is your own agent, below). "router" uses
+# whichever keys are present. With no key and no agent connected, nothing is
+# made: the app says what is missing before Start. There is no stand-in.
+GENERATION_PROVIDER=router
+GEMINI_API_KEY=
+GEMINI_MODEL=gemini-3.6-flash
+GEMINI_BASE_URL=https://generativelanguage.googleapis.com/v1beta
+DEEPSEEK_API_KEY=
+DEEPSEEK_MODEL=deepseek-v4-flash
+DEEPSEEK_BASE_URL=https://api.deepseek.com
+OPENROUTER_API_KEY=
+OPENROUTER_MODEL=google/gemini-3.6-flash
+OPENROUTER_BASE_URL=https://openrouter.ai/api/v1
+
+# Optional: Jina Reader escalation tier for bot-walled pages.
+JINA_API_KEY=
+
+# Optional: yt-dlp sidecar for deep video/social extraction (services/ytdlp-sidecar).
+YTDLP_SIDECAR_URL=
+YTDLP_SIDECAR_TOKEN=
+
+# Optional, local only: your own agent makes videos as drawn scenes
+# (DECISIONS #54). Start services/scenes (it needs the agent connector below)
+# and put its URL and token here; a URL that is not this machine is refused.
+# Unset, video is shown but not ready (engine/docs/video.md).
+# VIDEO_MAKER_DEFAULT names the maker "auto" picks (default: the first
+# one set up). Never set in production (engine/README.md "The video format").
+SCENES_SERVICE_URL=
+SCENES_SERVICE_TOKEN=
+VIDEO_MAKER_DEFAULT=
+
+# Optional, local only: your own agent answers the chat (DECISIONS #53).
+# Start services/agent-connector with OPENSOURCEBOOK_CONNECTOR_TOKEN set to a long random
+# string, and put the same string here. Off unless CHAT_AGENT_URL is set; a
+# URL that is not this machine is refused. CHAT_AGENT picks the agent the
+# connector runs (claude), CHAT_AGENT_MODEL and CHAT_AGENT_EFFORT override
+# the connector's (default model haiku), CHAT_AGENT_CALLBACK_URL is where the
+# connector calls the engine back (default: the request's origin), and
+# CHAT_AGENT_TIMEOUT_MS caps one turn (default 600000, ten minutes; at most 1800000). Never set in
+# production (engine/README.md "Chats").
+CHAT_AGENT_URL=
+CHAT_AGENT_TOKEN=
+CHAT_AGENT=
+CHAT_AGENT_MODEL=
+CHAT_AGENT_EFFORT=
+CHAT_AGENT_CALLBACK_URL=
+CHAT_AGENT_TIMEOUT_MS=
+
+# Optional, local only: with the connector above set, your agent also makes
+# bytes and quizzes, with no model key (engine/README.md "Bytes and quizzes
+# by your agent"). ITEM_AGENT_MODEL / ITEM_AGENT_EFFORT pick its model and
+# effort for that (CHAT_AGENT_MODEL / _EFFORT, then the connector's, when
+# unset). ITEM_MAKER_DEFAULT is the maker "auto" prefers: agent (the
+# default when it is connected) or api (a model key above).
+ITEM_AGENT_MODEL=
+ITEM_AGENT_EFFORT=
+ITEM_MAKER_DEFAULT=
+
+# Optional: OpenAlex polite pool contact and base URL override.
+OPENALEX_MAILTO=
+OPENALEX_BASE_URL=
+
+# Optional: public base for /v1/assets/<id> when the worker sits behind a custom domain.
+ASSET_PUBLIC_BASE_URL=

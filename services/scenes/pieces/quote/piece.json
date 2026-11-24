@@ -1,0 +1,10 @@
+{
+  "about": "A quotation set large between big quotation marks, with the words that matter swept in the accent as they are said and who said it beneath: a source's own words, a line from a speech, a clause of a text, a saying.",
+  "tags": ["quote", "quotation", "words of", "said", "speech", "source", "citation", "passage", "line", "excerpt", "emphasis", "key words", "highlight words", "famous words", "text", "primary source", "clause", "saying"],
+  "params": {
+    "text": { "default": "Words that matter, said well.", "about": "the quotation" },
+    "emphasis": { "default": "", "about": "words or phrases of it to sweep, in order, split by |" },
+    "by": { "default": "", "about": "who said or wrote it, and where" },
+    "when": { "default": "", "about": "moments each emphasis is swept; else when its words are said, or one after another" }
+  }
+}

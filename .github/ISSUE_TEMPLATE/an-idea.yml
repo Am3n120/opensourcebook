@@ -1,0 +1,28 @@
+name: An idea
+description: Something Open Sourcebook could make, do or be better at.
+labels: ["idea"]
+body:
+  - type: textarea
+    id: idea
+    attributes:
+      label: The idea
+      description: What would you like to be able to do, and what would you give Open Sourcebook to do it with?
+    validations:
+      required: true
+  - type: textarea
+    id: why
+    attributes:
+      label: Why it matters to you
+      description: What you were doing when you wished for it.
+    validations:
+      required: false
+  - type: dropdown
+    id: help
+    attributes:
+      label: Would you like to build it?
+      options:
+        - "No, just an idea"
+        - "Yes, with some guidance"
+        - "Yes, I can do it"
+    validations:
+      required: false

@@ -1,0 +1,40 @@
+# The labels this repository uses, one entry each: the name, a colour and one line saying what it is for.
+# The issue templates in ISSUE_TEMPLATE/ put the first four on by themselves. Nothing reads this file on its own:
+# make or change the labels to match it by hand (Issues, then Labels), or with `gh label create <name> --color <colour>
+# --description "<description>" --force` for each entry.
+
+- name: bug
+  color: d73a4a
+  description: Something that worked, or should work, does not.
+
+- name: install
+  color: fbca04
+  description: Installing, starting, updating or stopping Open Sourcebook went wrong.
+
+- name: video
+  color: 5319e7
+  description: A video came out wrong, did not finish, or could look or sound better.
+
+- name: idea
+  color: a2eeef
+  description: Something Open Sourcebook could make, do or be better at.
+
+- name: docs
+  color: 0075ca
+  description: The README, the guides or the words on screen are wrong, missing or hard to follow.
+
+- name: agents
+  color: 1d76db
+  description: About one of the coding agents Open Sourcebook runs, or adding a new one.
+
+- name: platform
+  color: c5def5
+  description: Only on one system (a Mac, Windows or Linux) or one browser.
+
+- name: good first issue
+  color: 7057ff
+  description: Small and well described; a good place to start.
+
+- name: help wanted
+  color: 008672
+  description: Nobody is working on this, and a pull request is welcome.

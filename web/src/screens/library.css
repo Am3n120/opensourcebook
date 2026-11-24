@@ -1,0 +1,42 @@
+/* Library: everything made, filtered by format and project. (.lit, not .it: the plan card owns .it) */
+.views { display: inline-flex; gap: 2px; padding: 3px; background: var(--fill); border-radius: var(--r-12); }
+.views button { border: 0; background: none; border-radius: var(--r-8); padding: 5px 14px; color: var(--mutedText); font: inherit; font-size: var(--fs-caption); font-weight: 600; }
+.views button[aria-pressed="true"] { background: var(--surface); color: var(--text); box-shadow: 0 1px 2px rgb(15 23 42 / .1); }
+.libtop { display: flex; gap: var(--space-12); align-items: center; flex-wrap: wrap; margin-bottom: var(--space-20); }
+.libtop .sp { flex: 1; }
+.chips { display: flex; flex-wrap: wrap; gap: var(--space-8); }
+.chip { height: 28px; padding: 0 var(--space-12); border: 1px solid var(--border); border-radius: var(--r-pill); background: none; color: var(--mutedText); font: inherit; font-size: var(--fs-label); line-height: var(--lh-label); font-weight: 550; white-space: nowrap; cursor: pointer; }
+.chip:hover { border-color: var(--borderStrong); color: var(--text); }
+.chip[aria-pressed="true"] { border-color: transparent; background: var(--primarySoft); color: var(--primaryText); font-weight: 600; }
+.libtop .libproject { font: inherit; font-size: var(--fs-caption); font-weight: 600; padding: 7px 12px; border: 1px solid var(--border); border-radius: var(--r-12); background: var(--surface); color: var(--text); }
+.libitems { list-style: none; margin: 0; padding: 0; }
+.libitems.gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: var(--space-16); }
+.libitems.list { border-radius: 18px; background: var(--surface); box-shadow: 0 0 0 1px rgb(var(--edge) / .05); overflow: hidden; }
+.lit .go { display: flex; text-decoration: none; color: inherit; }
+.gallery .lit .go { flex-direction: column; overflow: hidden; border: 1px solid var(--border); border-radius: 16px; background: var(--surface); transition: border-color var(--dur-quick) var(--ease-out), box-shadow var(--dur-quick) var(--ease-out); }
+.gallery .lit .go:hover { border-color: var(--borderStrong); box-shadow: var(--shadow-card); }
+.gallery .lit .face { border-radius: 0; }
+.gallery .lit .face .said { padding-top: 16px; }
+.gallery .lit .face .ftile { left: 12px; bottom: 12px; }
+.list .lit + .lit { border-top: 1px solid var(--border); }
+.list .lit .go { align-items: center; gap: var(--space-12); padding: 12px 16px; }
+.list .lit .go:hover { background: var(--bg); }
+.lit .tx { display: flex; flex-direction: column; gap: 4px; flex: 1; min-width: 0; }
+.gallery .lit .tx { padding: 12px 14px; gap: 2px; }
+.lit .tt { font-weight: 600; font-size: var(--fs-caption); line-height: 20px; }
+.gallery .lit .tt { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.list .lit .tt { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.lit .sb { display: flex; min-width: 0; white-space: pre; color: var(--mutedText); font-size: var(--fs-caption); line-height: var(--lh-caption); }
+.more { margin-top: var(--space-16); }
+
+.lit .gl { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--mutedText); font-size: var(--fs-caption); line-height: var(--lh-caption); }
+.lit .sb .sbl { flex: 0 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+.lit .sb .sbr { flex: none; }
+.lit .sb .ok { color: var(--successText); }
+
+/* The ⋯ on a thing that can be deleted on its own: over the card's corner, or at the end of the row. */
+.lit { position: relative; }
+.lit .rmenu { position: absolute; top: 8px; right: 8px; }
+.gallery .lit .rmenu .ib { background: var(--surface); box-shadow: 0 0 0 1px var(--border); }
+.list .lit .rmenu { top: 0; bottom: 0; right: 12px; display: flex; align-items: center; }
+.list .lit:has(.rmenu) .go { padding-right: 52px; }

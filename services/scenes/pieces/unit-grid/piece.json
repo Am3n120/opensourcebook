@@ -1,0 +1,12 @@
+{
+  "about": "A grid of units (squares, dots or little people) that colour in group by group: how many out of a total, one in four, odds and rates made countable.",
+  "tags": ["out of", "how many", "count", "counting", "proportion", "rate", "ratio", "percentage", "people", "population", "in every", "chance", "frequency", "risk", "waffle", "icons", "survey", "sample"],
+  "params": {
+    "total": { "default": "100", "about": "how many units in all (up to 400)" },
+    "count": { "default": "25", "about": "how many units each group takes, split by commas" },
+    "names": { "default": "", "about": "what each group is, split by |" },
+    "restName": { "default": "", "about": "what the uncoloured units are, listed after the groups" },
+    "shape": { "default": "square", "about": "square, dot or person" },
+    "when": { "default": "", "about": "moments each group colours in; else when its name is said, or one after another" }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "about": "Growth by repeated multiplying made countable: dots that multiply out of their parents step by step on the words, with the count and the multiplication written beneath: exponential growth, doubling, bacteria, compound interest, rumours spreading.",
+  "tags": ["doubling", "doubles", "exponential", "exponential growth", "grows fast", "multiply", "multiplies", "compound", "compound interest", "bacteria", "population growth", "spread", "viral", "chain reaction", "times two", "powers", "snowball", "generations"],
+  "params": {
+    "steps": { "default": "5", "about": "how many times it multiplies (up to 9)" },
+    "factor": { "default": "2", "about": "what it multiplies by each step" },
+    "start": { "default": "1", "about": "how many there are at first" },
+    "unit": { "default": "", "about": "written after the count" },
+    "when": { "default": "", "about": "moments of each step; else one after another" }
+  }
+}

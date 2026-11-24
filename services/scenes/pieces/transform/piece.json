@@ -1,0 +1,12 @@
+{
+  "about": "One thing passing down a line of stages that each change it, sliding from stage to stage and changing shape and fill as it goes, with what is done on the left, what it is now on the right and a copy left at each stage: raw to finished, how something is made, a thing that changes at each step, draft to signed, a life cycle that turns one thing into another.",
+  "tags": ["transform", "transformation", "becomes", "turns into", "changes", "a thing that changes at each step", "raw to finished", "how it is made", "made from", "manufacturing", "production", "refining", "processing", "stages", "steps", "draft to final", "metamorphosis", "growth", "evolves", "goes through", "before and after"],
+  "params": {
+    "stages": { "default": "Gather|Shape|Finish", "about": "what is done at each stage, split by |" },
+    "states": { "default": "Raw|Rough|Finished", "about": "what the thing is after each stage, split by |" },
+    "shapes": { "default": "", "about": "the thing's outline at each stage, split by |: rough, round, square, sheet, wide, tall, drop, star, hexagon, heart; left empty it starts rough and ends round" },
+    "sizes": { "default": "", "about": "how big the thing is at each stage, split by commas, such as 1,2,4 for a thing that grows; left empty it keeps its size" },
+    "stamp": { "default": "", "about": "a word stamped across the finished thing at the end, such as DONE or SIGNED" },
+    "when": { "default": "", "about": "moments the thing reaches each stage; else when its state (or the stage) is said, or one after another" }
+  }
+}

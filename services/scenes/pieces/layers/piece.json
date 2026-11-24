@@ -1,0 +1,11 @@
+{
+  "about": "A cross-section of layers stacked top to bottom, each band as thick as it really is, coming forward as it is named with its name and a note beside it, and a probe that can sink through them: the Earth's layers, soil and rock, the atmosphere, skin, the layers of a system.",
+  "tags": ["layers", "cross-section", "cross section", "strata", "stack", "levels", "depth", "beneath", "underground", "earth layers", "crust", "atmosphere", "skin", "soil", "tiers", "inside", "sediment", "stacked"],
+  "params": {
+    "layers": { "default": "Top|Middle|Bottom", "about": "the layers from top to bottom, split by |" },
+    "sizes": { "default": "", "about": "each layer's thickness, split by commas; equal when left out" },
+    "notes": { "default": "", "about": "a note for each layer, such as its depth, split by |" },
+    "probe": { "default": "0", "about": "1 sinks a marker through the layers as each is named" },
+    "when": { "default": "", "about": "moments each layer comes forward; else when its name is said, or one after another" }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "about": "A whole cut into its parts as a pie or a ring, each slice arriving as it is named, with a legend of names and shares: proportions, budgets, make-up, who holds what share.",
+  "tags": ["part of a whole", "parts", "proportion", "share", "percentage", "percent", "fraction", "breakdown", "composition", "made of", "pie chart", "donut", "ring", "split", "slice", "budget", "mix"],
+  "params": {
+    "labels": { "default": "First|Second|Third", "about": "the parts, split by |" },
+    "values": { "default": "50,30,20", "about": "a size for each part; shares are worked out from them" },
+    "highlight": { "default": "", "about": "parts to draw in the accent (the rest go quiet), split by |" },
+    "ring": { "default": "0", "about": "1 draws a ring with room in the middle" },
+    "middle": { "default": "", "about": "words in the ring's middle, such as the total" },
+    "when": { "default": "", "about": "moments each slice arrives; else when its name is said, or one after another" }
+  }
+}

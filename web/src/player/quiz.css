@@ -1,0 +1,54 @@
+/* A quiz on the player's screen (stage.css): one question, its answers as rows, the verdict
+   and why under them, one button on. The end is the result: the score large, what was missed,
+   two ways on. The pieces (quiz/) keep their own classes; here they take this look. */
+.qznone, .qzd { margin: 0; color: var(--mutedText); font-size: var(--fs-caption); line-height: var(--lh-caption); }
+.qzq, .qzstart, .qzres { display: flex; flex-direction: column; gap: var(--space-12); flex: 1; min-height: 0; }
+.qz .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+.qzprompt { margin: 0; font-size: var(--fs-heading); line-height: var(--lh-heading); font-weight: 650; letter-spacing: -.01em; text-wrap: pretty; }
+.qz .qdisplay { margin: 0; padding: var(--space-12); border-radius: var(--r-12); background: var(--surface); }
+
+/* Rows to answer with: a choice's options, an order's items. */
+.qz .qopts { gap: var(--space-8); }
+.qz .qo { padding: 14px; border: 1px solid var(--border); border-radius: var(--r-12); background: var(--surface); font-size: 15px; line-height: 21px; font-weight: 500; }
+.qz .qo .k { background: none; border: 1px solid var(--borderStrong); color: var(--mutedText); }
+.qz .qo.right { border-color: var(--success); background: var(--successSoft); }
+.qz .qo.wrong { border-color: var(--danger); background: var(--dangerSoft); }
+.qz .qkind > .btn { align-self: stretch; height: auto; padding: 12px var(--space-16); border: 1px solid var(--borderStrong); border-radius: var(--r-pill); background: transparent; color: var(--text); font-weight: 650; }
+.qz .order { display: flex; flex-direction: column; gap: var(--space-8); margin: 0; padding: 0; list-style: none; }
+.qz .order li { display: flex; align-items: center; gap: 10px; padding: 14px; border: 1px solid var(--border); border-radius: var(--r-12); background: var(--surface); font-size: 15px; line-height: 21px; }
+.qz .order li .n { color: var(--mutedText); font-weight: 700; font-variant-numeric: tabular-nums; }
+.qz .order li .t { flex: 1; min-width: 0; }
+.qz .order li .ico { width: 18px; height: 18px; color: var(--successText); }
+.qz .order li .goes { color: var(--danger); font-size: var(--fs-label); line-height: var(--lh-label); white-space: nowrap; }
+.qz .order li .mv { display: inline-flex; gap: var(--space-4); }
+.qz .qkind .order li.right { border-color: var(--success); background: var(--successSoft); }
+.qz .qkind .order li.right .n { color: var(--successText); }
+.qz .qkind .order li.wrong { border-color: var(--danger); background: var(--dangerSoft); }
+.qz .qkind .order li.wrong .n { color: var(--danger); }
+
+/* The verdict on its own line, in the colour of how it went; then why, and where it says so. */
+.qz .fb2 { margin: 0; padding: 0; border-radius: 0; background: none; color: var(--mutedText); font-size: 14px; line-height: 21px; }
+.qz .fb2 > b:first-child { display: block; margin-bottom: var(--space-4); font-size: var(--fs-caption); line-height: var(--lh-caption); }
+.qz .fb2.right > b:first-child { color: var(--successText); }
+.qz .fb2.partial > b:first-child { color: var(--accentText); }
+.qz .fb2.wrong > b:first-child, .qz .fb2.skipped > b:first-child { color: var(--danger); }
+
+.qzkick { margin: 0; color: var(--mutedText); font-size: var(--fs-label); font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+.qzstart h2 { margin: 0; font-size: var(--fs-title); line-height: var(--lh-title); letter-spacing: var(--tracking-tight); }
+
+/* The result. */
+.qzbig { margin: var(--space-24) 0 0; text-align: center; font-size: 44px; line-height: 52px; font-weight: 800; letter-spacing: var(--tracking-tight); font-variant-numeric: tabular-nums; }
+.qzpct { margin: 0; text-align: center; color: var(--mutedText); font-size: var(--fs-caption); line-height: var(--lh-caption); }
+.qzc { text-align: center; }
+/* The two ways on always show: a long list of what was missed scrolls inside its box, and on a
+   screen too short even for that, the buttons stay at the foot while the screen scrolls. */
+.qzmiss { display: flex; flex-direction: column; flex: 0 1 auto; min-height: min(9em, 40%); margin-top: var(--space-12); border: 1px solid var(--border); border-radius: var(--r-12); background: var(--surface); overflow: hidden; }
+.qzmiss ul { min-height: 0; overflow-y: auto; scrollbar-width: thin; }
+.qzres > .pstage-foot { position: sticky; bottom: 0; z-index: 1; margin: 0 -2px; padding: var(--space-8) 2px 0; background: var(--bg); }
+.qzmiss h3 { margin: 0; padding: var(--space-12); color: var(--mutedText); font-size: var(--fs-caption); line-height: var(--lh-caption); font-weight: 650; }
+.qzmiss ul { margin: 0; padding: 0; list-style: none; }
+.qzmiss li { padding: var(--space-12); border-top: 1px solid var(--border); color: var(--mutedText); font-size: var(--fs-caption); line-height: 21px; }
+.qzmiss li b { color: var(--text); }
+.qznote { padding: var(--space-12); border: 1px solid var(--border); border-radius: var(--r-12); }
+.qznext { padding: var(--space-12); border-radius: var(--r-12); background: var(--primaryGhost); }
+.qznext b { color: var(--text); font-weight: 650; }

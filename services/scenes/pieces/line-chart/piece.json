@@ -1,0 +1,14 @@
+{
+  "about": "A line over time on two axes that draws itself point by point as the years or steps are said: a quantity growing, falling or levelling off, optionally beside a second line.",
+  "tags": ["over time", "trend", "growth", "grow", "rise", "fall", "decline", "change", "history", "time series", "graph", "chart", "line graph", "curve", "data", "increase", "decrease", "years"],
+  "params": {
+    "values": { "default": "2,3,5,8,13", "about": "the numbers in order, one per point" },
+    "labels": { "default": "1980|1990|2000|2010|2020", "about": "what each point is (years, steps), split by |" },
+    "unit": { "default": "", "about": "written after numbers, such as % or bn" },
+    "name": { "default": "", "about": "what the line is, written at the top" },
+    "second": { "default": "", "about": "a second line's numbers, to compare against" },
+    "secondName": { "default": "", "about": "what the second line is" },
+    "when": { "default": "", "about": "moments the line reaches each point, such as @2,@5,@9; else when each label is said, or spread out" },
+    "secondWhen": { "default": "", "about": "moments for the second line's points" }
+  }
+}

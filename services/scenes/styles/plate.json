@@ -1,0 +1,309 @@
+{
+  "name": "plate",
+  "label": "Textbook plate",
+  "offered": false,
+  "description": "A plate from an old reference book: fine, even pen lines on ivory paper, shapes shaded with close cross-hatching, a classic book serif throughout, labels on thin leader lines, one Prussian blue for what matters, slow even motion and a quiet fade between plates, with captions set like a figure caption. Suits anatomy, botany, zoology, geology, instruments and anything best seen as a labelled drawing.",
+  "palette": {
+    "paper": "#f3f0e4",
+    "ink": "#16181b",
+    "accent": "#24577a",
+    "highlight": "#b8862b"
+  },
+  "fonts": {
+    "caption": "Baskervville",
+    "title": "Baskervville",
+    "body": "Baskervville"
+  },
+  "art": {
+    "scene": "Scientific textbook plate: fine black engraved pen lines with close cross hatching on ivory paper, one Prussian blue accent, the subject accurate, sharp and instantly recognizable.",
+    "object": "Engraved scientific illustration of a single specimen or object shown whole on plain ivory paper: fine black lines, cross hatching for shade, nothing around it.",
+    "diagram": "Clean labelled scientific plate on ivory paper: fine black lines, cross hatching, one Prussian blue accent, simple clear shapes, one idea only."
+  },
+  "realAssets": "proof",
+  "grain": 0,
+  "vignette": 0.12,
+  "voice": {
+    "id": "JBFqnCBsd6RMkjVDRZzb",
+    "model": "eleven_v4"
+  },
+  "render": {
+    "line": {
+      "pen": "ink",
+      "weight": 0.62,
+      "wobble": 0.5,
+      "pressure": 0.55
+    },
+    "fill": {
+      "kind": "hatch",
+      "base": 0.9,
+      "spacing": 7,
+      "angle": 40,
+      "cross": 1
+    },
+    "surface": {
+      "kind": "paper",
+      "grain": 0.25,
+      "smudge": 0.06,
+      "light": 0.06
+    },
+    "type": {
+      "title": "\"Baskervville\", serif",
+      "body": "\"Baskervville\", serif",
+      "mono": "\"PT Mono\", monospace",
+      "tracking": 0.015,
+      "halo": 0.7
+    },
+    "motion": {
+      "feel": "steady",
+      "frames": 22,
+      "ease": "smooth",
+      "enter": "draw",
+      "cut": "dip",
+      "cutFrames": 12
+    },
+    "read": {
+      "text": 0.032,
+      "dim": 0.5
+    },
+    "caption": {
+      "kind": "strip",
+      "size": 56,
+      "words": 6
+    }
+  },
+  "design": {
+    "moves": {
+      "leans": [
+        {
+          "move": "draw",
+          "why": "an engraving is built line by line, so a plate that draws itself on reads as being made with care"
+        },
+        {
+          "move": "fade",
+          "why": "a reference plate is still; labels that fade in beside it keep the drawing calm"
+        },
+        {
+          "move": "zoom",
+          "why": "a plate rewards close looking: moving in on one labelled part is how a reader studies it"
+        }
+      ]
+    },
+    "colors": {
+      "card": "#faf8ef",
+      "faded": "#6f6b62",
+      "rust": "#8f3a22",
+      "tint": "#e3dcc6"
+    },
+    "scale": {
+      "base": 0.045,
+      "ratio": 1.3
+    },
+    "roles": {
+      "title": {
+        "color": "ink",
+        "step": 3,
+        "weight": 400,
+        "font": "title",
+        "case": "asis",
+        "glow": 0
+      },
+      "heading": {
+        "color": "ink",
+        "step": 0,
+        "weight": 700,
+        "font": "title",
+        "case": "upper",
+        "glow": 0
+      },
+      "body": {
+        "color": "ink",
+        "step": 0,
+        "weight": 400,
+        "font": "body",
+        "case": "asis",
+        "glow": 0
+      },
+      "label": {
+        "color": "ink",
+        "step": -1,
+        "weight": 400,
+        "font": "body",
+        "case": "asis",
+        "glow": 0
+      },
+      "note": {
+        "color": "faded",
+        "step": -1,
+        "weight": 400,
+        "font": "body",
+        "case": "asis",
+        "glow": 0
+      },
+      "key": {
+        "color": "accent",
+        "step": 1,
+        "weight": 700,
+        "font": "body",
+        "case": "asis",
+        "glow": 0
+      },
+      "answer": {
+        "color": "accent",
+        "step": 2,
+        "weight": 700,
+        "font": "title",
+        "case": "asis",
+        "glow": 0
+      },
+      "muted": {
+        "color": "faded",
+        "step": 0,
+        "weight": 400,
+        "font": "body",
+        "case": "asis",
+        "glow": 0
+      },
+      "wrong": {
+        "color": "rust",
+        "step": 0,
+        "weight": 400,
+        "font": "body",
+        "case": "asis",
+        "glow": 0
+      },
+      "code": {
+        "color": "ink",
+        "step": 0,
+        "weight": 400,
+        "font": "mono",
+        "case": "asis",
+        "glow": 0
+      },
+      "caption": {
+        "color": "ink",
+        "step": 0,
+        "weight": 400,
+        "font": "body",
+        "case": "asis",
+        "glow": 0,
+        "back": "card"
+      },
+      "panel": {
+        "color": "ink",
+        "back": "card",
+        "stroke": 0.5
+      },
+      "pointer": {
+        "color": "accent",
+        "stroke": 0.7,
+        "glow": 0
+      }
+    },
+    "surfaces": {
+      "paper": {
+        "text": "ink",
+        "roles": [
+          "title",
+          "heading",
+          "body",
+          "label",
+          "note",
+          "key",
+          "answer",
+          "muted",
+          "wrong",
+          "code",
+          "pointer"
+        ]
+      },
+      "card": {
+        "text": "ink",
+        "roles": [
+          "title",
+          "heading",
+          "body",
+          "label",
+          "note",
+          "key",
+          "answer",
+          "muted",
+          "wrong",
+          "code",
+          "caption"
+        ]
+      },
+      "tint": {
+        "text": "ink",
+        "roles": [
+          "key",
+          "body",
+          "answer"
+        ]
+      },
+      "highlight": {
+        "text": "ink",
+        "roles": []
+      },
+      "accent": {
+        "text": "card",
+        "roles": []
+      }
+    },
+    "elements": {
+      "panel": {
+        "radius": 0,
+        "edge": "ink",
+        "edgeWidth": 1.5,
+        "shadow": 0,
+        "rotate": 0,
+        "pad": 0.9
+      },
+      "caption": {
+        "rotate": 0,
+        "pad": 0.4,
+        "rule": "none",
+        "ruleWidth": 0,
+        "edge": "none"
+      },
+      "label": {
+        "back": "card",
+        "leader": "ink",
+        "leaderWidth": 1.5
+      },
+      "table": {
+        "lines": "header",
+        "rule": "ink",
+        "ruleWidth": 1.2,
+        "header": "heading",
+        "zebra": "none"
+      },
+      "pointer": {
+        "head": "open",
+        "ring": "clean",
+        "width": 3
+      },
+      "highlight": {
+        "kind": "underline",
+        "color": "accent",
+        "opacity": 1
+      },
+      "dim": {
+        "amount": 0.42,
+        "keepHue": false,
+        "glow": 0,
+        "stroke": 0.6
+      }
+    },
+    "picture": {
+      "saturation": 0.25,
+      "contrast": 1.08,
+      "brightness": 1.0,
+      "tint": "card",
+      "tintAmount": 0.25,
+      "border": "ink",
+      "borderWidth": 2,
+      "shadow": 0,
+      "rotate": 0
+    }
+  }
+}

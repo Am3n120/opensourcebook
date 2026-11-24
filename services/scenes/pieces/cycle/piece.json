@@ -1,0 +1,11 @@
+{
+  "about": "Stages around a circle joined by arrows, each arriving as it is named, then a marker running round and round: anything that repeats and returns to its start, with a word in the middle if wanted.",
+  "tags": ["cycle", "loop", "circle", "repeat", "repeats", "round", "life cycle", "stages", "phases", "recurring", "seasons", "feedback", "circular", "process that repeats", "water cycle", "again and again", "rotation", "routine"],
+  "params": {
+    "stages": { "default": "First|Second|Third|Fourth", "about": "the stages in order round the circle, split by |" },
+    "middle": { "default": "", "about": "words in the middle of the circle" },
+    "run": { "default": "1", "about": "0 leaves out the marker that runs round once all stages are there" },
+    "turn": { "default": "4", "about": "seconds for the marker to go round once" },
+    "when": { "default": "", "about": "moments each stage arrives; else when its name is said, or one after another" }
+  }
+}

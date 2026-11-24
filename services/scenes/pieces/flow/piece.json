@@ -1,0 +1,13 @@
+{
+  "about": "A flow chart built down the frame as it is said: stages joined by arrows, a question with a yes or no (or any named) second way that leads to an outcome or back to an earlier stage, and a named thing passing along the arrows and taking the ways it takes: a process with a choice, a procedure with checks, an order through a factory, a request through a system.",
+  "tags": ["flow chart", "flowchart", "flow", "process", "procedure", "steps", "stages", "process with a choice", "decision", "branch", "yes or no", "if not", "check", "approval", "rejected", "goes through", "passes through", "workflow", "pipeline", "sent back", "arrows"],
+  "params": {
+    "steps": { "default": "Start|Check?|Finish", "about": "the stages in order down the main way, split by |; a question can end with ?" },
+    "notes": { "default": "", "about": "a short note in each stage, split by | (empty ones keep their place)" },
+    "ways": { "default": "|no:Stop|", "about": "each stage's second way as WORD:OUTCOME, or WORD:>N to go back to stage N (from 1), split by | (empty ones keep their place)" },
+    "main": { "default": "", "about": "the word on each main arrow down, split by |; left empty it is the opposite of the second way's word (yes for no, pass for fail)" },
+    "path": { "default": "", "about": "the words the thing takes at each question it meets, in order, split by |; a question it meets with no word left, or another word, it passes by the main way" },
+    "thing": { "default": "", "about": "the name of what passes along, written on its tag; else a plain dot" },
+    "when": { "default": "", "about": "moments the thing reaches each stage or outcome on its way, in order; else when their names are said, or one after another" }
+  }
+}

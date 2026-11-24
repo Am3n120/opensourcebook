@@ -1,0 +1,12 @@
+{
+  "about": "Framed stages down the frame joined by arrows with a live progress marker riding from step to step as each is named: a single linear sequence, pipeline, or chain of causes.",
+  "tags": ["process", "steps", "stages", "pipeline", "procedure", "how it works", "sequence", "flow", "chain", "cause and effect", "causes", "effects", "leads to", "then", "recipe", "method", "workflow", "one after another", "order", "domino"],
+  "params": {
+    "steps": { "default": "First|Second|Third", "about": "the steps in order, split by |" },
+    "notes": { "default": "", "about": "a short note under each step, split by |" },
+    "links": { "default": "", "about": "words on the arrows between steps, split by |" },
+    "numbered": { "default": "1", "about": "0 drops the numbers and uses small dots" },
+    "token": { "default": "1", "about": "0 turns off the progress marker riding down the steps" },
+    "when": { "default": "", "about": "moments each step arrives; else when its words are said, or one after another" }
+  }
+}

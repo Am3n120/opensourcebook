@@ -1,0 +1,11 @@
+{
+  "about": "Bars side by side that grow to their values as each is named: compare amounts, counts, sizes or shares across a few things.",
+  "tags": ["compare", "comparison", "amount", "quantity", "how much", "how many", "chart", "bar chart", "column", "ranking", "bigger", "smaller", "values", "statistics", "data", "measure"],
+  "params": {
+    "labels": { "default": "First|Second|Third", "about": "the things compared, split by | (or commas)" },
+    "values": { "default": "3,5,8", "about": "a number for each, in the same order" },
+    "unit": { "default": "", "about": "written after each number, such as % or kg" },
+    "highlight": { "default": "", "about": "labels drawn in the accent, split by |" },
+    "when": { "default": "", "about": "moments each bar grows, such as @3,@7,@11; else each grows when its label is said, or they follow one another" }
+  }
+}

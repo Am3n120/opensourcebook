@@ -1,0 +1,20 @@
+{
+  "name": "opensourcebook-agent-connector",
+  "private": true,
+  "license": "MIT",
+  "type": "module",
+  "description": "Runs the person's own coding agent (Claude Code, Codex, OpenCode) for Open Sourcebook's chat and work, on their computer.",
+  "scripts": {
+    "start": "node --env-file-if-exists=.env src/main.ts",
+    "check-box": "node --env-file-if-exists=.env scripts/check-box.ts",
+    "test": "node --test test/*.test.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "engines": {
+    "node": ">=24"
+  },
+  "devDependencies": {
+    "@types/node": "^24.19.2",
+    "typescript": "^5.9.2"
+  }
+}

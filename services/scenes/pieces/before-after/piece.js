@@ -1,0 +1,40 @@
+// Two columns of one quantity, then and now, with the change between them worked out and written on the arrow.
+const a = Number(args.from), b = Number(args.to);
+const names = items(args.labels).map(String);
+const unit = String(args.unit || "");
+const U = Math.min(W, H);
+const L = clamp(U * 0.095, 46, 110);
+const at = beats(2, args.when, names);
+const dec = Number.isInteger(a) && Number.isInteger(b) ? 0 : 1;
+const fmt = (v) => v.toFixed(dec) + unit;
+const top = Math.max(Math.abs(a), Math.abs(b), 1e-9);
+const colW = Math.min(W * 0.3, L * 4);
+const base = H - L * 1.6;
+const room = base - L * 4.2;
+const xs = [W * 0.22, W * 0.78];
+[a, b].forEach((v, i) => {
+  const h = Math.max(6, (Math.abs(v) / top) * room);
+  const col = path("col" + i, { x: xs[i], y: base, points: rect(-colW / 2, -h, colW, h), fill: i ? "accent" : "highlight", stroke: "ink", strokeWidth: 5, closed: 1, scaleY: 0 });
+  key(col, "scaleY", T0, 0);
+  key(col, "scaleY", at[i], 0, "step");
+  key(col, "scaleY", at[i] + 20, 1, "out");
+  const num = text("value" + i, { x: xs[i], y: base - h - L * 0.9, text: fmt(v), size: fitSize(fmt(v), L * 1.25, W * 0.42), color: "ink", weight: 700 });
+  key(num, "y", T0, base - L * 0.9);
+  key(num, "y", at[i], base - L * 0.9, "step");
+  key(num, "y", at[i] + 20, base - h - L * 0.9, "out");
+  anim(num, "text", at[i], at[i] + 20, (t) => fmt(v * smooth(t)), 2);
+  appear(num, at[i]);
+  if (names[i]) appear(text("name" + i, { x: xs[i], y: base + L * 0.85, text: names[i], size: fitSize(names[i], L * 0.9, W * 0.45), color: "ink" }), at[i]);
+});
+path("ground", { points: [0, base, W, base], stroke: "ink", strokeWidth: 5 });
+// The change: an arrow over the gap, with the difference or the factor as words say it best.
+const diff = b - a;
+const pct = a !== 0 ? Math.round((diff / Math.abs(a)) * 100) : 0;
+const ratio = a !== 0 ? b / a : 0;
+const change = String(args.show) === "times" && a ? `×${Math.round(ratio * 10) / 10}` : String(args.show) === "difference" || !a ? `${diff >= 0 ? "+" : "−"}${fmt(Math.abs(diff))}` : `${pct >= 0 ? "+" : "−"}${Math.abs(pct)}%`;
+const y = L * 1.6;
+const arrow = path("arrow", { points: [xs[0], y + L * 0.9, (xs[0] + xs[1]) / 2, y - L * 0.2, xs[1] - L * 0.3, y + L * 0.9], smooth: 1, stroke: "accent", strokeWidth: 8, fill: "none" });
+const f = at[1] + 24;
+appear(arrow, f, "draw", 16);
+appear(path("head", { x: xs[1] - L * 0.3, y: y + L * 0.9, points: [-L * 0.55, -L * 0.15, 0, 0, -L * 0.1, -L * 0.6], stroke: "accent", strokeWidth: 8, fill: "none" }), f + 14);
+appear(text("change", { x: W / 2, y: y - L * 0.95, text: change, size: L * 1.3, color: "accent", weight: 700 }), f + 8, "pop");

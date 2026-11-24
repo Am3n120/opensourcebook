@@ -1,0 +1,12 @@
+{
+  "about": "A month or a run of weeks as a calendar grid, with days ringed or runs of days filled as they are said, and a key of what each mark means: schedules, deadlines, how often something happens, cycles over days, a plan for a month.",
+  "tags": ["calendar", "month", "week", "weeks", "days", "dates", "schedule", "deadline", "plan", "timetable", "how often", "routine", "cycle", "period", "appointments", "habit tracker", "frequency", "diary"],
+  "params": {
+    "days": { "default": "30", "about": "how many days (7 to 42)" },
+    "start": { "default": "0", "about": "which column the first day falls in, 0 to 6" },
+    "weekdays": { "default": "", "about": "seven column headings, split by |; else M T W T F S S" },
+    "marks": { "default": "", "about": "days or runs of days and what they are, as 12:name or 3-7:name, split by |" },
+    "style": { "default": "", "about": "ring or fill for every mark; else runs are filled and single days ringed" },
+    "when": { "default": "", "about": "moments each mark is drawn; else when its name is said, or one after another" }
+  }
+}

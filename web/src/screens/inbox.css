@@ -1,0 +1,38 @@
+/* Inbox: unfiled sources, one row each, filed in one step. */
+.inbox .selrow { display: flex; align-items: center; gap: var(--space-8); margin: 0 0 var(--space-8) var(--space-16); color: var(--muted); font-size: var(--fs-label); line-height: var(--lh-label); }
+.inbox .bulk { position: sticky; top: var(--space-12); z-index: 5; display: flex; align-items: center; gap: var(--space-12); flex-wrap: wrap; padding: var(--space-8) var(--space-16); margin-bottom: var(--space-12); background: var(--inverse); color: var(--onInverse); border-radius: var(--r-12); box-shadow: var(--shadow-card); font-size: var(--fs-caption); line-height: var(--lh-caption); }
+.inbox .bulk select { font: inherit; font-size: var(--fs-caption); padding: var(--space-4) var(--space-8); border-radius: var(--r-8); border: 0; background: var(--surface); color: var(--text); }
+.inbox .bulk .btn.ghost { color: var(--onInverse); border-color: var(--mutedText); }
+.inbox .bulk .sp { flex: 1; }
+.inbox .rows { list-style: none; margin: 0; padding: 0; border: 0; border-radius: 18px; box-shadow: 0 0 0 1px rgb(var(--edge) / .05); overflow: hidden; }
+.inbox .row { display: flex; align-items: center; gap: var(--space-12); padding: 12px 16px; }
+.inbox .row + .row { border-top: 1px solid var(--border); }
+.inbox .row:hover, .inbox .row.sel { background: var(--bg); }
+.inbox .pick .cbx { opacity: 0; transition: opacity var(--dur-quick) var(--ease-out); }
+.inbox .row:hover .pick .cbx, .inbox .row.sel .pick .cbx, .inbox .pick .cbx:focus-visible { opacity: 1; }
+.inbox .ic { width: 34px; height: 34px; border-radius: 10px; background: var(--fill); color: var(--mutedText); display: grid; place-items: center; flex: none; }
+.inbox .src { flex: 1; min-width: 0; }
+.inbox .src .t { display: block; color: var(--text); font-weight: 600; font-size: 14.5px; line-height: 20px; text-decoration: none; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.inbox .src .t:hover { text-decoration: underline; }
+.inbox .via { color: var(--muted); font-size: var(--fs-label); line-height: var(--lh-label); margin-top: 2px; }
+.inbox .fileto { flex: none; max-width: 200px; font: inherit; font-size: var(--fs-caption); font-weight: 600; padding: 6px 12px; border: 0; border-radius: var(--r-pill); background: var(--fill); color: var(--text); cursor: pointer; }
+.inbox .addcard { margin-bottom: var(--space-16); padding: var(--space-16); }
+.inbox .empty-big { text-align: center; padding: var(--space-64) var(--space-24); border-radius: var(--r-20); background: var(--surface); box-shadow: 0 0 0 1px rgb(var(--edge) / .05); color: var(--muted); }
+.inbox .empty-big b { display: block; color: var(--text); font-size: var(--fs-body); }
+.inbox .foot { margin: var(--space-16) var(--space-4) 0; color: var(--muted); font-size: var(--fs-caption); line-height: var(--lh-caption); }
+/* On a phone a row is two lines: what it is, then where to file it, under its name. */
+@media (max-width: 560px) {
+  .inbox .row { display: grid; grid-template-columns: auto auto minmax(0, 1fr) auto; align-items: center; column-gap: var(--space-12); row-gap: var(--space-8); }
+  .inbox .row > .pick { grid-column: 1; grid-row: 1; }
+  .inbox .row > .ic { grid-column: 2; grid-row: 1; }
+  .inbox .row > .src { grid-column: 3; grid-row: 1; }
+  .inbox .row > .smenu { grid-column: 4; grid-row: 1; }
+  .inbox .row > .fileto { grid-column: 3 / -1; grid-row: 2; justify-self: start; max-width: 100%; }
+}
+@media (hover: none) { .inbox .pick .cbx { opacity: 1; } }
+.row .why { display: flex; flex-wrap: wrap; gap: 4px 8px; align-items: baseline; margin-top: 2px; color: var(--danger); font-size: var(--fs-label); line-height: var(--lh-label); }
+.row .mark { color: var(--muted); }
+.row .mark[title] { cursor: help; }
+.row .smenu .x { opacity: 0; }
+.row:hover .smenu .x, .row .smenu .x:focus-visible, .row .smenu .x[aria-expanded="true"] { opacity: 1; }
+@media (hover: none) { .row .smenu .x { opacity: 1; } }

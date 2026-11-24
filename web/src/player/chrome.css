@@ -1,0 +1,100 @@
+/* The chrome every player wears (chrome.tsx): the player fills the frame, the bar floats on top,
+   a thin line runs along the bottom. Tokens only; over a dark picture the bar turns light. */
+.pchrome { --chrome-top: 60px; --chrome-bottom: 3px; --pc-tone: var(--primary); display: flex; flex: 1; min-width: 0; min-height: 0; height: 100%; }
+.pc-main { position: relative; flex: 1; min-width: 0; min-height: 0; overflow: hidden; background: var(--bg); color: var(--text); }
+.pc-main.dark { background: var(--feed-bg); }
+.pc-stage { position: absolute; inset: 0; display: flex; flex-direction: column; min-height: 0; }
+
+/* One player in its place: below the bar unless it draws under it. */
+.pc-slot { position: relative; flex: 1; min-height: 0; height: 100%; display: flex; flex-direction: column; overflow: auto; scrollbar-width: thin; }
+.pc-slot:not(.behind) { padding-top: var(--chrome-top); }
+.pc-slot.behind { overflow: hidden; }
+
+/* The bar: back, the title, talk, done, full view. */
+.pc-bar { position: absolute; z-index: 6; left: 0; right: 0; top: 0; display: flex; align-items: center; gap: var(--space-4); padding: 10px var(--space-8); background: linear-gradient(var(--bg) 55%, transparent); color: var(--text); pointer-events: none; }
+.pc-bar > * { pointer-events: auto; }
+/* Over a picture the bar sits on a scrim dark enough for white over any frame, even a white one,
+   held under the whole row and only fading out below it. */
+.pc-main.dark .pc-bar { padding-bottom: 34px; background: linear-gradient(rgb(0 0 0 / .62), rgb(0 0 0 / .58) calc(100% - 24px), rgb(0 0 0 / 0)); color: var(--onPrimary); }
+.pc-main.behind:not(.dark) .pc-bar { background: linear-gradient(color-mix(in srgb, var(--bg) 70%, transparent), transparent); }
+.pc-title { flex: 1; min-width: 0; display: flex; flex-direction: column; }
+.pc-title h1 { margin: 0; font-size: 14px; line-height: 20px; font-weight: 700; letter-spacing: -.005em; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pc-title small { color: var(--mutedText); font-size: 12.5px; line-height: 16px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.pc-main.dark .pc-title small { color: var(--feed-muted); }
+.pchrome .pc-ib { position: relative; flex: none; display: grid; place-items: center; width: 40px; height: 40px; padding: 0; border: 0; border-radius: var(--r-pill); background: none; box-shadow: none; color: inherit; text-decoration: none; cursor: pointer; }
+.pchrome .pc-ib:hover { background: color-mix(in srgb, currentColor 12%, transparent); }
+.pchrome .pc-ib:focus-visible { outline: 2px solid currentColor; outline-offset: -2px; }
+.pchrome .pc-ib .ico { width: 20px; height: 20px; }
+.pchrome .pc-ib[aria-pressed="true"]:not(.pc-done) { background: color-mix(in srgb, currentColor 14%, transparent); }
+/* The count sits on the talk icon's corner. */
+.pchrome .pc-talk .tcount { position: absolute; top: 3px; right: 3px; min-width: 14px; height: 14px; margin: 0; padding: 0 3px; border-radius: var(--r-pill); display: grid; place-items: center; background: var(--primary); color: var(--onPrimary); font-size: 9px; line-height: 1; font-weight: 700; }
+.pchrome .pc-done.on { color: var(--successText); }
+.pc-main.dark .pc-done.on { color: var(--success); }
+
+/* The line along the bottom. Over a picture it is white; on a page it takes the shape's colour. */
+.pc-line { position: absolute; z-index: 6; left: 0; right: 0; bottom: 0; height: 3px; background: var(--border); }
+.pc-line > i { position: absolute; left: 0; top: 0; bottom: 0; width: var(--at); background: var(--pc-tone); transition: width var(--dur-quick) linear; }
+.pc-main.dark .pc-line { background: rgb(255 255 255 / .18); }
+.pc-main.dark .pc-line > i { background: var(--onPrimary); }
+.pc-mark { position: absolute; top: 0; bottom: 0; width: 2px; margin-left: -1px; background: var(--bg); }
+.pc-main.dark .pc-mark { background: var(--feed-bg); }
+/* The line moves the player when it can: a taller target than it looks, and a little thicker under the pointer. */
+.pc-line input { position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 16px; margin: 0; opacity: 0; cursor: pointer; }
+.pc-line:has(input:hover), .pc-line:has(input:focus-visible) { height: 6px; }
+.pc-line:has(input:focus-visible) { outline: 2px solid var(--pc-tone); outline-offset: 2px; }
+@media (prefers-reduced-motion: reduce) { .pc-line > i { transition: none; } }
+
+/* Full view: the bar is a row of its own, the player centred under it. */
+.pchrome.pc-full { --chrome-top: 0px; }
+.pchrome.pc-full .pc-main { display: flex; flex-direction: column; }
+.pchrome.pc-full .pc-main.dark { background: linear-gradient(var(--feed-bg-top), var(--feed-bg) 40%); }
+.pchrome.pc-full .pc-bar { order: -1; position: relative; flex: none; gap: var(--space-12); min-height: 64px; padding: var(--space-12) var(--space-24); background: none; }
+.pchrome.pc-full .pc-title h1 { font-size: 15px; }
+.pchrome.pc-full .pc-stage { position: relative; inset: auto; flex: 1; }
+.pc-exit { flex: none; display: inline-flex; align-items: center; gap: 6px; height: 32px; padding: 0 var(--space-12); border: 1px solid var(--border); border-radius: var(--r-pill); background: none; color: inherit; font: inherit; font-size: var(--fs-caption); line-height: var(--lh-caption); font-weight: 600; text-decoration: none; white-space: nowrap; cursor: pointer; }
+.pc-exit:hover { border-color: var(--borderStrong); }
+.pc-exit .ico { width: 14px; height: 14px; }
+.pc-main.dark .pc-exit { border-color: rgb(255 255 255 / .24); }
+.pc-main.dark .pc-exit:hover { border-color: rgb(255 255 255 / .45); }
+
+/* The thread beside the player on a wide window. */
+.pchrome > .thread.side { height: auto; }
+
+/* The end of a plan or a feed. */
+.endcard { flex: 1; min-height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; padding: var(--space-32) 28px; text-align: center; background: linear-gradient(var(--primaryGhost), var(--bg) 50%); color: var(--text); }
+.endcard .ec-tick { width: 56px; height: 56px; border-radius: var(--r-pill); display: grid; place-items: center; background: var(--successSoft); color: var(--successText); }
+.endcard .ec-tick .ico { width: 26px; height: 26px; }
+.endcard h2 { margin: 0; font-size: var(--fs-heading); line-height: 26px; font-weight: 700; letter-spacing: var(--tracking-tight); text-wrap: balance; }
+.endcard p { margin: 0; max-width: 34em; color: var(--mutedText); font-size: var(--fs-caption); line-height: 19px; }
+.endcard .ec-acts { display: flex; flex-direction: column; gap: var(--space-8); width: 100%; max-width: 260px; margin-top: var(--space-8); }
+.endcard .obtn.wide { width: 100%; padding: 12px var(--space-16); font-size: var(--fs-caption); line-height: var(--lh-caption); }
+.endcard .pbtn.wide { padding: 12px var(--space-16); font-size: var(--fs-caption); line-height: var(--lh-caption); }
+
+/* In a project's panel the chrome wraps the feed of made things: each screen is one slot. */
+.immerse > .pchrome { height: 100%; }
+.immerse .feed9 { height: 100%; }
+.immerse .pc-slot { overflow: hidden; }
+.immerse .pc-slot > .screen9 { flex: 1; height: auto; min-height: 0; }
+.pchrome.pc-full .pc-main .pc-bar { background: none; }
+
+/* The line in pieces, one per card or question, each in its state. */
+.pc-segs { display: flex; gap: 2px; background: none; }
+.pc-seg { flex: 1; min-width: 0; height: 100%; background: var(--border); }
+.pc-seg.good { background: var(--success); }
+.pc-seg.warn { background: var(--accent); }
+.pc-seg.done { background: var(--mutedText); }
+.pc-seg.now { background: var(--pc-tone); }
+.pc-main.dark .pc-seg { background: rgb(255 255 255 / .18); }
+.pc-main.dark .pc-seg.done { background: var(--onPrimary); }
+.pc-main.dark .pc-seg.good { background: var(--success); }
+.pc-main.dark .pc-seg.warn { background: var(--accent); }
+.pc-main.dark .pc-seg.now { background: var(--pc-tone); }
+
+/* A player's own tools in the bar (ChromeTools). */
+.pc-tools { display: flex; align-items: center; gap: var(--space-8); flex: none; }
+.pc-tools:empty { display: none; }
+.pc-tools .obtn { background: transparent; border-color: var(--borderStrong); color: inherit; padding: 5px 10px; }
+
+/* A player that paints its own screen (.pstage) runs under the bar and keeps clear of it with --player-top. */
+.pchrome { --player-top: calc(var(--chrome-top) + 10px); }
+.pc-slot:has(> .pstage), .pc-slot:has(> .screen9 > .pstage) { padding-top: 0; overflow: hidden; }

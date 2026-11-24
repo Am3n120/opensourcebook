@@ -1,0 +1,12 @@
+{
+  "about": "Steps in order as a winding route down the frame, a named thing moving from stop to stop as each is said, with a note at each, a way not taken at a stop and a way back to an earlier one: something going through stages, a process from start to finish, a journey, a delivery, a migration, the stages of a life.",
+  "tags": ["steps in order", "stages", "process", "goes through", "passes through", "from start to finish", "sequence", "step by step", "route", "path", "journey", "travel", "trip", "stops", "delivery", "migration", "trade route", "life stages", "moves along", "branch", "way back", "sent back"],
+  "params": {
+    "stops": { "default": "Start|Middle|End", "about": "the stops or steps in order, split by |" },
+    "notes": { "default": "", "about": "a short note at each stop, split by | (empty ones keep their place)" },
+    "thing": { "default": "", "about": "the name of what goes through, written on the traveller; else a plain dot" },
+    "branch": { "default": "", "about": "at each stop, the other way on that is not taken (a dead end drawn off the road), split by | (empty ones keep their place)" },
+    "returns": { "default": "", "about": "ways back as FROM>TO:words, stops counted from 1, such as 4>2:sent back; split by |" },
+    "when": { "default": "", "about": "moments the traveller reaches each stop; else when its name is said, or one after another" }
+  }
+}

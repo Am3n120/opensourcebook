@@ -1,0 +1,15 @@
+{
+  "about": "One big number that counts up or down to each value as it is said, with what it counts written under it and, if given, a bar filling toward a goal: a total, a record, a running count, a key figure.",
+  "tags": ["big number", "number", "count", "counter", "total", "figure", "statistic", "key figure", "how many", "amount", "tally", "running total", "goal", "target", "progress", "money", "population", "headline number"],
+  "params": {
+    "values": { "default": "1000", "about": "the values it counts to, in turn, split by commas" },
+    "from": { "default": "0", "about": "where the count starts" },
+    "label": { "default": "", "about": "what the number counts, under it" },
+    "unit": { "default": "", "about": "written after the number, such as % or km" },
+    "prefix": { "default": "", "about": "written before the number, such as $" },
+    "goal": { "default": "0", "about": "a goal the bar under it fills toward; 0 for no bar" },
+    "goalName": { "default": "", "about": "what the goal is called" },
+    "thousands": { "default": ",", "about": "what goes between thousands, such as , or a space" },
+    "when": { "default": "", "about": "moments it counts to each value; else when the value is said, or one after another" }
+  }
+}
