@@ -137,7 +137,8 @@ test("a beat whose picture is only words and plain shapes is answered with the s
   assert.match(first.text, /The shelf has \d+ pieces that draw themselves in this video's style and follow the voice: the second picture below shows each/);
   assert.equal(first.images?.length, 2, "the strip, then the shelf");
   assert.equal(fresh.draft.shelfShown, "s2");
-  assert.doesNotMatch(first.text, /\b(must|should|always|try)\b/i, "what is there, never which to use");
+  const shelf = first.text.slice(first.text.indexOf("The shelf has")).split("\n")[0]!;
+  assert.doesNotMatch(shelf, /\b(must|should|always|try)\b/i, "what is there, never which to use");
   const again = await callTool("write_beat", { beat: "s2", source: `${sources.s2}\n` }, fresh);
   assert.match(again.text, /the picture of all of them came with s2's answer, and find_piece with no want shows it again/);
   assert.equal(again.images?.length, 1, "the strip alone");

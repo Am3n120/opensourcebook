@@ -1,7 +1,7 @@
 {
   "name": "comic",
   "label": "Comic",
-  "offered": false,
+  "offered": true,
   "description": "A comic book page: bold, slightly brushy black outlines on cream newsprint, flat colour with a hard drop shadow, shouting display capitals over friendly lettering, red for what matters and yellow narration boxes, things that pop in with a bounce and a wipe from panel to panel. Suits stories, history, people and their choices, science told as an adventure and anything with a before and after.",
   "palette": {
     "paper": "#fff6df",
@@ -91,7 +91,7 @@
       "blue": "#1d5fa8"
     },
     "scale": {
-      "base": 0.047,
+      "base": 0.046,
       "ratio": 1.36
     },
     "roles": {

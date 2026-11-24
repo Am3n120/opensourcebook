@@ -1,7 +1,7 @@
 {
   "name": "kinetic",
   "label": "Kinetic type",
-  "offered": false,
+  "offered": true,
   "description": "Words as the picture: big heavy grotesque capitals and clean sans words on a near-black page, one hot red-orange for what matters, thick plain shapes, things that snap in on the word that names them and hard cuts on the beat, with short caption pages. Suits definitions, arguments, quotes, rules, lists, numbers and short punchy ideas where the words themselves carry the point.",
   "palette": {
     "paper": "#111111",
@@ -89,7 +89,7 @@
     },
     "scale": {
       "base": 0.05,
-      "ratio": 1.414
+      "ratio": 1.3
     },
     "roles": {
       "title": {

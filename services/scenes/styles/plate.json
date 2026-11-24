@@ -1,7 +1,7 @@
 {
   "name": "plate",
   "label": "Textbook plate",
-  "offered": false,
+  "offered": true,
   "description": "A plate from an old reference book: fine, even pen lines on ivory paper, shapes shaded with close cross-hatching, a classic book serif throughout, labels on thin leader lines, one Prussian blue for what matters, slow even motion and a quiet fade between plates, with captions set like a figure caption. Suits anatomy, botany, zoology, geology, instruments and anything best seen as a labelled drawing.",
   "palette": {
     "paper": "#f3f0e4",

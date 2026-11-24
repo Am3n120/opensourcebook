@@ -29,7 +29,7 @@ test("a style is offered unless its file says it is not, and every style kept st
 
   const all = allStyles();
   const offered = listStyles();
-  assert.ok(offered.length >= 3 && offered.length < all.length, `${offered.length} of ${all.length} offered`);
+  assert.ok(offered.length >= 3 && offered.length <= all.length, `${offered.length} of ${all.length} offered`);
   assert.ok(offered.every((s) => s.offered));
   // Offered ones come first, so a default pick (the first style) is always one that is offered.
   assert.deepEqual(all.slice(0, offered.length), offered);
@@ -38,11 +38,12 @@ test("a style is offered unless its file says it is not, and every style kept st
 
 test("the agent picking a style is shown only the offered ones; a request that names a kept one gets its description", () => {
   const request = { title: "T", brief: "", assumes: [], frame: { width: 1080, height: 1920 }, targetSeconds: 60, style: "auto", passages: [], limits: { minScenes: 2, maxScenes: 12, narrationMaxChars: 600, visualMinChars: 20, visualMaxChars: 700, onScreenTextMax: 4 } } as never;
-  const prompt = turnPrompt(request, listStyles());
-  for (const s of allStyles()) assert.equal(prompt.includes(`- ${s.id} (`), s.offered, s.id);
-  const hidden = allStyles().find((s) => !s.offered)!;
-  const named = turnPrompt({ ...(request as object), style: hidden.id } as never, listStyles());
-  assert.ok(named.includes(hidden.description));
+  // One style kept but not offered, whether or not the folder has one today.
+  const [hidden, ...offered] = allStyles();
+  const prompt = turnPrompt(request, offered);
+  for (const s of allStyles()) assert.equal(prompt.includes(`- ${s.id} (`), s !== hidden, s.id);
+  const named = turnPrompt({ ...(request as object), style: hidden!.id } as never, offered);
+  assert.ok(named.includes(hidden!.description));
 });
 
 test("a style that leaves its world unsaid inherits it: captions, the rim round letters, and how scenes change", () => {

@@ -1,8 +1,8 @@
 {
   "name": "whiteboard",
   "label": "Whiteboard",
-  "offered": false,
-  "description": "Black marker on a clean white board with one blue accent. Suits plain step-by-step explanations and comparisons.",
+  "offered": true,
+  "description": "A clean whiteboard: confident black marker lines on white, shapes lightly filled in, brushy handwriting throughout, one blue for what matters, green for answers and red for what is wrong, things that settle with a little bounce as they are drawn. Suits plain step-by-step explanations, comparisons, quick sketches of an idea and anything a person would draw on a board in a meeting.",
   "palette": {
     "paper": "#ffffff",
     "ink": "#1b1b1b",

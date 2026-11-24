@@ -1,7 +1,7 @@
 {
   "name": "documentary",
   "label": "Documentary",
-  "offered": false,
+  "offered": true,
   "description": "Real pictures with notes drawn on top: archive photographs and footage frames shown large and in their own colour on a dark screen, circled, underlined and pointed at in a yellow marker, labels on small dark cards, a classic serif for titles over clean sans words, unhurried glides and a dip to black between scenes. Suits history, places, people, events, news, nature and anything where seeing the real thing is the point.",
   "palette": {
     "paper": "#15171a",

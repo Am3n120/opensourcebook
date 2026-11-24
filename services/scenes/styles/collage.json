@@ -1,8 +1,8 @@
 {
   "name": "collage",
-  "label": "Documentary collage",
-  "offered": false,
-  "description": "A documentary look: warm paper, serif titles, muted archival colours. Suits history, people, places and events.",
+  "label": "Collage",
+  "offered": true,
+  "description": "A cut-and-paste page: pictures and shapes cut out and laid on warm paper with a soft drop shadow, an elegant serif for titles over clean sans words, muted archival colours, one brick red for what matters and yellow behind key words, things that pop in and land as if pasted down, quick cuts between scenes and captions on a dark strip. Suits history, people, places, events and stories pieced together from many sources.",
   "palette": {
     "paper": "#efe9dc",
     "ink": "#161412",
@@ -12,7 +12,7 @@
   "fonts": {
     "caption": "Jost",
     "title": "Libre Caslon Display",
-    "body": "Jost"
+    "body": "Barlow"
   },
   "art": {
     "scene": "Documentary still: realistic, natural light, muted archival color, the subject sharp and instantly recognizable.",
@@ -49,12 +49,12 @@
     },
     "type": {
       "title": "\"Libre Caslon Display\", serif",
-      "body": "\"Jost\", sans-serif",
+      "body": "\"Barlow\", sans-serif",
       "mono": "\"PT Mono\", monospace",
       "tracking": 0.01
     },
     "motion": {
-      "feel": "snappy",
+      "feel": "springy",
       "enter": "pop"
     }
   },

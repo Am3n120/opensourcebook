@@ -1,7 +1,7 @@
 {
   "name": "atlas",
   "label": "Map and timeline",
-  "offered": false,
+  "offered": true,
   "description": "A map or a line of time as the stage: crisp navy pen lines on pale chart paper, land in a soft wash, routes and borders drawn on in a brick red, the places and dates that matter in a sea teal, a classic serif for titles over a clean sans for place names, glides across the map from one place to the next and a quiet dip between scenes. Suits history, geography, exploration, trade, migration, wars and empires, the spread of an idea or a disease, and anything where where and when are the story.",
   "palette": {
     "paper": "#eef0e6",
@@ -11,7 +11,7 @@
   },
   "fonts": {
     "caption": "Barlow",
-    "title": "Libre Caslon Display",
+    "title": "Baskervville",
     "body": "Barlow"
   },
   "art": {
@@ -45,7 +45,7 @@
       "light": 0.05
     },
     "type": {
-      "title": "\"Libre Caslon Display\", serif",
+      "title": "\"Baskervville\", serif",
       "body": "\"Barlow\", sans-serif",
       "mono": "\"PT Mono\", monospace",
       "tracking": 0.01,
@@ -93,7 +93,7 @@
       "tint": "#dfe4d8"
     },
     "scale": {
-      "base": 0.045,
+      "base": 0.048,
       "ratio": 1.3
     },
     "roles": {

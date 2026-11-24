@@ -1,8 +1,8 @@
 {
   "name": "neon",
   "label": "Neon",
-  "offered": false,
-  "description": "Glowing cyan and pink lines on a dark wall. Suits technology, energy, signals and anything that should feel electric.",
+  "offered": true,
+  "description": "A neon sign: glowing cyan tube lines on a dark wall, pink for what matters and a warm yellow for answers, clean round sans words that glow too, things that snap on with a spring and quick cuts between scenes, with captions on dark glass. Suits technology, energy, light, signals, music and anything that should feel electric.",
   "palette": {
     "paper": "#0d0b1e",
     "ink": "#62e7ff",
@@ -50,7 +50,7 @@
       "mono": "\"PT Mono\", monospace"
     },
     "motion": {
-      "feel": "snappy"
+      "feel": "springy"
     },
     "read": {
       "dim": 0.5
@@ -124,7 +124,7 @@
         "glow": 0.2
       },
       "key": {
-        "color": "highlight",
+        "color": "accent",
         "step": 1,
         "weight": 600,
         "font": "body",
