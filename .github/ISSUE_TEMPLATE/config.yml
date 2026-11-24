@@ -3,3 +3,6 @@ contact_links:
   - name: Report a security problem privately
     url: https://github.com/Mikiyas-Meles-Assefa/opensourcebook/security/advisories/new
     about: Please do not open a public issue for a security problem.
+  - name: Ask a question
+    url: https://github.com/Mikiyas-Meles-Assefa/opensourcebook/discussions/categories/q-a
+    about: Questions about using Open Sourcebook go to Discussions.
