@@ -130,7 +130,9 @@ jobs:
           if ($status -notmatch "Web app +up ") { exit 1 }
       - name: Stopping
         if: always()
+        # From the home folder: inside this checkout, the command would refuse to act on the installed copy.
         run: |
+          Set-Location $env:USERPROFILE
           $cmd = "$env:USERPROFILE\.opensourcebook\bin\opensourcebook.cmd"
           if (Test-Path $cmd) { & $cmd stop }
       - name: Logs
