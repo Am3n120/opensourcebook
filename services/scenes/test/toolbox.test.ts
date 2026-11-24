@@ -280,8 +280,14 @@ test("a page is shown as a picture and read after its scripts ran, through the s
 });
 
 test("a Chrome that never answers is stopped with a plain message instead of hanging", async () => {
-  const stuck = join(made, "stuck-chrome");
-  writeFileSync(stuck, "#!/bin/sh\nsleep 600\n", { mode: 0o755 });
+  let stuck = join(made, "stuck-chrome");
+  if (process.platform === "win32") {
+    // Windows cannot start a #! script, and the program must be a real one that stays open and never answers: Notepad,
+    // which takes Chrome's arguments for the name of a file and waits.
+    stuck = join(process.env.SystemRoot ?? "C:\\Windows", "System32", "notepad.exe");
+  } else {
+    writeFileSync(stuck, "#!/bin/sh\nsleep 600\n", { mode: 0o755 });
+  }
   const started = Date.now();
   await assert.rejects(printPdf(stuck, "about:blank", join(made, "never.pdf"), box.web, { timeout: 1_500 }), /took more than \d+ seconds/);
   assert.ok(Date.now() - started < 10_000);

@@ -87,7 +87,8 @@ test("a refused key is not kept; a good one and one out of credits are, in a fil
   assert.equal(good.service.keyHint, KEY.slice(-4));
   assert.deepEqual(good.service.health, { ok: true });
   assert.ok(!JSON.stringify(good).includes(KEY));
-  assert.equal(statSync(file).mode & 0o777, 0o600);
+  // Windows has no POSIX file modes (a file there reads as 0o666), so who may read it is not a mode to check.
+  if (process.platform !== "win32") assert.equal(statSync(file).mode & 0o777, 0o600);
   assert.equal(JSON.parse(readFileSync(file, "utf8")).ACME_KEY, KEY);
 
   // With its key kept the service is the voice, chosen by the app's key.

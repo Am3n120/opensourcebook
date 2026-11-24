@@ -62,8 +62,11 @@ test("the private voice file is laid over the environment, keeps only voice name
     const file = join(dir, "private", "voice.json");
     assert.deepEqual(readVoiceFile(file, names), {});
     writeVoiceFile(file, { SCENES_VOICE: second.id, [second.key!.name]: "file-key" });
-    assert.equal(statSync(file).mode & 0o777, 0o600);
-    assert.equal(statSync(join(dir, "private")).mode & 0o777, 0o700);
+    // Windows has no POSIX file modes (a file there reads as 0o666), so who may read it is not a mode to check.
+    if (process.platform !== "win32") {
+      assert.equal(statSync(file).mode & 0o777, 0o600);
+      assert.equal(statSync(join(dir, "private")).mode & 0o777, 0o700);
+    }
     // The file wins over the environment: the app's choice overrides a .env that names another voice.
     const env = { [first.key!.name]: "env-key", SCENES_VOICE: first.id };
     const settings = layered(env, readVoiceFile(file, names));
