@@ -23,9 +23,13 @@
 /og-image*
   X-Robots-Tag: noindex
 
-# Everything: the page loads nothing from anywhere else, and this holds it to that.
+# The app screens and video clips on the page: kept a day, then checked again.
+/media/*
+  Cache-Control: public, max-age=86400
+
+# Everything: the page loads nothing from anywhere else, only its own files, and this holds it to that.
 /*
   X-Content-Type-Options: nosniff
   Referrer-Policy: no-referrer
   X-Frame-Options: DENY
-  Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'
+  Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src 'self' data:; media-src 'self'; base-uri 'none'; form-action 'none'; frame-ancestors 'none'

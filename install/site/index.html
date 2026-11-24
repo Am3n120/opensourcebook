@@ -44,6 +44,7 @@
   "offers": { "@type": "Offer", "price": "0", "priceCurrency": "USD" }
 }
 </script>
+<link rel="preload" as="image" href="/media/app-make-sheet.jpg">
 <style>
 /* The app's own tokens (web/src/design/tokens.css), light then dark. */
 :root {
@@ -51,6 +52,7 @@
   --surface: #ffffff;
   --border: #e5e7eb;
   --borderStrong: #cbd5e1;
+  --fill: #f1f2f6;
   --text: #0f172a;
   --muted: #5e6e85;
   --mutedText: #556277;
@@ -58,9 +60,11 @@
   --primaryHover: #5b4bd6;
   --primarySoft: #efedfc;
   --primaryText: #5b4bd6;
-  --inverse: #0f172a;
-  --onInverse: #ffffff;
   --logoDot: #ffb020;
+  --shadowCard: 0 1px 2px rgb(15 23 42 / .05), 0 4px 14px rgb(15 23 42 / .06);
+  --float: 0 2px 6px rgb(15 23 42 / .10), 0 18px 40px rgb(15 23 42 / .22);
+  --sans: "Inter Variable", Inter, -apple-system, system-ui, "Segoe UI", Roboto, sans-serif;
+  --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
 }
 @media (prefers-color-scheme: dark) {
   :root {
@@ -68,13 +72,14 @@
     --surface: #181b22;
     --border: #2a2f3a;
     --borderStrong: #3c4352;
+    --fill: #22262f;
     --text: #e7e9ee;
     --muted: #9aa3b2;
     --mutedText: #abb3c1;
     --primarySoft: #2b2752;
     --primaryText: #b7aeff;
-    --inverse: #e7e9ee;
-    --onInverse: #0e1015;
+    --shadowCard: 0 1px 2px rgb(0 0 0 / .4), 0 4px 14px rgb(0 0 0 / .35);
+    --float: 0 2px 6px rgb(0 0 0 / .5), 0 18px 40px rgb(0 0 0 / .55);
   }
 }
 * { box-sizing: border-box; }
@@ -83,212 +88,164 @@ body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
-  font-family: "Inter Variable", Inter, -apple-system, system-ui, "Segoe UI", Roboto, sans-serif;
+  font-family: var(--sans);
   -webkit-font-smoothing: antialiased;
 }
 a { color: var(--primaryText); }
 :focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; border-radius: 4px; }
-code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
 
-.wrap {
-  max-width: 1200px;
+.page {
+  max-width: 1392px;
   min-height: 100vh;
   min-height: 100dvh;
   margin: 0 auto;
-  padding: 0 48px;
+  padding: 24px 56px 20px;
   display: flex;
   flex-direction: column;
 }
 
-.brand {
-  padding-top: 28px;
-}
-.brand a {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  color: var(--text);
-  text-decoration: none;
-}
-.brand svg { width: 40px; height: 40px; }
-.name { font-size: 26px; line-height: 32px; font-weight: 800; letter-spacing: -0.03em; }
+/* Top line: the mark and name, and the two links */
+.top { display: flex; align-items: center; justify-content: space-between; gap: 12px 24px; flex-wrap: wrap; }
+.brand { display: inline-flex; align-items: center; gap: 10px; color: var(--text); text-decoration: none; }
+.name { font-size: 22px; line-height: 28px; font-weight: 800; letter-spacing: -0.03em; }
 .name span { color: var(--logoDot); }
 .beta {
   font-size: 12px; line-height: 16px; font-weight: 600;
   padding: 2px 8px; border-radius: 999px;
   background: var(--primarySoft); color: var(--primaryText);
 }
+.links { display: flex; gap: 24px; }
+.links a {
+  min-height: 44px; display: inline-flex; align-items: center; gap: 8px;
+  font-size: 14px; line-height: 20px; font-weight: 600; text-decoration: none;
+}
+.links a:hover { text-decoration: underline; text-underline-offset: .22em; }
+.links a.github { color: var(--text); }
 
+/* The hero: words and install on the left, the app and a clip on the right */
 main {
   flex: 1 0 auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  padding-top: 32px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 600px;
+  gap: 48px;
+  align-items: center;
+  padding-top: 16px;
 }
 h1 {
   margin: 0;
-  max-width: 25ch;
-  font-size: clamp(34px, 4vw, 54px);
+  max-width: 18ch;
+  font-size: clamp(32px, 3.7vw, 52px);
   line-height: 1.04;
   font-weight: 700;
-  letter-spacing: -0.045em;
+  letter-spacing: -0.04em;
   text-wrap: balance;
 }
-.tagline {
-  margin: 22px 0 0;
-  font-size: clamp(19px, 1.9vw, 24px);
-  line-height: 1.3;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-}
-.who {
-  margin: 12px 0 0;
-  max-width: 760px;
-  font-size: 16px;
-  line-height: 24px;
-  color: var(--mutedText);
-}
-
-.split {
-  margin-top: 44px;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 380px;
-  gap: 48px;
-  align-items: start;
-}
+.tagline { margin: 18px 0 0; font-size: 20px; line-height: 27px; font-weight: 600; letter-spacing: -0.015em; }
+.who { margin: 8px 0 0; max-width: 620px; font-size: 15px; line-height: 23px; color: var(--mutedText); }
 
 /* The install line */
-.systems { display: flex; gap: 24px; margin-bottom: 12px; }
-.system {
-  min-height: 36px;
-  padding: 6px 0;
-  border: 0;
-  border-bottom: 2px solid transparent;
-  background: transparent;
-  font: inherit;
-  font-size: 14px;
-  line-height: 20px;
-  font-weight: 600;
-  color: var(--muted);
-  cursor: pointer;
-  transition: color 200ms ease-out, border-color 200ms ease-out;
+.install { margin-top: 32px; max-width: 660px; }
+.choices {
+  display: inline-flex; gap: 2px; padding: 3px;
+  background: var(--fill); border-radius: 12px;
 }
-.system:hover { color: var(--text); }
-.system[aria-pressed="true"] { color: var(--text); border-bottom-color: var(--primary); }
-.slab {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 10px 10px 10px 20px;
+.choice {
+  min-height: 36px; padding: 6px 14px; border: 0; border-radius: 8px;
+  background: transparent; color: var(--muted);
+  font: inherit; font-size: 13px; font-weight: 600; cursor: pointer;
+  transition: background-color 200ms ease-out, color 200ms ease-out;
+}
+.choice:hover { color: var(--text); }
+.choice[aria-pressed="true"] { background: var(--surface); color: var(--text); box-shadow: var(--shadowCard); }
+.field {
+  margin-top: 12px;
+  display: flex; align-items: center; gap: 12px;
+  padding: 8px 8px 8px 18px;
   background: var(--surface);
-  color: var(--text);
   border: 1px solid var(--borderStrong);
   border-radius: 12px;
 }
-.cmds { flex: 1 1 auto; min-width: 0; }
+.texts { flex: 1 1 auto; min-width: 0; }
 .cmd {
-  display: block;
-  overflow-x: auto;
-  white-space: nowrap;
-  padding: 8px 0;
-  font-size: 17px;
-  line-height: 26px;
-  letter-spacing: -0.01em;
+  display: block; margin: 0; padding: 8px 0;
+  overflow-x: auto; white-space: nowrap;
+  font-family: var(--mono); font-size: 15px; line-height: 24px;
   color: var(--text);
 }
+.prompt { font-family: var(--sans); font-size: 14px; line-height: 21px; white-space: normal; padding: 6px 0; }
 .copy {
-  flex: 0 0 auto;
-  min-height: 48px;
-  min-width: 104px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 10px 20px;
-  border: 0;
-  border-radius: 999px;
-  background: var(--primary);
-  color: #ffffff;
-  font: inherit;
-  font-size: 14px;
-  line-height: 20px;
-  font-weight: 600;
-  cursor: pointer;
+  flex: 0 0 auto; min-height: 46px; min-width: 104px;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 10px 18px; border: 0; border-radius: 999px;
+  background: var(--primary); color: #ffffff;
+  font: inherit; font-size: 14px; font-weight: 600; cursor: pointer;
   transition: background-color 200ms ease-out;
 }
 .copy:hover { background: var(--primaryHover); }
-.prompt {
-  margin: 0;
-  white-space: normal;
-  overflow-wrap: normal;
-  font-size: 15px;
-  line-height: 22px;
-  letter-spacing: -0.005em;
-}
-.hint[hidden] { display: none; }
-.hint { margin: 12px 0 0; font-size: 13px; line-height: 19px; color: var(--mutedText); }
+.hint { margin: 10px 0 0; font-size: 13px; line-height: 19px; color: var(--mutedText); }
 
-/* Without scripts: both lines show, each with its system's name, and no switch or button. */
-.systems, .copy { display: none; }
-.label { display: block; font-size: 12px; line-height: 16px; font-weight: 600; opacity: .7; }
-.cmd + .label { margin-top: 8px; }
-.js .systems { display: flex; }
+/* Without scripts: each line shows with its name, and there is no switch or button. */
+.choices, .copy { display: none; }
+.label { display: block; margin-top: 6px; font-size: 12px; line-height: 16px; font-weight: 600; color: var(--muted); }
+.js .choices { display: inline-flex; }
 .js .copy { display: inline-flex; }
 .js .label { display: none; }
-.js .cmd[hidden] { display: none; }
+.js [hidden] { display: none; }
+.hint[hidden] { display: none; }
 
 /* The four points */
-.points { display: flex; flex-direction: column; }
-.points p {
-  margin: 0;
-  padding: 12px 0;
-  border-top: 1px solid var(--border);
-  font-size: 16px;
-  line-height: 23px;
-  letter-spacing: -0.005em;
-  color: var(--mutedText);
-}
-.points p:first-child { padding-top: 0; border-top: 0; }
-.points p:last-child { padding-bottom: 0; }
-.points strong { color: var(--text); font-weight: 700; }
+.points { margin-top: 32px; max-width: 700px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px 32px; }
+.points p { margin: 0; font-size: 14px; line-height: 21px; color: var(--mutedText); }
+.points strong { color: var(--text); }
 
-footer {
-  margin-top: 28px;
-  padding: 12px 0 24px;
-  border-top: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
+/* The app window with a clip in front of it */
+figure { margin: 0; }
+.stage { position: relative; width: 100%; height: 520px; }
+.window {
+  position: absolute; right: 0; top: 0; width: 600px; aspect-ratio: 16 / 10;
+  border-radius: 12px; overflow: hidden;
+  border: 1px solid var(--border); background: #0e1015;
 }
-footer nav { display: flex; flex-wrap: wrap; gap: 28px; }
-footer a {
-  min-height: 44px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14px;
-  line-height: 20px;
-  font-weight: 600;
-  text-underline-offset: .22em;
-  text-decoration-thickness: 1px;
+.clip {
+  position: absolute; left: -28px; bottom: 0; width: 196px; aspect-ratio: 9 / 16;
+  border-radius: 18px; overflow: hidden;
+  background: #0f172a; border: 4px solid var(--bg); box-shadow: var(--float);
 }
-footer a:hover { text-decoration-thickness: 2px; }
-footer a.github { color: var(--text); }
-.quiet { margin: 0; max-width: 560px; font-size: 12px; line-height: 17px; color: var(--muted); }
+.layer {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: top left;
+  opacity: 0; transition: opacity 600ms ease-out;
+}
+.layer.on { opacity: 1; }
+.clip .layer { object-position: center; }
+.style-name {
+  position: absolute; left: 8px; bottom: 8px;
+  font-size: 12px; line-height: 16px; font-weight: 600;
+  padding: 3px 9px; border-radius: 999px;
+  background: rgb(15 23 42 / .82); color: #ffffff;
+}
+figcaption { margin-top: 12px; padding-left: 192px; font-size: 13px; line-height: 19px; color: var(--mutedText); min-height: 38px; }
+figcaption b { color: var(--text); font-weight: 600; }
+figcaption .from { color: var(--muted); }
 
-@media (max-width: 1180px) {
-  .split { grid-template-columns: minmax(0, 1fr); gap: 40px; max-width: 720px; }
+.quiet { margin: 18px 0 0; font-size: 12px; line-height: 16px; color: var(--muted); }
+
+@media (max-width: 1160px) {
+  main { grid-template-columns: minmax(0, 1fr); gap: 40px; }
+  figure { width: 100%; max-width: 600px; }
+  .clip { left: 0; }
 }
-@media (max-width: 600px) {
-  .wrap { padding: 0 20px; }
-  main { padding-top: 40px; }
-  .slab { flex-wrap: wrap; padding: 16px; }
-  .cmds { flex-basis: 100%; }
-  .cmd { white-space: normal; overflow-wrap: normal; font-size: 13px; line-height: 21px; letter-spacing: 0; }
+@media (max-width: 640px) {
+  .page { padding: 20px 20px 18px; }
+  .points { grid-template-columns: minmax(0, 1fr); }
+  .field { flex-wrap: wrap; padding: 14px; }
+  .texts { flex-basis: 100%; }
+  .cmd { white-space: normal; overflow-wrap: normal; font-size: 13px; line-height: 21px; }
   .copy { width: 100%; }
-  footer { flex-direction: column; align-items: flex-start; }
+  .stage { height: auto; aspect-ratio: 600 / 520; }
+  .window { width: 90%; }
+  .clip { width: 32%; border-width: 3px; }
+  figcaption { padding-left: 0; }
 }
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; }
@@ -296,43 +253,45 @@ footer a.github { color: var(--text); }
 </style>
 </head>
 <body>
-<div class="wrap">
+<div class="page">
 
-<header class="brand">
-<a href="/">
-<svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="9" fill="#6c5ce7"/><path d="M7 22V10c3-1.5 6-1.5 9 0 3-1.5 6-1.5 9 0v12c-3-1.5-6-1.5-9 0-3-1.5-6-1.5-9 0z" fill="#ffffff"/><path d="M16 10v12" stroke="#6c5ce7" stroke-width="2"/><circle cx="16" cy="26" r="2" fill="#ffb020"/></svg>
+<header class="top">
+<a class="brand" href="/">
+<svg width="32" height="32" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="9" fill="#6c5ce7"/><path d="M7 22V10c3-1.5 6-1.5 9 0 3-1.5 6-1.5 9 0v12c-3-1.5-6-1.5-9 0-3-1.5-6-1.5-9 0z" fill="#ffffff"/><path d="M16 10v12" stroke="#6c5ce7" stroke-width="2"/><circle cx="16" cy="26" r="2" fill="#ffb020"/></svg>
 <span class="name">Open Sourcebook<span>.</span></span>
 <span class="beta">Beta</span>
 </a>
+<nav class="links" aria-label="Links">
+<a class="github" href="https://github.com/Mikiyas-Meles-Assefa/opensourcebook"><svg width="17" height="17" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>View on GitHub</a>
+<a href="https://github.com/Mikiyas-Meles-Assefa/opensourcebook/tree/main/docs">Read the docs</a>
+</nav>
 </header>
 
 <main>
+<div>
 <h1>The open-source NotebookLM (now Gemini Notebook) alternative with explainer videos.</h1>
 <p class="tagline">Understand what you have to read. Explain what you know.</p>
 <p class="who">Preparing for an exam · reading a stack of papers · getting a new colleague up to speed · turning a manual into something people will watch.</p>
 
-<div class="split">
-<section aria-label="Install">
-<div class="systems" role="group" aria-label="Your system">
-<button class="system" type="button" data-os="unix" aria-pressed="true">Mac and Linux</button>
-<button class="system" type="button" data-os="win" aria-pressed="false">Windows</button>
-<button class="system" type="button" data-os="agent" aria-pressed="false">Ask your agent</button>
+<section class="install" aria-label="Install">
+<div class="choices" role="group" aria-label="How to install">
+<button class="choice" type="button" data-pick="unix" aria-pressed="true">Mac and Linux</button>
+<button class="choice" type="button" data-pick="win" aria-pressed="false">Windows</button>
+<button class="choice" type="button" data-pick="agent" aria-pressed="false">Ask your agent</button>
 </div>
-<div class="slab">
-<div class="cmds">
+<div class="field">
+<div class="texts">
 <span class="label">Mac and Linux</span>
-<code class="cmd" data-os="unix">curl -fsSL https://opensourcebook.app/install | sh</code>
+<code class="cmd" data-for="unix">curl -fsSL https://opensourcebook.app/install | sh</code>
 <span class="label">Windows</span>
-<code class="cmd" data-os="win">irm https://opensourcebook.app/install.ps1 | iex</code>
+<code class="cmd" data-for="win">irm https://opensourcebook.app/install.ps1 | iex</code>
 <span class="label">Ask your agent</span>
-<p class="cmd prompt" data-os="agent">Install Open Sourcebook for me. On a Mac or Linux, run curl -fsSL https://opensourcebook.app/install | sh in a terminal. On Windows, run irm https://opensourcebook.app/install.ps1 | iex in PowerShell. Tell me when it opens in my browser.</p>
+<p class="cmd prompt" data-for="agent">Install Open Sourcebook for me. On a Mac or Linux, run curl -fsSL https://opensourcebook.app/install | sh in a terminal. On Windows, run irm https://opensourcebook.app/install.ps1 | iex in PowerShell. Tell me when it opens in my browser.</p>
 </div>
-<button class="copy" type="button" aria-live="polite">
-<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span class="copy-label">Copy</span>
-</button>
+<button class="copy" type="button" aria-live="polite"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span class="copy-label">Copy</span></button>
 </div>
-<p class="hint" data-os="terminal">Paste it into Terminal and press Return. It opens in your browser after a few minutes.</p>
-<p class="hint" data-os="agent" hidden>Paste it into your agent, such as Claude Code or Codex, and it runs the line for you.</p>
+<p class="hint" data-for="terminal">Paste it into Terminal and press Return. It opens in your browser after a few minutes.</p>
+<p class="hint" data-for="agent" hidden>Paste it into your agent, such as Claude Code or Codex, and it runs the line for you.</p>
 </section>
 
 <section class="points" aria-label="What you get">
@@ -342,39 +301,49 @@ footer a.github { color: var(--text); }
 <p><strong>Answers you can check.</strong> Every cite is checked word for word. Your files stay on your computer. Open source, MIT.</p>
 </section>
 </div>
+
+<figure>
+<div class="stage">
+<div class="window">
+<img class="layer screen on" src="/media/app-make-sheet.jpg" alt="The make sheet for a video in Open Sourcebook, with the Blueprint style and Claude Code as the maker" width="1280" height="800" data-cap="Ask for a video: the sources it reads, its length and style, and the agent on your plan that makes it.">
+<img class="layer screen" src="/media/app-style-picker.jpg" alt="The style picker in Open Sourcebook" width="1280" height="800" loading="lazy" data-cap="Pick a style, or let the maker pick.">
+<img class="layer screen" src="/media/app-answer.jpg" alt="A cited answer comparing two papers in Open Sourcebook" width="1280" height="800" loading="lazy" data-cap="An answer across two papers, with a cite at every claim.">
+</div>
+<div class="clip">
+<video class="layer reel on" src="/media/clip-chalkboard.mp4" poster="/media/clip-chalkboard.jpg" muted loop playsinline preload="auto" aria-hidden="true" data-name="Chalkboard"></video>
+<video class="layer reel" src="/media/clip-flat.mp4" poster="/media/clip-flat.jpg" muted loop playsinline preload="none" aria-hidden="true" data-name="Flat illustrated"></video>
+<video class="layer reel" src="/media/clip-ink.mp4" poster="/media/clip-ink.jpg" muted loop playsinline preload="none" aria-hidden="true" data-name="Editorial ink"></video>
+<video class="layer reel" src="/media/clip-blueprint.mp4" poster="/media/clip-blueprint.jpg" muted loop playsinline preload="none" aria-hidden="true" data-name="Blueprint"></video>
+<span class="style-name">Chalkboard</span>
+</div>
+</div>
+<figcaption aria-live="polite"><b>In the app.</b> <span class="screen-cap">Ask for a video: the sources it reads, its length and style, and the agent on your plan that makes it.</span> <span class="from">Clip: a video it made, in the <span class="clip-style">chalkboard</span> style.</span></figcaption>
+</figure>
 </main>
 
-<footer>
-<nav aria-label="Links">
-<a class="github" href="https://github.com/Mikiyas-Meles-Assefa/opensourcebook"><svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>View on GitHub</a>
-<a href="https://github.com/Mikiyas-Meles-Assefa/opensourcebook/tree/main/docs">Read the docs</a>
-</nav>
 <p class="quiet">This is the beta. A fuller site is coming soon.</p>
-</footer>
 </div>
 
 <script>
 (function () {
   document.documentElement.classList.add("js");
-  var buttons = document.querySelectorAll(".system");
-  var cmds = document.querySelectorAll(".cmd");
-  var hints = document.querySelectorAll(".hint");
-  var label = document.querySelector(".copy-label");
-  var timer;
-  var current = "unix";
 
-  function pick(os) {
-    current = os;
-    buttons.forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.os === os)); });
-    cmds.forEach(function (c) { c.hidden = c.dataset.os !== os; });
-    hints.forEach(function (h) { h.hidden = (h.dataset.os === "agent") !== (os === "agent"); });
+  /* The install line */
+  var choices = document.querySelectorAll(".choice");
+  var texts = document.querySelectorAll("[data-for]");
+  var label = document.querySelector(".copy-label");
+  var current = "unix";
+  var timer;
+  function pick(which) {
+    current = which;
+    choices.forEach(function (c) { c.setAttribute("aria-pressed", String(c.dataset.pick === which)); });
+    texts.forEach(function (t) {
+      var f = t.dataset.for;
+      t.hidden = f === "terminal" ? which === "agent" : f !== which;
+    });
     label.textContent = "Copy";
   }
-
-  buttons.forEach(function (b) {
-    b.addEventListener("click", function () { pick(b.dataset.os); });
-  });
-
+  choices.forEach(function (c) { c.addEventListener("click", function () { pick(c.dataset.pick); }); });
   var platform = (navigator.userAgentData && navigator.userAgentData.platform) || navigator.platform || navigator.userAgent || "";
   pick(/win/i.test(platform) ? "win" : "unix");
 
@@ -383,7 +352,6 @@ footer a.github { color: var(--text); }
     clearTimeout(timer);
     timer = setTimeout(function () { label.textContent = "Copy"; }, 2000);
   }
-
   function fallback(text) {
     var area = document.createElement("textarea");
     area.value = text;
@@ -395,15 +363,53 @@ footer a.github { color: var(--text); }
     try { if (document.execCommand("copy")) copied(); } catch (e) {}
     document.body.removeChild(area);
   }
-
   document.querySelector(".copy").addEventListener("click", function () {
-    var text = document.querySelector('.cmd[data-os="' + current + '"]').textContent;
+    var text = document.querySelector('[data-for="' + current + '"]').textContent;
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard.writeText(text).then(copied, function () { fallback(text); });
     } else {
       fallback(text);
     }
   });
+
+  /* The app window and the clip in front of it */
+  var screens = document.querySelectorAll(".screen");
+  var reels = document.querySelectorAll(".reel");
+  var screenCap = document.querySelector(".screen-cap");
+  var clipStyle = document.querySelector(".clip-style");
+  var styleName = document.querySelector(".style-name");
+  var stage = document.querySelector(".stage");
+  var still = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var si = 0, ci = 0, paused = false;
+
+  function showScreen(i) {
+    screens.forEach(function (s, k) { s.classList.toggle("on", k === i); });
+    screenCap.textContent = screens[i].dataset.cap;
+  }
+  function showClip(i) {
+    reels.forEach(function (v, k) {
+      var on = k === i;
+      v.classList.toggle("on", on);
+      if (on && !still) {
+        if (v.preload === "none") v.preload = "auto";
+        v.currentTime = 0;
+        var p = v.play();
+        if (p && p.catch) p.catch(function () {});
+      } else {
+        v.pause();
+      }
+    });
+    styleName.textContent = reels[i].dataset.name;
+    clipStyle.textContent = reels[i].dataset.name.toLowerCase();
+  }
+
+  showClip(0);
+  if (!still) {
+    setInterval(function () { if (!paused && !document.hidden) { ci = (ci + 1) % reels.length; showClip(ci); } }, 3500);
+    setInterval(function () { if (!paused && !document.hidden) { si = (si + 1) % screens.length; showScreen(si); } }, 4600);
+    stage.addEventListener("mouseenter", function () { paused = true; });
+    stage.addEventListener("mouseleave", function () { paused = false; });
+  }
 })();
 </script>
 </body>
