@@ -8,7 +8,7 @@ const L = clamp(U * 0.1, 50, 130);
 const ws = sentence.split(/\s+/).filter(Boolean);
 // Lay the words out in lines, leaving room under each line for brackets and their names.
 const gap = textWidth(" ", L);
-const lineH = L * 3.1;
+const lineH = L * 3.4;
 const placed = [];
 let x = 0, line = 0;
 for (const w of ws) {
