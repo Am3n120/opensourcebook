@@ -186,7 +186,8 @@ test("a turn on the person's sign-in writes Open Sourcebook's MCP server and the
     const hooks = JSON.parse(readFileSync(join(cwd, ".agents", "hooks.json"), "utf8"));
     const pre = hooks[GATE_HOOK].PreToolUse[0];
     assert.equal(pre.matcher, "*", "every tool goes past the gate");
-    assert.ok(pre.hooks[0].command.includes(join(gate, "gate.mjs")), "its script is outside the folder it works in");
+    // The command names the script as a JSON string, which doubles the backslashes of a Windows path.
+    assert.ok(pre.hooks[0].command.includes(JSON.stringify(join(gate, "gate.mjs"))), "its script is outside the folder it works in");
     assert.ok(existsSync(join(gate, "gate.mjs")));
   } finally {
     rmSync(cwd, { recursive: true, force: true });
@@ -282,16 +283,17 @@ test("while the check runs it says so, and only says ready once it passed", asyn
 test("what the check found is kept in the connector's own state, never under the person's ~/.gemini", async () => {
   const agy = fakeAgy("obeys");
   const home = realpathSync(mkdtempSync(join(tmpdir(), "opensourcebook-home-")));
-  const saved = process.env.HOME;
-  process.env.HOME = home;
+  // The home folder is HOME on macOS and Linux and USERPROFILE on Windows.
+  const names = process.platform === "win32" ? ["HOME", "USERPROFILE"] : ["HOME"];
+  const saved = names.map((n) => process.env[n]);
+  for (const n of names) process.env[n] = home;
   try {
     assert.equal((await loginTurn({ bin: agy.bin })).ok, true);
     assert.equal(passedFor(defaultStateDir(home)), "1.6.0");
     assert.ok(existsSync(join(home, ".opensourcebook-agent-connector", "antigravity-check.json")));
     assert.equal(existsSync(join(home, ".gemini")), false);
   } finally {
-    if (saved === undefined) delete process.env.HOME;
-    else process.env.HOME = saved;
+    names.forEach((n, k) => (saved[k] === undefined ? delete process.env[n] : (process.env[n] = saved[k])));
     agy.remove();
     rmSync(home, { recursive: true, force: true });
   }
