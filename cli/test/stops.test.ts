@@ -101,8 +101,14 @@ async function launch(name: string, env: Record<string, string> = {}): Promise<L
   });
   everyone.push(child);
   const home = join(root, ".opensourcebook");
-  await until(`${name} to be ready`, () => readRunning(home)?.ready === true);
   const read = (file: string) => (existsSync(file) ? readFileSync(file, "utf8") : "");
+  try {
+    await until(`${name} to be ready`, () => readRunning(home)?.ready === true);
+  } catch (e) {
+    // What the launcher and its program wrote says why, where the bare timeout would not.
+    const logs = ["stops.log", "stub.log"].map((f) => `--- ${f}\n${read(join(home, "logs", f))}`).join("\n");
+    throw new Error(`${(e as Error).message}\n${logs}`);
+  }
   return {
     root,
     home,
@@ -274,9 +280,11 @@ test("two launchers picking ports at the same moment never pick the same one, an
 const ports = await pickPorts([{ name: "a", port: ${first} }, { name: "b", port: ${first + 1} }], async () => true, claimPort);
 console.log(JSON.stringify(ports));
 await new Promise((r) => setTimeout(r, 1500));`;
+  // A temporary folder is TMPDIR on macOS and Linux, TEMP and TMP on Windows, which also needs SystemRoot for PowerShell.
+  const claimsEnv = process.platform === "win32" ? { TEMP: tmp, TMP: tmp, SystemRoot: process.env.SystemRoot } : { TMPDIR: tmp };
   const run = () =>
     new Promise<Record<string, number>>((resolve) => {
-      const c = spawn(process.execPath, ["--input-type=module", "-e", script], { env: { PATH: process.env.PATH, TMPDIR: tmp }, stdio: ["ignore", "pipe", "ignore"] });
+      const c = spawn(process.execPath, ["--input-type=module", "-e", script], { env: { PATH: process.env.PATH, ...claimsEnv }, stdio: ["ignore", "pipe", "ignore"] });
       everyone.push(c);
       let out = "";
       c.stdout.on("data", (d) => (out += d));
@@ -291,13 +299,13 @@ await new Promise((r) => setTimeout(r, 1500));`;
   const port = first + 50;
   mkdirSync(join(tmp, "opensourcebook-port-claims"), { recursive: true });
   writeFileSync(join(tmp, "opensourcebook-port-claims", `${port}.json`), JSON.stringify({ pid: dead.pid, startedAt: "Mon Jan  1 00:00:00 2024" }));
-  const old = process.env.TMPDIR;
-  process.env.TMPDIR = tmp;
+  const names = Object.keys(claimsEnv).filter((n) => n !== "SystemRoot");
+  const old = names.map((n) => process.env[n]);
+  for (const n of names) process.env[n] = tmp;
   try {
     const { claimPort } = await import("../ports.ts");
     assert.equal(claimPort(port), true);
   } finally {
-    if (old === undefined) delete process.env.TMPDIR;
-    else process.env.TMPDIR = old;
+    names.forEach((n, i) => (old[i] === undefined ? delete process.env[n] : (process.env[n] = old[i])));
   }
 });

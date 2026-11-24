@@ -310,7 +310,8 @@ test("the line at start: said when a newer version is out, silent when up to dat
   assert.equal(await checkForNewer(copy), undefined, "offline");
 
   // A remote that accepts and never answers: the short timeout ends it, with nothing said.
-  const server: Server = createServer(() => undefined);
+  // When git gives up, Windows resets the connection, which ends here as an error of the socket: nothing to report.
+  const server: Server = createServer((socket) => socket.on("error", () => undefined));
   await new Promise<void>((r) => server.listen(0, "127.0.0.1", r));
   const port = (server.address() as { port: number }).port;
   git(copy, "remote", "set-url", "origin", `git://127.0.0.1:${port}/opensourcebook.git`);

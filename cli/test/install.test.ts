@@ -62,12 +62,13 @@ test("install: a node_modules that is a symbolic link is never installed into, a
   writeFileSync(join(engine, "package.json"), readFileSync(join(other, "package.json")));
   // The lockfile differs from what the link's packages were made from: still no install through the link.
   writeFileSync(join(engine, "package-lock.json"), JSON.stringify({ ...LOCK, packages: { ...LOCK.packages, "node_modules/a": { version: "1.1.0" } } }));
-  symlinkSync(join(other, "node_modules"), join(engine, "node_modules"));
+  // A junction on Windows, which needs no administrator; the type is ignored elsewhere.
+  symlinkSync(join(other, "node_modules"), join(engine, "node_modules"), "junction");
   assert.equal(needsInstall(engine, home), false);
   assert.deepEqual(missingPackages(root, home), []);
   const [linked] = linkedPackages(root);
   assert.deepEqual(linked, { dir: "engine", target: join(other, "node_modules"), answers: true });
-  assert.match(linkedLine("Engine", linked!), /^ {2}Engine: engine\/node_modules is a symbolic link to .*other-checkout\/engine\/node_modules, and Open Sourcebook does not install into a link .* The packages there answer, so Open Sourcebook goes on with them/);
+  assert.match(linkedLine("Engine", linked!), /^ {2}Engine: engine\/node_modules is a symbolic link to .*other-checkout[\\/]engine[\\/]node_modules, and Open Sourcebook does not install into a link .* The packages there answer, so Open Sourcebook goes on with them/);
 
   const log = join(dir, "install.log");
   assert.equal(await install(engine, log, home), false);
