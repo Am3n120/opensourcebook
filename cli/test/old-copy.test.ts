@@ -26,7 +26,8 @@ after(() => {
       // already gone
     }
   }
-  rmSync(base, { recursive: true, force: true });
+  // Windows keeps a file in use until the process that holds it has fully gone.
+  rmSync(base, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 });
 });
 
 function copy(name: string, command: string, script = ""): string {

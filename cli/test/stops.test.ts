@@ -271,6 +271,16 @@ test("a launcher that was killed outright leaves its programs; opensourcebook st
   everyone.push(bystander);
   a.child.kill("SIGKILL");
   await until("the launcher to be gone", () => !alive(a.child.pid!));
+  if (process.platform === "win32") {
+    // Nothing is left behind on Windows: Node puts each program it starts in a job that the system ends with the
+    // launcher. So the program goes too, and a stop then only clears the record.
+    await until("its program to go with it", () => !alive(program));
+    const r = await runIn(["stop"], { home: a.home, root: a.root, cwd: base });
+    assert.equal(r.code, 0, r.err);
+    assert.match(r.out, /not running/);
+    assert.ok(alive(bystander.pid!), "nothing else was touched");
+    return;
+  }
   assert.ok(alive(program), "its program is left running");
   const recorded = readRunning(a.home);
   const r = await runIn(["stop"], { home: a.home, root: a.root, cwd: base });
@@ -297,13 +307,16 @@ test("two launchers picking ports at the same moment never pick the same one, an
   const script = `import { claimPort, pickPorts } from ${JSON.stringify(new URL("../ports.ts", import.meta.url).href)};
 const ports = await pickPorts([{ name: "a", port: ${first} }, { name: "b", port: ${first + 1} }], async () => true, claimPort);
 console.log(JSON.stringify(ports));
-await new Promise((r) => setTimeout(r, 1500));`;
+setInterval(() => undefined, 1000);`;
+  // Each stays, holding its claims, until both have picked (a slow computer may need seconds between the two).
+  const pickers: ChildProcess[] = [];
   // A temporary folder is TMPDIR on macOS and Linux, TEMP and TMP on Windows.
   const claimsEnv: Record<string, string> = process.platform === "win32" ? { TEMP: tmp, TMP: tmp } : { TMPDIR: tmp };
   const run = () =>
     new Promise<Record<string, number>>((resolve) => {
       const c = spawn(process.execPath, ["--input-type=module", "-e", script], { env: { PATH: process.env.PATH, ...windowsBasics, ...claimsEnv }, stdio: ["ignore", "pipe", "ignore"] });
       everyone.push(c);
+      pickers.push(c);
       let out = "";
       c.stdout.on("data", (d) => (out += d));
       c.stdout.once("data", () => setTimeout(() => resolve(JSON.parse(out.trim().split("\n")[0]!)), 20));
@@ -320,6 +333,7 @@ await new Promise((r) => setTimeout(r, 1500));`;
       })
       .join("; ");
   assert.equal(new Set(all).size, 4, `four different ports, got ${all.join(", ")}; claims: ${new Set(all).size === 4 ? "" : claimsNow()}`);
+  for (const c of pickers) c.kill("SIGKILL");
   // A claim whose process is gone is taken over.
   const dead = spawn(process.execPath, ["-e", ""], { stdio: "ignore" });
   await new Promise((r) => dead.once("exit", r));
