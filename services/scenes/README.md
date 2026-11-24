@@ -9,7 +9,7 @@ It listens on `127.0.0.1` only and runs the agent through the agent connector on
 - **Skills** (`skills/`): knowledge to read, never rules. `make-a-video` (what a video needs, how the tools fit together, the scene language's guide, a cookbook of worked scenes), `teaching` (how to explain so a person follows) and `media` (the voice and its pauses, pictures, the sound kit).
 - **Tools**: `read_passages`, `read_skill`, `about_video`, `write_beat`, `look`, `render`, `watch`, `viewer_report`, `sound`, `find_piece`, `save_piece` and `finish`, plus a toolbox for pictures and the web (`web_search`, `open_page`, `find_images`, `generate_image`, `cut_out`, `read_pdf`, `video_frames` and others) where this computer can run it.
 - **Pieces** (`pieces/`): a shelf of 50 ready-made things to put on screen and drive with a few settings and the spoken words, such as a number line, a timeline, a map, a sort or a graph. One folder each.
-- **Styles** (`styles/`): the look of a video, one file each: its palette, fonts, line, fills, page, motion and captions. Four are offered today: **Chalkboard**, **Flat illustrated**, **Editorial ink** and **Blueprint**. Ten more are kept in the repo and not offered yet.
+- **Styles** (`styles/`): the look of a video, one file each: its palette, fonts, line, fills, page, motion and captions. Twelve of the fourteen are offered; **Sketchnote** and **Terminal** are kept in the repo and not offered yet, until every piece draws cleanly in them.
 
 ## How a video is made
 

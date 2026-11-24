@@ -4,6 +4,7 @@ The newest first. `opensourcebook update` prints the lines here that your copy d
 
 ## 2026-11-24
 
+- Videos have more styles to pick from: twelve instead of four, among them Comic, Neon, Whiteboard, Collage, Kinetic type, Textbook plate, Map and timeline and Documentary. Each shows its picture when you choose.
 - The iPhone app's code is now in one folder, `ios/`, under the name Open Sourcebook. If you build the app yourself, open `ios/OpenSourcebook.xcodeproj`, and move your own `Config/Local.xcconfig` to `ios/Config/Local.xcconfig`. Its ids did not change, so a build installs over the app you have.
 - The name is now Open Sourcebook everywhere, not only in the web app. You have nothing to do: your projects, sources, paired phones, voice and settings are found as they are. The folder that keeps them inside your copy, `.re`, is renamed to `.opensourcebook` once, the first time you start after updating.
 - The command is now `opensourcebook`, with no short form. `npm start` works as before. If you made `re` a command with `npm link`, run `npm link` once more in the folder to get `opensourcebook`; the `re` you already have keeps working until you remove it.

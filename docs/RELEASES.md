@@ -52,7 +52,7 @@ Open Sourcebook turns your notes, slides and PDFs into a video to watch, flashca
 
 - Claude Code is proven end to end. Codex and OpenCode are less proven. Cursor and GitHub Copilot are built and tested against stand-ins, but not yet tried for real. Antigravity is built and has never been run on a real install.
 - Tried on a Mac. Linux is only partly tried. Windows has its own automated checks, but they have not run yet, and it is not tested by hand (help wanted).
-- Videos are good, not great, and take minutes to make. Fourteen styles are kept in the repo and four are offered; the others wait until a finished video in each has been watched.
+- Videos are good, not great, and take minutes to make. Twelve of the fourteen styles in the repo are offered; eight of them have not yet had a finished video watched, and any that fall short will be dropped. Sketchnote and Terminal are kept back until the pieces draw cleanly in them.
 - Without a voice, videos have no sound and audio cannot be made. Speechify has been tested against a stand-in, not a real key. Kokoro sounds less natural than ElevenLabs and is tried on Linux only.
 - A real phone has not been tried yet.
 

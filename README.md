@@ -21,7 +21,7 @@ Website: [opensourcebook.app](https://opensourcebook.app)
 | | |
 |---|---|
 | **Explainer videos, drawn for your material** | Each scene is written and drawn, the agent looks at its own frames and fixes them, and a fresh viewer reviews the cut before you see it. With captions, and with narration, music and sound effects once you set a voice. |
-| **Four styles, any length up to 30 minutes** | Chalkboard, Flat illustrated, Editorial ink or Blueprint. Ask for 30 seconds or a full walkthrough, or let the length fit the material. |
+| **Twelve styles, any length up to 30 minutes** | From Chalkboard and Blueprint to Comic, Neon, Documentary and Map and timeline, each picked by its picture. Ask for 30 seconds or a full walkthrough, or let the length fit the material. |
 | **Your plan, or an API key** | Use the AI plan you already have, whether that is Claude, ChatGPT, Gemini, Cursor or GitHub Copilot: no API key is needed. A key works too: a Gemini, DeepSeek or OpenRouter key for chat, flashcards and quizzes, or any provider you connect in OpenCode for everything, videos included. |
 | **Six agents, any model they offer** | Claude Code, Codex, OpenCode, Cursor, Antigravity and GitHub Copilot. Pick who makes each kind of thing, with which model and effort. |
 | **A whole set from one request** | "Get me ready for Friday's exam" or "get a new teammate up to speed on this runbook" becomes a plan of videos, flashcards, quizzes, audio and guides in order. Look it over, change it, start it. |

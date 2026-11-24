@@ -64,7 +64,7 @@ A **style** is a small world, not a palette: one file in `styles/` says its pale
 
 The engine never names a style: drawing (`engine/style/paint.ts`, `draw.tsx`), motion (`engine/core/compile.ts`), captions, cuts and the end card (`video/`) read only what the file says. Words are measured in the style's own fonts everywhere, by the layout, by programs (`textWidth`, `fitSize`, `wrapText`) and by the checks on built frames.
 
-A style is **offered** unless its file says `"offered": false`: kept in the repo, it still draws any video that names it (an older plan's), but it is left out of what the person, the planner and the video agent choose from. Today chalkboard, flat, editorial ink and blueprint are offered; whiteboard, collage and neon are kept until they reach the same bar, as are sketchnote, textbook plate, terminal, comic, kinetic type, documentary and map and timeline until a finished video in each has been watched.
+A style is **offered** unless its file says `"offered": false`: kept in the repo, it still draws any video that names it (an older plan's), but it is left out of what the person, the planner and the video agent choose from. Today twelve are offered; sketchnote and terminal are kept until every piece on the shelf builds in them with nothing measured that a viewer would notice (the shelf test checks each offered style). An offered style that does not hold up on finished videos is set back to `"offered": false` or removed.
 
 ## The toolbox
 

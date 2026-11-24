@@ -41,6 +41,7 @@ What the one-line install has and has not been tried on, in full: [`install/READ
 - It is not a hosted service. There is no account and nothing to sign up for.
 - Open Sourcebook checks every cite word for word against your sources, and a first test found no wrong fact about a source. But a made thing can still carry a line that is the agent's own reasoning or general knowledge without saying so, so a line with no cite is not from your files. Marking such lines is being worked on.
 - Videos are good, not great. They depend a lot on the agent and model: they can be too slow, too busy or just wrong. A bad one is worth a report.
+- Twelve styles are offered, but only Chalkboard, Flat illustrated, Editorial ink and Blueprint have been judged on finished videos. The other eight are offered to try, and one that does not hold up will be dropped. Sketchnote and Terminal are in the repo but not offered yet: some pieces still draw words too small or late in them.
 - A video takes minutes, and the strongest model takes much longer. A big plan takes a while: your agent does real work for each item.
 - A voice needs a key or Kokoro. Without one a video has no sound and audio cannot be made.
 - A real phone has not been tried, and Windows is not tested yet (help wanted). Linux is only partly tried.
