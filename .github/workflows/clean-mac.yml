@@ -98,7 +98,7 @@ jobs:
       # docs/DEVELOPING.md: git clone --depth 1 <the repo>, then cd opensourcebook. Checked out the same way (one commit, into opensourcebook/), so a
       # pull request tests its own commit.
       - name: "Clone (depth 1) and cd opensourcebook"
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           path: opensourcebook
           fetch-depth: 1
@@ -120,7 +120,7 @@ jobs:
 
       # docs/DEVELOPING.md sends a person to nodejs.org for Node 24; this downloads that same Node, with no cache.
       - name: "Node 24 from nodejs.org"
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v7
         with:
           node-version: 24
 
