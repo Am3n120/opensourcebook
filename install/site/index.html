@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Open Sourcebook: the open-source alternative with explainer videos</title>
-<meta name="description" content="Open Sourcebook turns your PDFs, notes, slides and links into explainer videos, flashcards, quizzes, guides, audio and cited answers, on your own computer, with the AI plan you already have. Free and open source. In beta.">
+<meta name="description" content="Open Sourcebook turns your PDFs, notes, slides and links into explainer videos, drawn scene by scene: for an exam, a stack of papers, a new colleague or a manual. It also makes guides, audio, flashcards, quizzes and cited answers, on the AI plan you already have. Free and open source. In beta.">
 <link rel="canonical" href="https://opensourcebook.app/">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#F7F7FA" media="(prefers-color-scheme: light)">
@@ -24,7 +24,7 @@
 <meta property="og:image:alt" content="Open Sourcebook: understand what you have to read, explain what you know.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Open Sourcebook">
-<meta name="twitter:description" content="Explainer videos, flashcards, quizzes and cited answers from your own sources, on your own computer. Free and open source. In beta.">
+<meta name="twitter:description" content="Explainer videos drawn from your own sources, for an exam, a stack of papers, a new colleague or a manual, on the AI plan you already have. Free and open source. In beta.">
 <meta name="twitter:image" content="https://opensourcebook.app/og.png">
 <meta name="twitter:image:alt" content="Open Sourcebook: understand what you have to read, explain what you know.">
 
@@ -33,7 +33,7 @@
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
   "name": "Open Sourcebook",
-  "description": "An open-source app that turns your PDFs, notes, slides and links into explainer videos, flashcards, quizzes, guides, audio and cited answers, on your own computer, with the AI plan you already have.",
+  "description": "An open-source app that turns your PDFs, notes, slides and links into explainer videos, drawn scene by scene, for preparing for an exam, reading a stack of papers, getting a new colleague up to speed or turning a manual into something people will watch. It also makes guides, audio, flashcards, quizzes and cited answers, on your own computer, with the AI plan you already have.",
   "url": "https://opensourcebook.app/",
   "codeRepository": "https://github.com/Mikiyas-Meles-Assefa/opensourcebook",
   "applicationCategory": "EducationalApplication",
@@ -45,98 +45,84 @@
 }
 </script>
 <style>
+/* Colours and type from the app's own tokens (web/src/design/tokens.css). */
 :root {
   --primary: #6C5CE7;
-  --primary-hover: #5B4BD6;
-  --primary-text: #5B4BD6;
-  --primary-soft: #EFEDFC;
-  --on-primary: #FFFFFF;
+  --primaryHover: #5B4BD6;
+  --primaryText: #5B4BD6;
+  --onPrimary: #FFFFFF;
   --bg: #F7F7FA;
   --surface: #FFFFFF;
   --border: #E5E7EB;
-  --border-strong: #CBD5E1;
+  --borderStrong: #CBD5E1;
   --text: #0F172A;
-  --muted: #556277;
-  --code-bg: #0F172A;
-  --code-text: #E7E9EE;
-  --code-prompt: #9AA3B5;
+  --mutedText: #556277;
+  --codeBg: #0F172A;
+  --codeText: #E7E9EE;
+  --codePrompt: #9AA3B5;
   --focus: #2563EB;
-  --glow: rgb(108 92 231 / .10);
-  --shadow: 0 1px 2px rgb(15 23 42 / .05), 0 8px 28px rgb(15 23 42 / .07);
+  --font: "Inter Variable", Inter, -apple-system, system-ui, "Segoe UI", Roboto, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --primary-text: #B7AEFF;
-    --primary-soft: #2B2752;
+    --primaryText: #B7AEFF;
     --bg: #0E1015;
     --surface: #181B22;
     --border: #2A2F3A;
-    --border-strong: #3C4352;
+    --borderStrong: #3C4352;
     --text: #E7E9EE;
-    --muted: #ABB3C1;
-    --code-bg: #07080C;
+    --mutedText: #ABB3C1;
+    --codeBg: #07080C;
     --focus: #7AB4FF;
-    --glow: rgb(108 92 231 / .22);
-    --shadow: 0 1px 2px rgb(0 0 0 / .4), 0 8px 28px rgb(0 0 0 / .35);
   }
 }
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 body {
-  margin: 0;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  background:
-    radial-gradient(60rem 28rem at 50% -6rem, var(--glow), transparent 70%),
-    var(--bg);
-  color: var(--text);
-  font: 16px/1.55 system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  margin: 0; min-height: 100vh; display: flex; flex-direction: column;
+  background: var(--bg); color: var(--text);
+  font: 16px/24px var(--font);
 }
-a { color: var(--primary-text); text-underline-offset: .18em; }
+a { color: var(--primaryText); text-underline-offset: .18em; }
 :focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: 6px; }
 
-.wrap { width: 100%; max-width: 60rem; margin: 0 auto; padding: 0 1rem; }
-main { flex: 1 0 auto; display: flex; align-items: center; }
-main .wrap { padding-top: 1.75rem; padding-bottom: 1.25rem; text-align: center; }
+.wrap { width: 100%; max-width: 46rem; margin: 0 auto; padding: 0 1rem; }
+main { flex: 1 0 auto; }
+main .wrap { padding-top: 3rem; padding-bottom: 2rem; }
 
-.brand { display: inline-flex; align-items: center; gap: .6rem; font-weight: 700; font-size: 1.15rem; letter-spacing: -.01em; }
-.brand svg { width: 2.25rem; height: 2.25rem; display: block; }
+.brand { display: flex; align-items: center; gap: .6rem; font-weight: 700; font-size: 1.1rem; }
+.brand svg { width: 2rem; height: 2rem; display: block; }
 .beta {
-  font-size: .72rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
-  color: var(--primary-text); background: var(--primary-soft);
-  border: 1px solid rgb(108 92 231 / .25);
-  border-radius: 999px; padding: .15rem .55rem; margin-left: .15rem;
+  font-size: 12px; line-height: 16px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
+  color: var(--mutedText); border: 1px solid var(--borderStrong);
+  border-radius: 999px; padding: .1rem .5rem;
 }
 
 h1 {
-  margin: 1rem auto 0;
-  max-width: 52rem;
-  font-size: clamp(1.75rem, 3.6vw, 2.5rem);
-  line-height: 1.12;
-  letter-spacing: -.025em;
-  font-weight: 750;
-  text-wrap: balance;
+  margin: 1.5rem 0 0;
+  font-size: clamp(1.75rem, 4vw, 40px); line-height: 1.1;
+  letter-spacing: -.02em; font-weight: 750; text-wrap: balance;
 }
-.tagline { margin: .6rem 0 0; font-size: clamp(1.08rem, 2.2vw, 1.25rem); font-weight: 600; }
+.tagline { margin: .75rem 0 0; font-size: 20px; line-height: 28px; font-weight: 600; }
 .tagline span { display: inline-block; }
-.what { margin: .6rem auto 0; max-width: 42rem; color: var(--muted); text-wrap: pretty; }
+.jobs { margin: .5rem 0 0; color: var(--mutedText); text-wrap: pretty; }
+.what { margin: 1rem 0 0; text-wrap: pretty; }
 
 .install {
-  margin: 1.25rem auto 0; max-width: 44rem; text-align: left;
-  background: var(--surface); border: 1px solid var(--border); border-radius: 16px;
-  box-shadow: var(--shadow); padding: .75rem .75rem .9rem;
+  margin: 1.5rem 0 0; background: var(--surface);
+  border: 1px solid var(--border); border-radius: 12px; padding: .75rem .75rem .9rem;
 }
 .tabs { display: flex; gap: .35rem; margin: 0 0 .6rem; }
 .tabs[hidden] { display: none; }
 .tab {
-  font: inherit; font-size: .9rem; font-weight: 600; color: var(--muted);
+  font: inherit; font-size: .9rem; font-weight: 600; color: var(--mutedText);
   background: transparent; border: 1px solid transparent; border-radius: 999px;
   padding: .3rem .85rem; min-height: 2.25rem; cursor: pointer;
 }
 .tab:hover { color: var(--text); border-color: var(--border); }
-.tab[aria-selected="true"] { color: var(--text); background: var(--bg); border-color: var(--border-strong); }
-.os-name { font-size: .9rem; font-weight: 600; margin: .2rem .25rem .4rem; color: var(--muted); }
+.tab[aria-selected="true"] { color: var(--text); background: var(--bg); border-color: var(--borderStrong); }
+.os-name { font-size: .9rem; font-weight: 600; margin: .2rem .25rem .4rem; color: var(--mutedText); }
 .js .os { display: none; }
 .js .os.is-on { display: block; }
 .js .os-name { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
@@ -146,61 +132,56 @@ h1 {
 .line { display: flex; align-items: stretch; gap: .5rem; }
 .cmd {
   flex: 1 1 auto; min-width: 0; margin: 0;
-  background: var(--code-bg); color: var(--code-text);
-  border-radius: 10px; padding: .85rem 1rem;
-  font: 1rem/1.5 ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
-  white-space: pre; overflow-x: auto;
+  background: var(--codeBg); color: var(--codeText);
+  border-radius: 8px; padding: .85rem 1rem;
+  font: 1rem/1.5 var(--font-mono); white-space: pre; overflow-x: auto;
 }
-.cmd::before { content: "$ "; color: var(--code-prompt); }
+.cmd::before { content: "$ "; color: var(--codePrompt); }
 .cmd.ps::before { content: "> "; }
 .copy {
   display: none; flex: 0 0 auto;
-  font: inherit; font-weight: 650; color: var(--on-primary); background: var(--primary);
-  border: 0; border-radius: 10px; padding: 0 1.1rem; min-width: 5.5rem; min-height: 2.9rem; cursor: pointer;
+  font: inherit; font-weight: 650; color: var(--onPrimary); background: var(--primary);
+  border: 0; border-radius: 8px; padding: 0 1.1rem; min-width: 5.5rem; min-height: 2.9rem; cursor: pointer;
 }
 .js .copy { display: block; }
-.copy:hover { background: var(--primary-hover); }
-.help { margin: .6rem .25rem 0; font-size: .875rem; color: var(--muted); }
-.help + .help { margin-top: .2rem; }
-.copied { margin: .4rem .25rem 0; font-size: .9rem; color: var(--muted); }
+.copy:hover { background: var(--primaryHover); }
+.help { margin: .6rem .25rem 0; font-size: 14px; line-height: 20px; color: var(--mutedText); }
+.help + .help { margin-top: .25rem; }
+.help b { color: var(--text); font-weight: 600; }
+.copied { margin: .4rem .25rem 0; font-size: .9rem; color: var(--mutedText); }
 .copied:empty { display: none; }
 
 .points {
-  list-style: none; margin: 1.1rem auto 0; padding: 0; max-width: 56rem;
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: .6rem; text-align: left;
+  list-style: none; margin: 2rem 0 0; padding: 0;
+  display: grid; grid-template-columns: 1fr 1fr; column-gap: 2rem;
 }
-.points li {
-  background: var(--surface); border: 1px solid var(--border); border-radius: 12px;
-  padding: .65rem .85rem; font-size: .875rem; line-height: 1.4; color: var(--muted);
-}
-.points b { display: block; color: var(--text); font-size: .95rem; margin-bottom: .15rem; }
+.points li { border-top: 1px solid var(--border); padding: .8rem 0 1rem; color: var(--mutedText); font-size: 15px; line-height: 22px; }
+.points b { display: block; color: var(--text); font-size: 16px; line-height: 24px; margin-bottom: .15rem; }
 
-.actions { margin: 1.1rem 0 0; display: flex; justify-content: center; flex-wrap: wrap; gap: .6rem; }
+.actions { margin: 1.25rem 0 0; display: flex; flex-wrap: wrap; gap: .6rem; }
 .btn {
   display: inline-flex; align-items: center; gap: .5rem; min-height: 2.75rem;
   padding: .55rem 1.15rem; border-radius: 999px; font-weight: 650; text-decoration: none;
-  border: 1px solid var(--border-strong); color: var(--text); background: var(--surface);
+  border: 1px solid var(--borderStrong); color: var(--text); background: transparent;
 }
 .btn:hover { border-color: var(--text); }
 .btn.solid { background: var(--text); border-color: var(--text); color: var(--bg); }
 .btn.solid:hover { opacity: .9; }
 .btn svg { width: 1.1rem; height: 1.1rem; fill: currentColor; }
-.soon { margin: .8rem 0 0; font-size: .9rem; color: var(--muted); }
+.soon { margin: .9rem 0 0; font-size: 14px; color: var(--mutedText); }
 
-footer { flex: 0 0 auto; border-top: 1px solid var(--border); color: var(--muted); font-size: .88rem; }
+footer { flex: 0 0 auto; border-top: 1px solid var(--border); color: var(--mutedText); font-size: 14px; }
 footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: .5rem; padding-top: .9rem; padding-bottom: 1rem; }
 footer p { margin: 0; }
 
-@media (max-width: 52rem) {
-  .points { grid-template-columns: repeat(2, 1fr); }
+@media (max-width: 36rem) {
+  main .wrap { padding-top: 2rem; }
+  .points { grid-template-columns: 1fr; }
 }
 @media (max-width: 30rem) {
-  main .wrap { padding-top: 1.75rem; }
   .line { flex-direction: column; }
   .cmd { font-size: .9rem; padding: .8rem .85rem; white-space: pre-wrap; overflow-wrap: anywhere; }
   .copy { width: 100%; }
-  .points { grid-template-columns: 1fr; }
-  footer .wrap { justify-content: center; text-align: center; }
 }
 @media (prefers-reduced-motion: no-preference) {
   .tab, .copy, .btn { transition: background-color .15s, border-color .15s, color .15s, opacity .15s; }
@@ -218,7 +199,14 @@ footer p { margin: 0; }
 
     <h1>The open-source NotebookLM (now Gemini Notebook) alternative with explainer videos.</h1>
     <p class="tagline"><span>Understand what you have to read.</span> <span>Explain what you know.</span></p>
-    <p class="what">Add your PDFs, notes, slides and links, and the AI agent you already have turns them into a short explainer video drawn scene by scene, flashcards, a quiz, a guide, audio and cited answers, on your own computer.</p>
+    <p class="jobs">Preparing for an exam · reading a stack of papers · getting a new colleague up to speed · turning a manual into something people will watch.</p>
+
+    <!-- DEMO CLIP PLACEHOLDER. A short silent loop of a real video the app made goes here,
+         between the words above and the install box, once the owner approves one.
+         Until then nothing is shown. When it is added, also add media-src 'self' to the
+         Content-Security-Policy in _headers. -->
+
+    <p class="what">Add your PDFs, notes, slides and links. Open Sourcebook turns them into a short explainer video, drawn scene by scene, and also makes guides, audio, flashcards, quizzes and answers with cites.</p>
 
     <div class="install" id="install">
       <div class="tabs" id="tabs" role="tablist" aria-label="Your computer" hidden>
@@ -245,15 +233,15 @@ footer p { margin: 0; }
       </div>
 
       <p class="copied" id="copied" role="status" aria-live="polite"></p>
-      <p class="help">You need an AI plan with its agent: Claude, ChatGPT, Gemini, Cursor or GitHub Copilot. An API key works too.</p>
+      <p class="help"><b>It runs on the AI plan you already have:</b> Claude, ChatGPT, Gemini, Cursor or GitHub Copilot. No API key is needed, and one works too.</p>
       <p class="help">Made and used on a Mac. Linux and Windows are written and not proven yet.</p>
     </div>
 
     <ul class="points" aria-label="What you get">
-      <li><b>Explainer videos</b>Drawn scene by scene from your own sources.</li>
-      <li><b>Flashcards and quizzes</b>The cards you miss come back until they stick.</li>
-      <li><b>Answers you can check</b>Every cite is checked word for word against your source.</li>
-      <li><b>On your computer</b>Your files stay there. Free and open source.</li>
+      <li><b>Explainer videos, drawn for your material</b>Four styles, any length up to 30 minutes, with captions, and narration and music once you set a voice.</li>
+      <li><b>The AI you already have</b>Your plan or an API key. Six agents, and any model they offer.</li>
+      <li><b>A whole set from one request</b>Videos, guides, audio, flashcards and quizzes in order, as a plan you can change before it starts.</li>
+      <li><b>Answers you can check, on your computer</b>Every cite is checked word for word. Your files stay there. Open source under MIT.</li>
     </ul>
 
     <div class="actions">
