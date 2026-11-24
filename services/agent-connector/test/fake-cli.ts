@@ -55,8 +55,7 @@ export function fakeCli(answers: Array<{ args: string; out?: string; code?: numb
   if (process.platform === "win32") {
     const script = join(dir, "agent.mjs");
     writeFileSync(script, nodeAgent(dir, answers.map((a, i) => ({ args: a.args, out: join(dir, `out-${i}`), code: a.code ?? 0 }))));
-    // The shape of npm's own .cmd shim: the script beside it, run with node.
-    writeFileSync(`${bin}.cmd`, `@ECHO off\r\nGOTO start\r\n:find_dp0\r\nSET dp0=%~dp0\r\nEXIT /b\r\n:start\r\nSETLOCAL\r\nCALL :find_dp0\r\nSET "_prog=node"\r\nendLocal & goto #_undefined_# 2>NUL || title %COMSPEC% & "%_prog%"  "%dp0%\\agent.mjs" %*\r\n`);
+    writeFileSync(`${bin}.cmd`, cmdShim("agent.mjs"));
   } else {
     writeFileSync(
       bin,
@@ -78,6 +77,27 @@ export function fakeCli(answers: Array<{ args: string; out?: string; code?: numb
     env: () => read("env").split("\n").filter(Boolean),
     remove: () => rmSync(dir, { recursive: true, force: true }),
   };
+}
+
+/** The shape of npm's own .cmd shim: `script`, the file beside it, run with node. */
+function cmdShim(script: string): string {
+  return `@ECHO off\r\nGOTO start\r\n:find_dp0\r\nSET dp0=%~dp0\r\nEXIT /b\r\n:start\r\nSETLOCAL\r\nCALL :find_dp0\r\nSET "_prog=node"\r\nendLocal & goto #_undefined_# 2>NUL || title %COMSPEC% & "%_prog%"  "%dp0%\\${script}" %*\r\n`;
+}
+
+/**
+ * A stand-in program written in Node (CommonJS), named `name` in `dir`; the path to start it by. On macOS and Linux a
+ * script with a #! line; on Windows, which cannot start such a script, the script beside a `.cmd` file of npm's kind.
+ */
+export function nodeProgram(dir: string, name: string, source: string): string {
+  const bin = join(dir, name);
+  if (process.platform === "win32") {
+    writeFileSync(`${bin}.cjs`, source);
+    writeFileSync(`${bin}.cmd`, cmdShim(`${name}.cjs`));
+    return `${bin}.cmd`;
+  }
+  writeFileSync(bin, `#!${process.execPath}\n${source}`);
+  chmodSync(bin, 0o755);
+  return bin;
 }
 
 /** The Windows stand-in: what the shell script does, in Node. */

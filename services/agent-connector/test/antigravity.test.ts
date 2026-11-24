@@ -5,7 +5,7 @@
  */
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
-import { chmodSync, existsSync, mkdirSync, mkdtempSync, readFileSync, realpathSync, rmSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, mkdtempSync, readFileSync, realpathSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { test } from "node:test";
@@ -39,7 +39,7 @@ import {
   readAntigravityModels,
   writeLoginTurnFiles,
 } from "../src/agents/antigravity.ts";
-import { fakeCli } from "./fake-cli.ts";
+import { fakeCli, nodeProgram } from "./fake-cli.ts";
 
 const base = { turnId: "t1", systemPrompt: "You are Open Sourcebook's chat.", prompt: "hi", cwd: "/tmp/opensourcebook-agent-x", mcp: { name: "opensourcebook", url: "http://127.0.0.1:8650/mcp/t1", headers: { Authorization: "Bearer s3cret" } } };
 const box: Box = { kind: "seatbelt", wrap: (bin, args) => ({ bin, args }) };
@@ -60,9 +60,18 @@ const ENDED = { ok: true, text: "Done.", model: "gemini-3.8-flash-medium", token
 function capturingCli(out: string): { bin: string; captured: string; remove(): void } {
   const dir = realpathSync(mkdtempSync(join(tmpdir(), "opensourcebook-fake-agy-")));
   writeFileSync(join(dir, "out"), out);
-  const bin = join(dir, "agy");
-  writeFileSync(bin, `#!/bin/sh\n[ "$1" = "--version" ] && echo "agy 1.6.0" && exit 0\necho "$*" > ${JSON.stringify(join(dir, "args"))}\ncat > /dev/null\n[ -d .agents ] && cp -R .agents ${JSON.stringify(join(dir, "agents"))}\ncat ${JSON.stringify(join(dir, "out"))}\n`);
-  chmodSync(bin, 0o755);
+  const bin = nodeProgram(
+    dir,
+    "agy",
+    `const fs = require("fs");
+const dir = ${JSON.stringify(dir)};
+if (process.argv[2] === "--version") { process.stdout.write("agy 1.6.0\\n"); process.exit(0); }
+fs.writeFileSync(dir + "/args", process.argv.slice(2).join(" ") + "\\n");
+fs.readFileSync(0);
+if (fs.existsSync(".agents")) fs.cpSync(".agents", dir + "/agents", { recursive: true });
+process.stdout.write(fs.readFileSync(dir + "/out"));
+`,
+  );
   return { bin, captured: dir, remove: () => rmSync(dir, { recursive: true, force: true }) };
 }
 
@@ -82,9 +91,10 @@ function passed(version = "1.6.0"): string {
 function fakeAgy(mode: "obeys" | "ignores" | "lazy" | "signedOut" | "slow"): { bin: string; dir: string; probes(): string[]; setVersion(v: string): void; remove(): void } {
   const dir = realpathSync(mkdtempSync(join(tmpdir(), "opensourcebook-fake-agy-")));
   writeFileSync(join(dir, "version"), "agy 1.6.0\n");
-  const bin = join(dir, "agy");
-  writeFileSync(bin, `#!${process.execPath}
-const fs = require("fs"), cp = require("child_process");
+  const bin = nodeProgram(
+    dir,
+    "agy",
+    `const fs = require("fs"), cp = require("child_process");
 const dir = ${JSON.stringify(dir)}, mode = ${JSON.stringify(mode)};
 const args = process.argv.slice(2).join(" ");
 if (args.startsWith("--version")) { process.stdout.write(fs.readFileSync(dir + "/version", "utf8")); process.exit(0); }
@@ -104,8 +114,8 @@ const obey = () => {
   ok("It was refused.");
 };
 if (mode === "slow") setTimeout(obey, 600); else obey();
-`);
-  chmodSync(bin, 0o755);
+`,
+  );
   const read = () => (existsSync(join(dir, "probes")) ? readFileSync(join(dir, "probes"), "utf8") : "");
   return { bin, dir, probes: () => read().split("\n").filter((l) => l.includes(CANARY)), setVersion: (v) => writeFileSync(join(dir, "version"), `agy ${v}\n`), remove: () => rmSync(dir, { recursive: true, force: true }) };
 }
