@@ -335,6 +335,7 @@ run_package() {
   status=0
   (
     cd "$home"
+    # shellcheck disable=SC2030 # on purpose: only the package's run gets the chosen Node first, not the rest of the script
     PATH=$node_dir:$PATH
     OPENSOURCEBOOK_HOME=$home
     npm_config_update_notifier=false
@@ -362,6 +363,7 @@ make_command() {
       'Next step: Paste the line again.' >&2
     exit 1
   fi
+  # shellcheck disable=SC2031 # the person's own PATH is the one meant here, not the package run's
   case ":$PATH:" in
     *":$home/bin:"*)
       say 'The word opensourcebook already works in a terminal.'
@@ -371,6 +373,7 @@ make_command() {
 
   # A folder for personal commands that is already known: one link is enough.
   link=$HOME/.local/bin/opensourcebook
+  # shellcheck disable=SC2031 # the person's own PATH is the one meant here, not the package run's
   case ":$PATH:" in
     *":$HOME/.local/bin:"*)
       if [ -L "$link" ] || [ ! -e "$link" ]; then
@@ -383,6 +386,7 @@ make_command() {
       ;;
   esac
 
+  # shellcheck disable=SC1003 # '\' is a backslash on its own, not an escaped quote
   case $home in
     *'"'* | *'$'* | *'`'* | *'\'* | *"'"*)
       say "To use the word opensourcebook in a terminal, add $home/bin to your PATH yourself; its name has signs this installer does not write for you."
@@ -390,6 +394,7 @@ make_command() {
       ;;
   esac
   if [ "$home" = "$HOME/.opensourcebook" ]; then
+    # shellcheck disable=SC2016 # written into the profile as it stands, so it is read each time a terminal opens
     folder='$HOME/.opensourcebook/bin'
   else
     folder=$home/bin
