@@ -272,9 +272,10 @@ test("a launcher that was killed outright leaves its programs; opensourcebook st
   a.child.kill("SIGKILL");
   await until("the launcher to be gone", () => !alive(a.child.pid!));
   assert.ok(alive(program), "its program is left running");
+  const recorded = readRunning(a.home);
   const r = await runIn(["stop"], { home: a.home, root: a.root, cwd: base });
   assert.equal(r.code, 0, r.err);
-  assert.match(r.out, /Stopped/);
+  assert.match(r.out, /Stopped/, `${r.out}recorded: ${JSON.stringify(recorded?.children)}; its start time now: ${processStart(program)}`);
   await until("the program to be gone", () => !alive(program));
   assert.ok(alive(bystander.pid!), "nothing else was touched");
 });
@@ -309,7 +310,16 @@ await new Promise((r) => setTimeout(r, 1500));`;
     });
   const [x, y] = await Promise.all([run(), run()]);
   const all = [...Object.values(x), ...Object.values(y)];
-  assert.equal(new Set(all).size, 4, `four different ports, got ${all.join(", ")}`);
+  // The claims as they are, each with its process's start time as seen from here, say how two picked one port.
+  const claimsNow = () =>
+    readdirSync(join(tmp, "opensourcebook-port-claims"))
+      .map((f) => {
+        const text = readFileSync(join(tmp, "opensourcebook-port-claims", f), "utf8");
+        const pid = (JSON.parse(text || "{}") as { pid?: number }).pid ?? 0;
+        return `${f} ${text} (now ${processStart(pid)})`;
+      })
+      .join("; ");
+  assert.equal(new Set(all).size, 4, `four different ports, got ${all.join(", ")}; claims: ${new Set(all).size === 4 ? "" : claimsNow()}`);
   // A claim whose process is gone is taken over.
   const dead = spawn(process.execPath, ["-e", ""], { stdio: "ignore" });
   await new Promise((r) => dead.once("exit", r));

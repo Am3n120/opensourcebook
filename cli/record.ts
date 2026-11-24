@@ -57,7 +57,16 @@ function powershell(command: string): string {
  */
 export function processStart(pid: number): string | undefined {
   if (!Number.isInteger(pid) || pid <= 0) return undefined;
-  if (process.platform === "win32") return powershell(`(Get-Process -Id ${pid} -ErrorAction Stop).StartTime.ToFileTimeUtc()`) || undefined;
+  if (process.platform === "win32") {
+    // PowerShell now and then gives no answer at all, most often when several start at once; a process that is
+    // still there is asked again, so a passing failure never reads as "a different process".
+    for (let attempt = 0; attempt < 3; attempt++) {
+      const text = powershell(`(Get-Process -Id ${pid} -ErrorAction Stop).StartTime.ToFileTimeUtc()`);
+      if (text) return text;
+      if (!alive(pid)) return undefined;
+    }
+    return undefined;
+  }
   const r = spawnSync("ps", ["-o", "lstart=", "-p", String(pid)], { encoding: "utf8", env: { ...process.env, LC_ALL: "C" }, timeout: 5_000 });
   const text = r.status === 0 ? r.stdout.trim() : "";
   return text || undefined;
