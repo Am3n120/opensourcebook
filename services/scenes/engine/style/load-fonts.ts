@@ -28,11 +28,26 @@ function shippedFaces() {
   return facesToLoad({ families }, (f, file) => url(f.folder, file));
 }
 
+/**
+ * One face, asked for again a few times when its request fails: every font is fetched from the local server on each
+ * page, and a busy computer (Windows most of all) now and then drops one of those connections.
+ */
+async function loadFace(f: ReturnType<typeof shippedFaces>[number]): Promise<FontFace> {
+  const waits = [250, 1_000, 2_500];
+  for (let attempt = 0; ; attempt++) {
+    try {
+      return await new FontFace(f.family, `url(${JSON.stringify(f.url)})`, f.descriptors).load();
+    } catch (e) {
+      if (attempt >= waits.length) throw e;
+      await new Promise((r) => setTimeout(r, waits[attempt]));
+    }
+  }
+}
+
 const handle = delayRender("loading the shipped fonts");
 Promise.all(
   shippedFaces().map(async (f) => {
-    const face = new FontFace(f.family, `url(${JSON.stringify(f.url)})`, f.descriptors);
-    document.fonts.add(await face.load());
+    document.fonts.add(await loadFace(f));
   }),
 ).then(
   () => continueRender(handle),
