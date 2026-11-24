@@ -120,7 +120,8 @@ async function launch(name: string, env: Record<string, string> = {}): Promise<L
   const home = join(root, ".opensourcebook");
   const read = (file: string) => (existsSync(file) ? readFileSync(file, "utf8") : "");
   try {
-    await until(`${name} to be ready`, () => readRunning(home)?.ready === true);
+    // A minute, not fifteen seconds: on a busy Windows computer the first PowerShell asked for a start time can take most of that.
+    await until(`${name} to be ready`, () => readRunning(home)?.ready === true, 60_000);
   } catch (e) {
     // What the launcher and its program wrote says why, where the bare timeout would not.
     const logs = [join(home, "logs", "stops.log"), join(home, "logs", "stub.log"), said].map((f) => `--- ${f}\n${read(f)}`).join("\n");
