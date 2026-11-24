@@ -21,9 +21,13 @@
 /index.html
   Cache-Control: public, max-age=0, must-revalidate
 
+# The source of og.png is kept beside it and is not a page to find in a search.
+/og-image*
+  X-Robots-Tag: noindex
+
 # Everything: the page loads nothing from anywhere else, and this holds it to that.
 /*
   X-Content-Type-Options: nosniff
   Referrer-Policy: no-referrer
   X-Frame-Options: DENY
-  Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'
+  Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src 'self' data:; base-uri 'none'; form-action 'none'; frame-ancestors 'none'

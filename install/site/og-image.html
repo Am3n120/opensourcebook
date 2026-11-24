@@ -1,0 +1,45 @@
+<!doctype html>
+<!-- The source of og.png (1280x640), the picture shown when the site or the repository is shared.
+     To make it again, from the repo root, with Chrome:
+       "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" --headless --disable-gpu --hide-scrollbars \
+         --force-device-scale-factor=1 --window-size=1280,640 \
+         --screenshot=install/site/og.png "file://$PWD/install/site/og-image.html"
+     then copy it to .github/social-preview.png. -->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="robots" content="noindex">
+<title>Open Sourcebook social image</title>
+<style>
+html, body { margin: 0; width: 1280px; height: 640px; overflow: hidden; }
+body {
+  background:
+    radial-gradient(900px 420px at 85% -10%, rgb(108 92 231 / .55), transparent 70%),
+    radial-gradient(700px 380px at -5% 110%, rgb(108 92 231 / .35), transparent 70%),
+    #0E1015;
+  color: #E7E9EE;
+  font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  display: flex; flex-direction: column; justify-content: center;
+  padding: 0 96px; box-sizing: border-box;
+}
+.brand { display: flex; align-items: center; gap: 22px; }
+.brand svg { width: 96px; height: 96px; }
+.name { font-size: 54px; font-weight: 750; letter-spacing: -.02em; }
+.beta { font-size: 20px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: #B7AEFF; background: #2B2752; border-radius: 999px; padding: 6px 16px; }
+h1 { margin: 44px 0 0; font-size: 50px; line-height: 1.14; letter-spacing: -.025em; font-weight: 750; max-width: 1060px; }
+p { margin: 26px 0 0; font-size: 32px; font-weight: 600; color: #ABB3C1; }
+.url { position: absolute; right: 96px; bottom: 52px; font-size: 26px; color: #9AA3B5; font-weight: 600; }
+.dot { color: #FFB020; }
+</style>
+</head>
+<body>
+  <div class="brand">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><rect width="32" height="32" rx="9" fill="#6C5CE7"/><path d="M7 22V10c3-1.5 6-1.5 9 0 3-1.5 6-1.5 9 0v12c-3-1.5-6-1.5-9 0-3-1.5-6-1.5-9 0z" fill="#FFFFFF"/><path d="M16 10v12" stroke="#6C5CE7" stroke-width="2"/><circle cx="16" cy="26" r="2" fill="#FFB020"/></svg>
+    <span class="name">Open Sourcebook</span>
+    <span class="beta">Beta</span>
+  </div>
+  <h1>The open-source NotebookLM (now Gemini Notebook) alternative with explainer videos.</h1>
+  <p>Understand what you have to read. Explain what you know.</p>
+  <div class="url">opensourcebook<span class="dot">.</span>app</div>
+</body>
+</html>
