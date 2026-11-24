@@ -45,320 +45,365 @@
 }
 </script>
 <style>
-/* Colours and type from the app's own tokens (web/src/design/tokens.css). */
+/* The app's own tokens (web/src/design/tokens.css), light then dark. */
 :root {
-  --primary: #6C5CE7;
-  --primaryHover: #5B4BD6;
-  --primaryText: #5B4BD6;
-  --onPrimary: #FFFFFF;
-  --bg: #F7F7FA;
-  --surface: #FFFFFF;
-  --border: #E5E7EB;
-  --borderStrong: #CBD5E1;
-  --text: #0F172A;
+  --bg: #f7f7fa;
+  --surface: #ffffff;
+  --border: #e5e7eb;
+  --borderStrong: #cbd5e1;
+  --text: #0f172a;
+  --muted: #5e6e85;
   --mutedText: #556277;
-  --codeBg: #0F172A;
-  --codeText: #E7E9EE;
-  --codePrompt: #9AA3B5;
-  --focus: #2563EB;
-  --font: "Inter Variable", Inter, -apple-system, system-ui, "Segoe UI", Roboto, sans-serif;
-  --font-mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+  --primary: #6c5ce7;
+  --primaryHover: #5b4bd6;
+  --primarySoft: #efedfc;
+  --primaryText: #5b4bd6;
+  --inverse: #0f172a;
+  --onInverse: #ffffff;
+  --logoDot: #ffb020;
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --primaryText: #B7AEFF;
-    --bg: #0E1015;
-    --surface: #181B22;
-    --border: #2A2F3A;
-    --borderStrong: #3C4352;
-    --text: #E7E9EE;
-    --mutedText: #ABB3C1;
-    --codeBg: #07080C;
-    --focus: #7AB4FF;
+    --bg: #0e1015;
+    --surface: #181b22;
+    --border: #2a2f3a;
+    --borderStrong: #3c4352;
+    --text: #e7e9ee;
+    --muted: #9aa3b2;
+    --mutedText: #abb3c1;
+    --primarySoft: #2b2752;
+    --primaryText: #b7aeff;
+    --inverse: #e7e9ee;
+    --onInverse: #0e1015;
   }
 }
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
 body {
-  margin: 0; min-height: 100vh; display: flex; flex-direction: column;
-  background: var(--bg); color: var(--text);
-  font: 16px/24px var(--font);
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "Inter Variable", Inter, -apple-system, system-ui, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
 }
-a { color: var(--primaryText); text-underline-offset: .18em; }
-:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: 6px; }
+a { color: var(--primaryText); }
+:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; border-radius: 4px; }
+code { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; }
 
-.wrap { width: 100%; max-width: 46rem; margin: 0 auto; padding: 0 1rem; }
-main { flex: 1 0 auto; }
-main .wrap { padding-top: 3rem; padding-bottom: 2rem; }
+.wrap {
+  max-width: 1200px;
+  min-height: 100vh;
+  min-height: 100dvh;
+  margin: 0 auto;
+  padding: 0 48px;
+  display: flex;
+  flex-direction: column;
+}
 
-.brand { display: flex; align-items: center; gap: .6rem; font-weight: 700; font-size: 1.1rem; }
-.brand svg { width: 2rem; height: 2rem; display: block; }
+.brand {
+  padding-top: 28px;
+}
+.brand a {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--text);
+  text-decoration: none;
+}
+.brand svg { width: 40px; height: 40px; }
+.name { font-size: 26px; line-height: 32px; font-weight: 800; letter-spacing: -0.03em; }
+.name span { color: var(--logoDot); }
 .beta {
-  font-size: 12px; line-height: 16px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase;
-  color: var(--mutedText); border: 1px solid var(--borderStrong);
-  border-radius: 999px; padding: .1rem .5rem;
+  font-size: 12px; line-height: 16px; font-weight: 600;
+  padding: 2px 8px; border-radius: 999px;
+  background: var(--primarySoft); color: var(--primaryText);
 }
 
+main {
+  flex: 1 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 32px;
+}
 h1 {
-  margin: 1.5rem 0 0;
-  font-size: clamp(1.75rem, 4vw, 40px); line-height: 1.1;
-  letter-spacing: -.02em; font-weight: 750; text-wrap: balance;
+  margin: 0;
+  max-width: 25ch;
+  font-size: clamp(34px, 4vw, 54px);
+  line-height: 1.04;
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  text-wrap: balance;
 }
-.tagline { margin: .75rem 0 0; font-size: 20px; line-height: 28px; font-weight: 600; }
-.tagline span { display: inline-block; }
-.jobs { margin: .5rem 0 0; color: var(--mutedText); text-wrap: pretty; }
-.what { margin: 1rem 0 0; text-wrap: pretty; }
+.tagline {
+  margin: 22px 0 0;
+  font-size: clamp(19px, 1.9vw, 24px);
+  line-height: 1.3;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+.who {
+  margin: 12px 0 0;
+  max-width: 760px;
+  font-size: 16px;
+  line-height: 24px;
+  color: var(--mutedText);
+}
 
-.install {
-  margin: 1.5rem 0 0; background: var(--surface);
-  border: 1px solid var(--border); border-radius: 12px; padding: .75rem .75rem .9rem;
+.split {
+  margin-top: 44px;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 380px;
+  gap: 48px;
+  align-items: start;
 }
-.tabs { display: flex; gap: .35rem; margin: 0 0 .6rem; }
-.tabs[hidden] { display: none; }
-.tab {
-  font: inherit; font-size: .9rem; font-weight: 600; color: var(--mutedText);
-  background: transparent; border: 1px solid transparent; border-radius: 999px;
-  padding: .3rem .85rem; min-height: 2.25rem; cursor: pointer;
-}
-.tab:hover { color: var(--text); border-color: var(--border); }
-.tab[aria-selected="true"] { color: var(--text); background: var(--bg); border-color: var(--borderStrong); }
-.os-name { font-size: .9rem; font-weight: 600; margin: .2rem .25rem .4rem; color: var(--mutedText); }
-.js .os { display: none; }
-.js .os.is-on { display: block; }
-.js .os-name { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
-.os + .os { margin-top: .75rem; }
-.js .os + .os { margin-top: 0; }
 
-.line { display: flex; align-items: stretch; gap: .5rem; }
+/* The install line */
+.systems { display: flex; gap: 24px; margin-bottom: 12px; }
+.system {
+  min-height: 36px;
+  padding: 6px 0;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: transparent;
+  font: inherit;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  color: var(--muted);
+  cursor: pointer;
+  transition: color 200ms ease-out, border-color 200ms ease-out;
+}
+.system:hover { color: var(--text); }
+.system[aria-pressed="true"] { color: var(--text); border-bottom-color: var(--primary); }
+.slab {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 10px 10px 20px;
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--borderStrong);
+  border-radius: 12px;
+}
+.cmds { flex: 1 1 auto; min-width: 0; }
 .cmd {
-  flex: 1 1 auto; min-width: 0; margin: 0;
-  background: var(--codeBg); color: var(--codeText);
-  border-radius: 8px; padding: .85rem 1rem;
-  font: 1rem/1.5 var(--font-mono); white-space: pre; overflow-x: auto;
+  display: block;
+  overflow-x: auto;
+  white-space: nowrap;
+  padding: 8px 0;
+  font-size: 17px;
+  line-height: 26px;
+  letter-spacing: -0.01em;
+  color: var(--text);
 }
-.cmd::before { content: "$ "; color: var(--codePrompt); }
-.cmd.ps::before { content: "> "; }
 .copy {
-  display: none; flex: 0 0 auto;
-  font: inherit; font-weight: 650; color: var(--onPrimary); background: var(--primary);
-  border: 0; border-radius: 8px; padding: 0 1.1rem; min-width: 5.5rem; min-height: 2.9rem; cursor: pointer;
+  flex: 0 0 auto;
+  min-height: 48px;
+  min-width: 104px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 20px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--primary);
+  color: #ffffff;
+  font: inherit;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 200ms ease-out;
 }
-.js .copy { display: block; }
 .copy:hover { background: var(--primaryHover); }
-.help { margin: .6rem .25rem 0; font-size: 14px; line-height: 20px; color: var(--mutedText); }
-.help + .help { margin-top: .25rem; }
-.help b { color: var(--text); font-weight: 600; }
-.copied { margin: .4rem .25rem 0; font-size: .9rem; color: var(--mutedText); }
-.copied:empty { display: none; }
-
-.points {
-  list-style: none; margin: 2rem 0 0; padding: 0;
-  display: grid; grid-template-columns: 1fr 1fr; column-gap: 2rem;
+.prompt {
+  margin: 0;
+  white-space: normal;
+  overflow-wrap: normal;
+  font-size: 15px;
+  line-height: 22px;
+  letter-spacing: -0.005em;
 }
-.points li { border-top: 1px solid var(--border); padding: .8rem 0 1rem; color: var(--mutedText); font-size: 15px; line-height: 22px; }
-.points b { display: block; color: var(--text); font-size: 16px; line-height: 24px; margin-bottom: .15rem; }
+.hint[hidden] { display: none; }
+.hint { margin: 12px 0 0; font-size: 13px; line-height: 19px; color: var(--mutedText); }
 
-.actions { margin: 1.25rem 0 0; display: flex; flex-wrap: wrap; gap: .6rem; }
-.btn {
-  display: inline-flex; align-items: center; gap: .5rem; min-height: 2.75rem;
-  padding: .55rem 1.15rem; border-radius: 999px; font-weight: 650; text-decoration: none;
-  border: 1px solid var(--borderStrong); color: var(--text); background: transparent;
+/* Without scripts: both lines show, each with its system's name, and no switch or button. */
+.systems, .copy { display: none; }
+.label { display: block; font-size: 12px; line-height: 16px; font-weight: 600; opacity: .7; }
+.cmd + .label { margin-top: 8px; }
+.js .systems { display: flex; }
+.js .copy { display: inline-flex; }
+.js .label { display: none; }
+.js .cmd[hidden] { display: none; }
+
+/* The four points */
+.points { display: flex; flex-direction: column; }
+.points p {
+  margin: 0;
+  padding: 12px 0;
+  border-top: 1px solid var(--border);
+  font-size: 16px;
+  line-height: 23px;
+  letter-spacing: -0.005em;
+  color: var(--mutedText);
 }
-.btn:hover { border-color: var(--text); }
-.btn.solid { background: var(--text); border-color: var(--text); color: var(--bg); }
-.btn.solid:hover { opacity: .9; }
-.btn svg { width: 1.1rem; height: 1.1rem; fill: currentColor; }
-.soon { margin: .9rem 0 0; font-size: 14px; color: var(--mutedText); }
+.points p:first-child { padding-top: 0; border-top: 0; }
+.points p:last-child { padding-bottom: 0; }
+.points strong { color: var(--text); font-weight: 700; }
 
-footer { flex: 0 0 auto; border-top: 1px solid var(--border); color: var(--mutedText); font-size: 14px; }
-footer .wrap { display: flex; justify-content: space-between; flex-wrap: wrap; gap: .5rem; padding-top: .9rem; padding-bottom: 1rem; }
-footer p { margin: 0; }
-
-@media (max-width: 36rem) {
-  main .wrap { padding-top: 2rem; }
-  .points { grid-template-columns: 1fr; }
+footer {
+  margin-top: 28px;
+  padding: 12px 0 24px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
 }
-@media (max-width: 30rem) {
-  .line { flex-direction: column; }
-  .cmd { font-size: .9rem; padding: .8rem .85rem; white-space: pre-wrap; overflow-wrap: anywhere; }
+footer nav { display: flex; flex-wrap: wrap; gap: 28px; }
+footer a {
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  line-height: 20px;
+  font-weight: 600;
+  text-underline-offset: .22em;
+  text-decoration-thickness: 1px;
+}
+footer a:hover { text-decoration-thickness: 2px; }
+footer a.github { color: var(--text); }
+.quiet { margin: 0; max-width: 560px; font-size: 12px; line-height: 17px; color: var(--muted); }
+
+@media (max-width: 1180px) {
+  .split { grid-template-columns: minmax(0, 1fr); gap: 40px; max-width: 720px; }
+}
+@media (max-width: 600px) {
+  .wrap { padding: 0 20px; }
+  main { padding-top: 40px; }
+  .slab { flex-wrap: wrap; padding: 16px; }
+  .cmds { flex-basis: 100%; }
+  .cmd { white-space: normal; overflow-wrap: normal; font-size: 13px; line-height: 21px; letter-spacing: 0; }
   .copy { width: 100%; }
+  footer { flex-direction: column; align-items: flex-start; }
 }
-@media (prefers-reduced-motion: no-preference) {
-  .tab, .copy, .btn { transition: background-color .15s, border-color .15s, color .15s, opacity .15s; }
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
 }
 </style>
 </head>
 <body>
+<div class="wrap">
+
+<header class="brand">
+<a href="/">
+<svg width="28" height="28" viewBox="0 0 32 32" aria-hidden="true" focusable="false"><rect width="32" height="32" rx="9" fill="#6c5ce7"/><path d="M7 22V10c3-1.5 6-1.5 9 0 3-1.5 6-1.5 9 0v12c-3-1.5-6-1.5-9 0-3-1.5-6-1.5-9 0z" fill="#ffffff"/><path d="M16 10v12" stroke="#6c5ce7" stroke-width="2"/><circle cx="16" cy="26" r="2" fill="#ffb020"/></svg>
+<span class="name">Open Sourcebook<span>.</span></span>
+<span class="beta">Beta</span>
+</a>
+</header>
+
 <main>
-  <div class="wrap">
-    <div class="brand">
-      <svg viewBox="0 0 32 32" role="img" aria-label="The Open Sourcebook mark, an open book"><rect width="32" height="32" rx="9" fill="#6C5CE7"/><path d="M7 22V10c3-1.5 6-1.5 9 0 3-1.5 6-1.5 9 0v12c-3-1.5-6-1.5-9 0-3-1.5-6-1.5-9 0z" fill="#FFFFFF"/><path d="M16 10v12" stroke="#6C5CE7" stroke-width="2"/><circle cx="16" cy="26" r="2" fill="#FFB020"/></svg>
-      <span>Open Sourcebook</span>
-      <span class="beta">Beta</span>
-    </div>
+<h1>The open-source NotebookLM (now Gemini Notebook) alternative with explainer videos.</h1>
+<p class="tagline">Understand what you have to read. Explain what you know.</p>
+<p class="who">Preparing for an exam · reading a stack of papers · getting a new colleague up to speed · turning a manual into something people will watch.</p>
 
-    <h1>The open-source NotebookLM (now Gemini Notebook) alternative with explainer videos.</h1>
-    <p class="tagline"><span>Understand what you have to read.</span> <span>Explain what you know.</span></p>
-    <p class="jobs">Preparing for an exam · reading a stack of papers · getting a new colleague up to speed · turning a manual into something people will watch.</p>
+<div class="split">
+<section aria-label="Install">
+<div class="systems" role="group" aria-label="Your system">
+<button class="system" type="button" data-os="unix" aria-pressed="true">Mac and Linux</button>
+<button class="system" type="button" data-os="win" aria-pressed="false">Windows</button>
+<button class="system" type="button" data-os="agent" aria-pressed="false">Ask your agent</button>
+</div>
+<div class="slab">
+<div class="cmds">
+<span class="label">Mac and Linux</span>
+<code class="cmd" data-os="unix">curl -fsSL https://opensourcebook.app/install | sh</code>
+<span class="label">Windows</span>
+<code class="cmd" data-os="win">irm https://opensourcebook.app/install.ps1 | iex</code>
+<span class="label">Ask your agent</span>
+<p class="cmd prompt" data-os="agent">Install Open Sourcebook for me. On a Mac or Linux, run curl -fsSL https://opensourcebook.app/install | sh in a terminal. On Windows, run irm https://opensourcebook.app/install.ps1 | iex in PowerShell. Tell me when it opens in my browser.</p>
+</div>
+<button class="copy" type="button" aria-live="polite">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg><span class="copy-label">Copy</span>
+</button>
+</div>
+<p class="hint" data-os="terminal">Paste it into Terminal and press Return. It opens in your browser after a few minutes.</p>
+<p class="hint" data-os="agent" hidden>Paste it into your agent, such as Claude Code or Codex, and it runs the line for you.</p>
+</section>
 
-    <!-- DEMO CLIP PLACEHOLDER. A short silent loop of a real video the app made goes here,
-         between the words above and the install box, once the owner approves one.
-         Until then nothing is shown. When it is added, also add media-src 'self' to the
-         Content-Security-Policy in _headers. -->
-
-    <p class="what">Add your PDFs, notes, slides and links. Open Sourcebook turns them into a short explainer video, drawn scene by scene, and also makes guides, audio, flashcards, quizzes and answers with cites.</p>
-
-    <div class="install" id="install">
-      <div class="tabs" id="tabs" role="tablist" aria-label="Your computer" hidden>
-        <button class="tab" type="button" role="tab" id="tab-unix" data-os="unix" aria-controls="os-unix" aria-selected="false">Mac and Linux</button>
-        <button class="tab" type="button" role="tab" id="tab-windows" data-os="windows" aria-controls="os-windows" aria-selected="false">Windows</button>
-      </div>
-
-      <div class="os" id="os-unix">
-        <p class="os-name">Mac and Linux</p>
-        <div class="line">
-          <pre class="cmd" tabindex="0" aria-label="The install line for Mac and Linux"><code id="cmd-unix">curl -fsSL https://opensourcebook.app/install | sh</code></pre>
-          <button class="copy" type="button" data-copy="cmd-unix" aria-label="Copy the line for Mac and Linux">Copy</button>
-        </div>
-        <p class="help">Paste it into Terminal and press Return. Open Sourcebook opens in your browser after a few minutes.</p>
-      </div>
-
-      <div class="os" id="os-windows">
-        <p class="os-name">Windows</p>
-        <div class="line">
-          <pre class="cmd ps" tabindex="0" aria-label="The install line for Windows"><code id="cmd-windows">irm https://opensourcebook.app/install.ps1 | iex</code></pre>
-          <button class="copy" type="button" data-copy="cmd-windows" aria-label="Copy the line for Windows">Copy</button>
-        </div>
-        <p class="help">Paste it into PowerShell and press Enter. Open Sourcebook opens in your browser after a few minutes.</p>
-      </div>
-
-      <p class="copied" id="copied" role="status" aria-live="polite"></p>
-      <p class="help"><b>It runs on the AI plan you already have:</b> Claude, ChatGPT, Gemini, Cursor or GitHub Copilot. No API key is needed, and one works too.</p>
-      <p class="help">Made and used on a Mac. Linux and Windows are written and not proven yet.</p>
-    </div>
-
-    <ul class="points" aria-label="What you get">
-      <li><b>Explainer videos, drawn for your material</b>Twelve styles, any length up to 30 minutes, with captions, and narration and music once you set a voice.</li>
-      <li><b>The AI you already have</b>Your plan or an API key. Six agents, and any model they offer.</li>
-      <li><b>A whole set from one request</b>Videos, guides, audio, flashcards and quizzes in order, as a plan you can change before it starts.</li>
-      <li><b>Answers you can check, on your computer</b>Every cite is checked word for word. Your files stay there. Open source under MIT.</li>
-    </ul>
-
-    <div class="actions">
-      <a class="btn solid" href="https://github.com/Mikiyas-Meles-Assefa/opensourcebook"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>View on GitHub</a>
-      <a class="btn" href="https://github.com/Mikiyas-Meles-Assefa/opensourcebook#readme">Read the docs</a>
-    </div>
-
-    <p class="soon">This is the beta. A fuller site is coming soon.</p>
-  </div>
+<section class="points" aria-label="What you get">
+<p><strong>Explainer videos, drawn for your material.</strong> Twelve styles, any length up to 30 minutes.</p>
+<p><strong>Runs on the AI plan you already have:</strong> Claude, ChatGPT, Gemini, Cursor or GitHub Copilot. No API key needed, and one works too.</p>
+<p><strong>A whole set from one request:</strong> videos, guides, audio, flashcards and quizzes, in order.</p>
+<p><strong>Answers you can check.</strong> Every cite is checked word for word. Your files stay on your computer. Open source, MIT.</p>
+</section>
+</div>
 </main>
 
 <footer>
-  <div class="wrap">
-    <p>Free and open source under the <a href="https://github.com/Mikiyas-Meles-Assefa/opensourcebook/blob/main/LICENSE">MIT licence</a>.</p>
-    <p><a href="https://github.com/Mikiyas-Meles-Assefa/opensourcebook">GitHub</a> · <a href="/install">Mac and Linux script</a> · <a href="/install.ps1">Windows script</a></p>
-  </div>
+<nav aria-label="Links">
+<a class="github" href="https://github.com/Mikiyas-Meles-Assefa/opensourcebook"><svg width="18" height="18" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true" focusable="false"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>View on GitHub</a>
+<a href="https://github.com/Mikiyas-Meles-Assefa/opensourcebook/tree/main/docs">Read the docs</a>
+</nav>
+<p class="quiet">This is the beta. A fuller site is coming soon.</p>
 </footer>
+</div>
 
 <script>
 (function () {
-  'use strict';
-  var doc = document;
-  var names = ['unix', 'windows'];
-  function byId(id) { return doc.getElementById(id); }
+  document.documentElement.classList.add("js");
+  var buttons = document.querySelectorAll(".system");
+  var cmds = document.querySelectorAll(".cmd");
+  var hints = document.querySelectorAll(".hint");
+  var label = document.querySelector(".copy-label");
+  var timer;
+  var current = "unix";
 
-  function isWindows() {
-    var nav = window.navigator || {};
-    var platform = String((nav.userAgentData && nav.userAgentData.platform) || nav.platform || '');
-    return /Win/i.test(platform) || /Windows/i.test(String(nav.userAgent || ''));
+  function pick(os) {
+    current = os;
+    buttons.forEach(function (b) { b.setAttribute("aria-pressed", String(b.dataset.os === os)); });
+    cmds.forEach(function (c) { c.hidden = c.dataset.os !== os; });
+    hints.forEach(function (h) { h.hidden = (h.dataset.os === "agent") !== (os === "agent"); });
+    label.textContent = "Copy";
   }
 
-  function select(os, focus) {
-    names.forEach(function (name) {
-      var on = name === os;
-      var tab = byId('tab-' + name);
-      tab.setAttribute('aria-selected', on ? 'true' : 'false');
-      tab.tabIndex = on ? 0 : -1;
-      byId('os-' + name).className = on ? 'os is-on' : 'os';
-      if (on && focus) tab.focus();
-    });
+  buttons.forEach(function (b) {
+    b.addEventListener("click", function () { pick(b.dataset.os); });
+  });
+
+  var platform = (navigator.userAgentData && navigator.userAgentData.platform) || navigator.platform || navigator.userAgent || "";
+  pick(/win/i.test(platform) ? "win" : "unix");
+
+  function copied() {
+    label.textContent = "Copied";
+    clearTimeout(timer);
+    timer = setTimeout(function () { label.textContent = "Copy"; }, 2000);
   }
 
-  // The old way of copying, for browsers without the clipboard API.
-  function copyOldWay(text) {
-    var area = doc.createElement('textarea');
+  function fallback(text) {
+    var area = document.createElement("textarea");
     area.value = text;
-    area.setAttribute('readonly', '');
-    area.style.position = 'fixed';
-    area.style.left = '-9999px';
-    doc.body.appendChild(area);
-    var ok = false;
-    try { area.select(); ok = doc.execCommand('copy'); } catch (e) { ok = false; }
-    doc.body.removeChild(area);
-    return ok;
+    area.setAttribute("readonly", "");
+    area.style.position = "fixed";
+    area.style.opacity = "0";
+    document.body.appendChild(area);
+    area.select();
+    try { if (document.execCommand("copy")) copied(); } catch (e) {}
+    document.body.removeChild(area);
   }
 
-  function selectText(node) {
-    try {
-      var range = doc.createRange();
-      range.selectNodeContents(node);
-      var sel = window.getSelection();
-      sel.removeAllRanges();
-      sel.addRange(range);
-    } catch (e) { /* the line is still there to select by hand */ }
-  }
-
-  function wireCopy(button) {
-    var code = byId(button.getAttribute('data-copy'));
-    var status = byId('copied');
-    var timer = null;
-    function done(ok) {
-      if (timer) window.clearTimeout(timer);
-      if (ok) {
-        button.textContent = 'Copied';
-        status.textContent = '';
-        timer = window.setTimeout(function () { button.textContent = 'Copy'; }, 2000);
-      } else {
-        selectText(code);
-        status.textContent = 'The line is selected. Copy it with Command and C on a Mac, or Ctrl and C on Windows and Linux.';
-      }
+  document.querySelector(".copy").addEventListener("click", function () {
+    var text = document.querySelector('.cmd[data-os="' + current + '"]').textContent;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(copied, function () { fallback(text); });
+    } else {
+      fallback(text);
     }
-    button.addEventListener('click', function () {
-      var text = code.textContent;
-      var clip = window.navigator.clipboard;
-      if (clip && typeof clip.writeText === 'function' && window.isSecureContext !== false) {
-        clip.writeText(text).then(function () { done(true); }, function () { done(copyOldWay(text)); });
-      } else {
-        done(copyOldWay(text));
-      }
-    });
-  }
-
-  try {
-    var tabs = byId('tabs');
-    names.forEach(function (name) {
-      var panel = byId('os-' + name);
-      panel.setAttribute('role', 'tabpanel');
-      panel.setAttribute('aria-labelledby', 'tab-' + name);
-      byId('tab-' + name).addEventListener('click', function () { select(name, false); });
-    });
-    tabs.addEventListener('keydown', function (event) {
-      var at = names.indexOf(doc.activeElement && doc.activeElement.getAttribute('data-os'));
-      if (at < 0) return;
-      var to = -1;
-      if (event.key === 'ArrowRight' || event.key === 'ArrowLeft') to = 1 - at;
-      else if (event.key === 'Home') to = 0;
-      else if (event.key === 'End') to = 1;
-      if (to < 0) return;
-      event.preventDefault();
-      select(names[to], true);
-    });
-    Array.prototype.forEach.call(doc.querySelectorAll('.copy'), wireCopy);
-    select(isWindows() ? 'windows' : 'unix', false);
-    tabs.hidden = false;
-    // Only now hide the other line: if anything above failed, both lines stay on the page.
-    doc.documentElement.className += ' js';
-  } catch (e) { /* without scripts both lines show */ }
+  });
 })();
 </script>
 </body>
