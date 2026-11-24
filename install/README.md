@@ -149,7 +149,7 @@ In this order. Each step has a check, and the next step waits for it.
 
    It should print the home folder and the archive address from step 1.
 
-3. **Put `install/site/` on `opensourcebook.app`.** Any static host that serves a folder as is and honours a `_headers` file will do. The folder is the site root and there is no build step. Then point the domain at the host (DNS, at the registrar) and check that both scripts come back as scripts and not as a web page:
+3. **Put `install/site/` on `opensourcebook.app`.** This is done: the folder is served by a Cloudflare Worker with static assets named `opensourcebook-site`, set up in `install/wrangler.jsonc`, which reads `_headers` and holds the domain as its custom domain (Cloudflare made the DNS record and the certificate). To publish a change to the page or a script, run `npx wrangler deploy` from `install/`, signed in with `npx wrangler login` to the account that holds the domain. There is no build step. `www.opensourcebook.app` is not set up. Check that both scripts come back as scripts and not as a web page:
 
    ```sh
    curl -fsSL https://opensourcebook.app/install | head -5
@@ -170,12 +170,16 @@ Tried for real, on a Mac with an Apple chip, in a throwaway home on private port
 - `npx` with the local package, with Node 24 already there.
 - The script by itself under `sh` and `dash`: every failure sentence, the PATH line for zsh, bash and fish, and the choice of download for each system (`test/script.sh`).
 
+Tried for real from the public addresses, on the same Mac on 2026-11-24:
+
+- `curl -fsSL https://opensourcebook.app/install | sh -s -- --no-open --ports-from 9300` into a throwaway home with no Node on the PATH: the script came from `opensourcebook.app` as `text/plain`, the package from npm (`opensourcebook@0.1.0`) and the app from the GitHub archive; a private Node 24 and ffmpeg were fetched, it ended with exit 0, `status` showed the four programs up, and `stop` stopped them.
+- The page, `install.ps1`, `robots.txt`, `sitemap.xml` and `og.png` answer on the domain, with the `_headers` rules applied.
+
 Not tried yet:
 
 - **Windows, at all.** `site/install.ps1` and the Windows parts of the package (`opensourcebook.cmd`, the Start menu shortcut, the PATH entry, unpacking with Windows' `tar`) have only been read, never run. The app itself is also not yet proven on Windows.
 - **Linux for real.** The script's Linux choices were tried with a stand-in `uname`; nothing has run on a Linux computer. The `wget` path has not run either.
 - **The automated check** (`.github/workflows/install.yml`) covers both of those and has not run once.
-- **The public addresses.** Nothing has been downloaded from GitHub, npm or `opensourcebook.app`, because none of them holds the real thing yet.
 - **The shortcut.** `Open Sourcebook.app` is made and well formed, and has not been opened from Finder. The Linux menu entry has not been seen in a menu.
 - An Intel Mac, a home folder with a space in its name, and a real Node older than 24 meeting `npx opensourcebook`.
 

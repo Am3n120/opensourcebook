@@ -1,0 +1,16 @@
+// The site at opensourcebook.app: the folder site/ served as it is, with its _headers file.
+// Deploy with `npx wrangler deploy` from this folder.
+{
+  "$schema": "https://unpkg.com/wrangler@4.167.0/config-schema.json",
+  "name": "opensourcebook-site",
+  "compatibility_date": "2026-11-24",
+  "assets": {
+    "directory": "./site",
+    "not_found_handling": "none"
+  },
+  "routes": [
+    { "pattern": "opensourcebook.app", "custom_domain": true }
+  ],
+  "workers_dev": false,
+  "preview_urls": false
+}
