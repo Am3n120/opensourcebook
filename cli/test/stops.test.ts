@@ -4,7 +4,7 @@
  */
 import assert from "node:assert/strict";
 import { spawn, type ChildProcess } from "node:child_process";
-import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, realpathSync, rmSync, writeFileSync } from "node:fs";
+import { closeSync, existsSync, mkdirSync, mkdtempSync, openSync, readdirSync, readFileSync, realpathSync, rmSync, writeFileSync } from "node:fs";
 import { createServer } from "node:net";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
@@ -27,6 +27,20 @@ after(() => {
   // Windows keeps a file in use until the process that holds it has fully gone.
   rmSync(base, { recursive: true, force: true, maxRetries: 10, retryDelay: 200 });
 });
+
+/**
+ * What a process on Windows needs from its environment to run the system's own programs: SystemRoot to open a socket,
+ * and the profile and temporary folders without which PowerShell (which tells a process's start time) stalls for many
+ * seconds. Nothing elsewhere.
+ */
+const windowsBasics: Record<string, string> =
+  process.platform === "win32"
+    ? Object.fromEntries(
+        ["SystemRoot", "windir", "SystemDrive", "TEMP", "TMP", "USERPROFILE", "HOMEDRIVE", "HOMEPATH", "APPDATA", "LOCALAPPDATA", "ProgramData", "ProgramFiles", "ProgramFiles(x86)", "CommonProgramFiles", "PSModulePath", "ComSpec", "PATHEXT", "USERNAME", "COMPUTERNAME", "NUMBER_OF_PROCESSORS", "PROCESSOR_ARCHITECTURE", "OS"]
+          .map((n) => [n, process.env[n]] as const)
+          .filter((e): e is readonly [string, string] => e[1] !== undefined),
+      )
+    : {};
 
 const sleep = (ms: number) => new Promise((r) => setTimeout(r, ms));
 const alive = (pid: number) => {
@@ -92,13 +106,16 @@ interface Launched {
 async function launch(name: string, env: Record<string, string> = {}): Promise<Launched> {
   const root = copy(name);
   const port = await freePort();
+  // The launcher's own words go to a file beside the copy, so a launcher that never got ready can say why.
+  const said = join(base, `${name}.out`);
+  const fd = openSync(said, "w");
   const child = spawn(process.execPath, [join(import.meta.dirname, "stub-launcher.ts"), root, String(port)], {
     cwd: root,
-    // Windows needs its own folder named for its system programs (PowerShell, which tells a process's start time).
-    env: { PATH: process.env.PATH, ...(process.platform === "win32" ? { SystemRoot: process.env.SystemRoot } : {}), ...env },
-    stdio: ["ignore", "ignore", "ignore"],
+    env: { PATH: process.env.PATH, ...windowsBasics, ...env },
+    stdio: ["ignore", fd, fd],
     detached: true,
   });
+  closeSync(fd);
   everyone.push(child);
   const home = join(root, ".opensourcebook");
   const read = (file: string) => (existsSync(file) ? readFileSync(file, "utf8") : "");
@@ -106,8 +123,8 @@ async function launch(name: string, env: Record<string, string> = {}): Promise<L
     await until(`${name} to be ready`, () => readRunning(home)?.ready === true);
   } catch (e) {
     // What the launcher and its program wrote says why, where the bare timeout would not.
-    const logs = ["stops.log", "stub.log"].map((f) => `--- ${f}\n${read(join(home, "logs", f))}`).join("\n");
-    throw new Error(`${(e as Error).message}\n${logs}`);
+    const logs = [join(home, "logs", "stops.log"), join(home, "logs", "stub.log"), said].map((f) => `--- ${f}\n${read(f)}`).join("\n");
+    throw new Error(`${(e as Error).message}\n${JSON.stringify(readRunning(home))}\n${logs}`);
   }
   return {
     root,
@@ -280,11 +297,11 @@ test("two launchers picking ports at the same moment never pick the same one, an
 const ports = await pickPorts([{ name: "a", port: ${first} }, { name: "b", port: ${first + 1} }], async () => true, claimPort);
 console.log(JSON.stringify(ports));
 await new Promise((r) => setTimeout(r, 1500));`;
-  // A temporary folder is TMPDIR on macOS and Linux, TEMP and TMP on Windows, which also needs SystemRoot for PowerShell.
-  const claimsEnv = process.platform === "win32" ? { TEMP: tmp, TMP: tmp, SystemRoot: process.env.SystemRoot } : { TMPDIR: tmp };
+  // A temporary folder is TMPDIR on macOS and Linux, TEMP and TMP on Windows.
+  const claimsEnv: Record<string, string> = process.platform === "win32" ? { TEMP: tmp, TMP: tmp } : { TMPDIR: tmp };
   const run = () =>
     new Promise<Record<string, number>>((resolve) => {
-      const c = spawn(process.execPath, ["--input-type=module", "-e", script], { env: { PATH: process.env.PATH, ...claimsEnv }, stdio: ["ignore", "pipe", "ignore"] });
+      const c = spawn(process.execPath, ["--input-type=module", "-e", script], { env: { PATH: process.env.PATH, ...windowsBasics, ...claimsEnv }, stdio: ["ignore", "pipe", "ignore"] });
       everyone.push(c);
       let out = "";
       c.stdout.on("data", (d) => (out += d));
@@ -299,7 +316,7 @@ await new Promise((r) => setTimeout(r, 1500));`;
   const port = first + 50;
   mkdirSync(join(tmp, "opensourcebook-port-claims"), { recursive: true });
   writeFileSync(join(tmp, "opensourcebook-port-claims", `${port}.json`), JSON.stringify({ pid: dead.pid, startedAt: "Mon Jan  1 00:00:00 2024" }));
-  const names = Object.keys(claimsEnv).filter((n) => n !== "SystemRoot");
+  const names = Object.keys(claimsEnv);
   const old = names.map((n) => process.env[n]);
   for (const n of names) process.env[n] = tmp;
   try {
