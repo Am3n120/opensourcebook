@@ -2,6 +2,10 @@
 
 The newest first. `opensourcebook update` prints the lines here that your copy did not have yet, so each line is written for a person using Open Sourcebook: what they can now do or will notice, in a sentence. How to add one is in `CONTRIBUTING.md`.
 
+## 2026-11-26
+
+- Open Sourcebook no longer slows your computer down while it reads a web page, and videos play without pausing every few seconds. The engine had kept trying to download a whole browser (about 150 MB) in the background, and every video seek read the whole video file again; now pages are read without that browser and a video sends only the part being played. Run `opensourcebook update` to get it.
+
 ## 2026-11-24
 
 - Videos work on a copy installed with the one-line install. Before, every video failed at once with "Something went wrong while making this video", because the folder a video is made in sits inside `~/.opensourcebook` and was refused. Run `opensourcebook update` to get it; if you had set `SCENES_DATA_DIR` to get around it, you can keep it or take it out.
