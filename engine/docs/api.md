@@ -1096,6 +1096,8 @@ of the video is kept, and the old one stays (and plays) until the new one is rea
 with `206 Partial Content` and `content-range`, and says `accept-ranges:
 bytes` on every answer, so a video can be seeked in a browser or on the
 phone. A range it cannot satisfy is `416` with `content-range: bytes */<size>`.
+Only the asked bytes are read from storage, streamed as they are sent; an
+open range (`bytes=N-`) is the rest of the file.
 
 ## Usage
 
