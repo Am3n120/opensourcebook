@@ -89,6 +89,11 @@ max_batch_size = 10
 max_batch_timeout = 5
 max_retries = 3
 
-# Browser Rendering: headless Chromium tier for bot-blocked / JS-heavy pages.
-[browser]
-binding = "BROWSER"
+# No headless-browser binding here. Pages are read with plain requests; a deployed
+# engine may also render a page that came back empty or blocked in Cloudflare's
+# Browser Rendering, by adding these two lines to its wrangler.local.toml:
+#   [browser]
+#   binding = "BROWSER"
+# The launcher leaves that binding out on a person's computer even when a
+# wrangler.local.toml names it (cli/serve-worker.ts, scripts/dev.ts): there the
+# local runtime would download a whole Chrome to answer it, stalling the engine.

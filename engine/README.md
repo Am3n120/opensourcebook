@@ -660,9 +660,15 @@ Names only; values go in `.dev.vars` locally (copy `.dev.vars.example`) and
   declared in `types/env.ts` but nothing reads it yet; the iOS app resolves
   `/v1/assets/<id>` against its own engine URL.
 - Bindings: `RE_JOB_DB` (D1), `RE_ASSETS` (R2), `RE_BYTE_QUEUE` and
-  `RE_HEAVY_QUEUE` (Queues), `BROWSER` (Browser Rendering). These four keep
+  `RE_HEAVY_QUEUE` (Queues). These four keep
   their names from before the rename, because a deployer's own
-  `wrangler.local.toml` repeats them.
+  `wrangler.local.toml` repeats them. `BROWSER` (Browser Rendering) is
+  optional and only for a deployed engine: add `[browser]` with
+  `binding = "BROWSER"` to `wrangler.local.toml` and a page that comes back
+  empty or blocked is rendered in a headless browser. On a person's computer
+  the launcher leaves it out even when the config names it, because the
+  local runtime would download a whole Chrome to answer it and the engine
+  would wait on that download; pages are read with plain requests there.
 - **Names from before the rename.** Every setting was once `RE_X` and is now
   `OPENSOURCEBOOK_X`. The worker reads an old name that is set as the new one
   when the new one is not (`src/old-names.ts`), so an older `.dev.vars`, a

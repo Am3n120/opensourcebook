@@ -8,7 +8,7 @@
  *   node scripts/dev.ts --ip 127.0.0.1 --port 8787 --env-file ../.opensourcebook/engine.env [--config wrangler.local.toml]
  *                       [--inspector-port 9230] [--compatibility-flags nodejs_compat]
  */
-import { unstable_startWorker } from "wrangler";
+import { unstable_readConfig, unstable_startWorker } from "wrangler";
 import { withNewNames } from "../src/old-names.ts";
 
 function flag(name: string): string | undefined {
@@ -25,8 +25,13 @@ const flags = flag("compatibility-flags");
 const inspect = withNewNames(process.env).OPENSOURCEBOOK_ENGINE_INSPECTOR === "1";
 const inspectorPort = Number(flag("inspector-port") ?? 9229);
 
+// The config as wrangler reads it, without the headless-browser binding a deployer's config may name (`[browser]`):
+// on this computer the runtime would answer it by downloading a whole Chrome the first time a page is rendered, and
+// again after every failed try, stalling the engine meanwhile. Pages are read without it.
+const { browser: _browser, ...read } = unstable_readConfig({ config });
+
 const worker = await unstable_startWorker({
-  config,
+  config: read as typeof read & { browser: undefined },
   ...(envFile ? { envFiles: [envFile] } : {}),
   ...(flags ? { compatibilityFlags: flags.split(",") } : {}),
   dev: {

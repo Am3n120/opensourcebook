@@ -77,7 +77,11 @@ export interface WorkerEnv {
   ITEM_MAKER_DEFAULT?: string;
   /** Jina Reader API key enabling the reader-service escalation tier for bot-walled pages. */
   JINA_API_KEY?: string;
-  /** Browser Rendering binding (wrangler [browser]); powers the headless render tier for bot-blocked/JS-heavy pages. */
+  /**
+   * Browser Rendering binding (wrangler [browser]); powers the headless render tier for bot-blocked/JS-heavy pages.
+   * Only a deployed engine has it (a deployer's wrangler.local.toml); the launcher never gives it to an engine on a
+   * person's computer, where the local runtime would download a whole Chrome to answer it.
+   */
   BROWSER?: BrowserRenderingBindingLike;
   /** Optional OpenAlex API base URL override for tests or a controlled proxy. */
   OPENALEX_BASE_URL?: string;
