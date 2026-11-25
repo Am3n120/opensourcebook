@@ -1,15 +1,20 @@
 // The site at opensourcebook.app: the folder site/ served as it is, with its _headers file.
+// worker.js runs first only to send www and plain http to https://opensourcebook.app.
 // Deploy with `npx wrangler deploy` from this folder.
 {
   "$schema": "https://unpkg.com/wrangler@4.167.0/config-schema.json",
   "name": "opensourcebook-site",
   "compatibility_date": "2026-11-24",
+  "main": "./worker.js",
   "assets": {
     "directory": "./site",
-    "not_found_handling": "none"
+    "not_found_handling": "none",
+    "binding": "ASSETS",
+    "run_worker_first": true
   },
   "routes": [
-    { "pattern": "opensourcebook.app", "custom_domain": true }
+    { "pattern": "opensourcebook.app", "custom_domain": true },
+    { "pattern": "www.opensourcebook.app", "custom_domain": true }
   ],
   "workers_dev": false,
   "preview_urls": false
