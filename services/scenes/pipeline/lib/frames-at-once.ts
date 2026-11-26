@@ -2,8 +2,8 @@
 //
 // Every frame at once is a tab of headless Chrome with a frame's worth of memory, drawing on a core. The renderer
 // refuses more tabs than the computer has cores, and a person's computer is running the rest of Open Sourcebook at the same time
-// (the engine, the web app and their own agent), so by default the service takes a share of the cores and of the memory
-// and never the whole of either. `RENDER_CONCURRENCY` sets it by hand (never above the cores, which the renderer would
+// (the engine, the web app, their own agent and their own apps), so by default the service takes about half of the
+// cores and a quarter of the memory, and the computer stays usable while a video draws; a video takes a little longer. `RENDER_CONCURRENCY` sets it by hand (never above the cores, which the renderer would
 // refuse). It imports nothing from the service, so the launcher and the tests can read it.
 import { cpus, totalmem } from "node:os";
 
@@ -16,8 +16,8 @@ export interface Machine {
 /** What one tab and its share of the encoder take, in megabytes: a 1080 by 1920 frame, its fonts and the scene. */
 export const MEMORY_PER_FRAME_MB = 700;
 /** The share of the cores and of the memory a render may take; the rest is for everything else that is running. */
-export const CORE_SHARE = 0.6;
-export const MEMORY_SHARE = 0.5;
+export const CORE_SHARE = 0.5;
+export const MEMORY_SHARE = 0.25;
 /** Past this, more tabs stop helping (measured on a ten-core Mac) and only cost memory. */
 export const MOST_AT_ONCE = 6;
 

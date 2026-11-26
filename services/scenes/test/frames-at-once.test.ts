@@ -9,22 +9,25 @@ import { fewerAtOnce, framesAtOnce, lackedRoom, thisMachine, MOST_AT_ONCE } from
 
 const GB = 1024 ** 3;
 
-test("with nothing set, frames at once follow the cores: a share of them, one at least, never past the renderer's most", () => {
+test("with nothing set, frames at once are about half the cores, one at least, never past the renderer's most", () => {
   const at = (cores: number, memory = 32 * GB) => framesAtOnce({ cores, memory }, {}).frames;
   assert.equal(at(1), 1);
   assert.equal(at(2), 1, "a two-core computer draws one at a time: the renderer refuses more than it has, and Open Sourcebook's other programs need a core");
   assert.equal(at(4), 2);
   assert.equal(at(8), 4);
+  assert.equal(at(10), 5);
   assert.equal(at(12), 6);
   assert.equal(at(64), MOST_AT_ONCE);
-  for (const cores of [1, 2, 3, 4, 6, 8, 12, 16, 32]) assert.ok(at(cores) >= 1 && at(cores) <= cores, `${cores} cores`);
+  // About half the machine stays free for the person's own apps.
+  for (const cores of [1, 2, 3, 4, 6, 8, 12, 16, 32]) assert.ok(at(cores) >= 1 && at(cores) <= Math.max(1, cores / 2), `${cores} cores`);
 });
 
-test("low memory brings it down, however many cores there are", () => {
+test("low memory brings it down, however many cores there are: a quarter of the memory at most", () => {
   const at = (memoryGb: number) => framesAtOnce({ cores: 12, memory: memoryGb * GB }, {}).frames;
   assert.equal(at(32), 6);
-  assert.equal(at(8), 5);
-  assert.equal(at(4), 2);
+  assert.equal(at(16), 5, "an 8-core, 16 GB Mac draws with about 4 GB of its memory");
+  assert.equal(at(8), 2);
+  assert.equal(at(4), 1);
   assert.equal(at(2), 1);
   assert.equal(at(0.5), 1, "never none");
 });
