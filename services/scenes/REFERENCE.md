@@ -41,6 +41,8 @@ The agent works the way it works in its own sessions: one turn, on adapters that
 
    **At low priority.** Drawing comes after the person's own apps (`pipeline/lib/priority.ts`): ffmpeg is started below normal priority, and while a render or a measure runs, every process the service has started (the drawing browser and its tabs, the encoder) is lowered as it appears, to nice 10 on macOS and Linux and the below-normal class on Windows. The video only uses what the person's apps leave.
 
+   **One at a time.** Only one video draws at a time on this computer, whoever asks (a video's render after its turn, the agent's own render, a measure of speed): two at once ran a computer short of memory. One that comes while another draws waits its turn, and its step says "Waiting for the video before it to finish drawing" until it draws. Its voice and its scenes are made meanwhile; only the drawing waits.
+
    **How long it takes.** Every render adds its frames a second in its style to `speed.json` in the data folder, and the first time (a style with no speed) the service draws a short stretch of a sample scene in each offered style in the background to have a number at all (`src/speed.ts`). `/status` carries it as `speed`, the render's step says `Drawing the video, about 4 minutes on this computer`, and the engine's maker says the same in the plan row and the make tile. A style that has not been measured says nothing about time.
 
 ## The fresh viewer

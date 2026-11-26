@@ -8,7 +8,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { after, before, test } from "node:test";
 import type { renderMedia } from "@remotion/renderer";
-import { render, roomWords, type Drawn } from "../pipeline/stages/render.ts";
+import { render, roomWords, WAIT_WORDS, type Drawn } from "../pipeline/stages/render.ts";
 import type { Machine } from "../pipeline/lib/frames-at-once.ts";
 import { useChrome } from "../src/chrome.ts";
 import { buildScene } from "../src/scene.ts";
@@ -150,4 +150,42 @@ test("a render that fails for another reason, or is stopped, is not tried again"
   }) as unknown as typeof renderMedia;
   await assert.rejects(render(timeline(), dir, { machine: BIG, renderer: stopped, signal: stop.signal }), /Target closed/);
   assert.equal(calls, 1, "a stop is not a lack of room");
+});
+
+test("two videos started together never draw at once: the second waits its turn and says so", async () => {
+  process.env.RENDER_CONCURRENCY = "1";
+  const { mkdirSync } = await import("node:fs");
+  const [a, b] = [join(folder, "first"), join(folder, "second")];
+  mkdirSync(a, { recursive: true });
+  mkdirSync(b, { recursive: true });
+  let open = 0;
+  let most = 0;
+  const order: string[] = [];
+  let finish: () => void = () => undefined;
+  const drawer = (name: string, hold?: Promise<void>) =>
+    (async () => {
+      open++;
+      most = Math.max(most, open);
+      order.push(`${name} draws`);
+      await hold;
+      order.push(`${name} done`);
+      open--;
+      return {} as never;
+    }) as unknown as typeof renderMedia;
+  const held = new Promise<void>((r) => (finish = r));
+  const waits: string[] = [];
+  const first = render(timeline(), a, { machine: TWO, renderer: drawer("first", held), onWait: () => waits.push("first") });
+  const second = render(timeline(), b, { machine: TWO, renderer: drawer("second"), onWait: () => waits.push("second"), onStart: () => order.push("second starts") });
+  assert.deepEqual(waits, ["second"], "only the one that came while another draws waits, and it is told at once");
+  await new Promise((r) => setTimeout(r, 2_000));
+  assert.ok(!order.includes("second draws"), `the second waits while the first draws: ${order.join(", ")}`);
+  finish();
+  await Promise.all([first, second]);
+  assert.equal(most, 1, "never two at once");
+  assert.deepEqual(order, ["first draws", "first done", "second starts", "second draws", "second done"]);
+  assert.match(WAIT_WORDS, /^Waiting for the video before it to finish drawing$/);
+  // A third, alone, does not wait.
+  const alone: string[] = [];
+  await render(timeline(), a, { machine: TWO, renderer: drawer("third"), onWait: () => alone.push("third") });
+  assert.deepEqual(alone, []);
 });
