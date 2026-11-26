@@ -6,6 +6,7 @@ import { bundled, releaseBundles } from "../../engine/render/bundle.ts";
 import { makeCancelSignal, renderMedia, selectComposition } from "@remotion/renderer";
 import type { Timeline } from "../../schemas/project.ts";
 import { fewerAtOnce, framesAtOnce, lackedRoom, thisMachine, type Machine } from "../lib/frames-at-once.ts";
+import { lowWhile } from "../lib/priority.ts";
 
 // H.264 quality: 18 (the default) made a 5:40 video 378 MB. 23 is the usual choice for video on the web.
 const CRF = Number(process.env.RENDER_CRF ?? 23);
@@ -72,10 +73,10 @@ export type RenderOptions = {
 };
 
 // One render or measure at a time on this computer, whoever asks: each takes the processor and the memory the frames
-// at once were counted for.
+// at once were counted for. It draws at low priority, so the person's own apps come first (pipeline/lib/priority.ts).
 let line: Promise<unknown> = Promise.resolve();
 function alone<T>(work: () => Promise<T>): Promise<T> {
-  const next = line.catch(() => undefined).then(work);
+  const next = line.catch(() => undefined).then(() => lowWhile(work));
   line = next;
   return next;
 }
