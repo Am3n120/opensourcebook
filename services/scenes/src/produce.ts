@@ -102,6 +102,8 @@ export async function renderVideo(ctx: ToolContext, placed: Placed[], spoken: Sp
     output: join(ctx.folder, "video.mp4"),
     imageCredits,
     ...(ctx.signal ? { signal: ctx.signal } : {}),
+    // The person asked to use more of the computer (Settings › Videos): more frames at once, at normal priority.
+    ...(ctx.request.faster ? { faster: true } : {}),
     onProgress,
     // Another video is drawing: this one waits its turn, and says so until it draws.
     onWait: () => {

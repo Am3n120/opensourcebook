@@ -32,6 +32,18 @@ test("low memory brings it down, however many cores there are: a quarter of the 
   assert.equal(at(0.5), 1, "never none");
 });
 
+test("a person who asked for speed gets most of the computer: more frames at once, the same limits", () => {
+  const at = (cores: number, memoryGb = 32) => framesAtOnce({ cores, memory: memoryGb * GB }, {}, { faster: true }).frames;
+  assert.equal(at(2), 1);
+  assert.equal(at(4), 2);
+  assert.equal(at(8), 4);
+  assert.equal(at(10), 6, "a ten-core Mac draws 6 at once, where gently it draws 5");
+  assert.equal(framesAtOnce({ cores: 10, memory: 32 * GB }, {}).frames, 5);
+  assert.equal(at(64), MOST_AT_ONCE);
+  assert.equal(at(12, 8), 5, "memory still brings it down, at half of it");
+  assert.equal(framesAtOnce({ cores: 2, memory: 16 * GB }, { RENDER_CONCURRENCY: "2" }, { faster: true }).frames, 2, "RENDER_CONCURRENCY still wins");
+});
+
 test("RENDER_CONCURRENCY sets it by hand, but not above the cores, which the renderer would refuse", () => {
   const machine = { cores: 2, memory: 16 * GB };
   assert.equal(framesAtOnce(machine, { RENDER_CONCURRENCY: "2" }).frames, 2);
