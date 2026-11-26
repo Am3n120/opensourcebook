@@ -83,6 +83,11 @@ export interface ScenesMakerOptions {
    * last drawing. `ownerId` is whose job it is, when the job says.
    */
   madeIn?: (pick: { agent: string; model?: string; effort?: string }, settings: VideoSettings, ownerId?: string) => Promise<number | undefined>;
+  /**
+   * Whether the owner asked to use more of the computer to draw videos faster (Settings › Videos, `GET /v1/drawing`).
+   * Each video it starts carries it; without it, or off, the scenes service draws gently.
+   */
+  drawFaster?: (ownerId?: string) => Promise<boolean>;
 }
 
 export interface ScenesBlueprint {
@@ -395,6 +400,7 @@ class ScenesEngine implements OutputEngine<VideoSettings, ScenesBlueprint, Video
     await ctx.services.progress({ stage: "writing", progress: 0.04, step: "Asking your agent to start" });
     // The project's packs go with the video, so the agent that makes it reads them as the byte and quiz makers do.
     const packs = packSkills(ctx.project?.packs ?? []);
+    const faster = this.options.drawFaster ? await this.options.drawFaster(ctx.ownerId).catch(() => false) : false;
     await this.call(() =>
       this.client.start(
         {
@@ -411,6 +417,7 @@ class ScenesEngine implements OutputEngine<VideoSettings, ScenesBlueprint, Video
           ...reviewOf(ctx.node.settings, picked.agent),
           passages: passages.map(toWirePassage),
           ...(packs.length > 0 ? { skills: packs } : {}),
+          ...(faster ? { faster: true } : {}),
           limits: {
             maxScenes: VIDEO_LIMITS.maxScenes,
             minScenes: 1,
