@@ -2,6 +2,10 @@
 
 The newest first. `opensourcebook update` prints the lines here that your copy did not have yet, so each line is written for a person using Open Sourcebook: what they can now do or will notice, in a sentence. How to add one is in `CONTRIBUTING.md`.
 
+## 2026-11-28
+
+- Setting a video's reviewer to off now stops its fresh viewer turn, and a reviewer you picked watches the finished video on that agent, model and effort.
+
 ## 2026-11-26
 
 - You can now drag a video's progress line to rewind or skip ahead; it follows your pointer while you drag and moves the video when you let go.
