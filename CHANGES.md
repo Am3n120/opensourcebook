@@ -6,6 +6,10 @@ The newest first. `opensourcebook update` prints the lines here that your copy d
 
 - Setting a video's reviewer to off now stops its fresh viewer turn, and a reviewer you picked watches the finished video on that agent, model and effort.
 
+## 2026-11-27
+
+- First-time setup now starts with a short list of what your computer has and what it still needs: Node, ffmpeg, a coding agent, its sign-in and a voice. Each row says where it stands, and Check again looks once more after you change something.
+
 ## 2026-11-26
 
 - You can now drag a video's progress line to rewind or skip ahead; it follows your pointer while you drag and moves the video when you let go.
