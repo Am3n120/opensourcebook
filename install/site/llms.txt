@@ -1,0 +1,53 @@
+# Open Sourcebook
+
+> The open-source NotebookLM (now Gemini Notebook) alternative that turns a person's PDFs, notes, slides and links into drawn explainer videos, guides, audio, mind maps, flashcards, quizzes and cited answers. It runs on their own computer, on the AI plan they already have (Claude, ChatGPT, Gemini, Cursor, GitHub Copilot, OpenCode) or on an API key. Free, licence MIT.
+
+Website: https://opensourcebook.app
+Repository: https://github.com/Mikiyas-Meles-Assefa/opensourcebook
+
+## What is true today
+
+- Made and used on a Mac. The Linux and Windows installs are written and not proven yet.
+- The making is done by the coding agent the person already has: Claude Code, Codex, Antigravity, Cursor, GitHub Copilot or OpenCode. Used most with Claude Code and Codex.
+- No API key is needed on a plan. A Gemini, DeepSeek or OpenRouter key works for chat, flashcards and quizzes; a provider connected in OpenCode works for everything.
+- Every cite is checked word for word against the source.
+- The person's files and projects stay on their computer. Their agent still sends what it reads to its own provider.
+- A video's sound and audio need a voice: a key for a voice service, or a free voice installed on the computer.
+
+## Install
+
+- Mac or Linux: `curl -fsSL https://opensourcebook.app/install | sh`
+- Windows (PowerShell): `irm https://opensourcebook.app/install.ps1 | iex`
+- With Node 24 already installed: `npx opensourcebook`
+- Needed besides: one coding agent, installed and signed in the normal way. The install gets ffmpeg for videos and, if needed, a private Node 24.
+
+## Commands an agent can run
+
+`opensourcebook help` lists every command, `opensourcebook <thing> help` says more, and each takes `--json`.
+
+- `opensourcebook start --background`, `status`, `stop`, `check`, `open`, `update`: run it and look after it.
+- `opensourcebook project make <title>`, `project list`, `project use <id>`: projects.
+- `opensourcebook source add <files or links...>`, `source list`, `source search <words>`, `source read <id>`: sources.
+- `opensourcebook chat ask <question>`: an answer from the sources, with cites.
+- `opensourcebook make <shape> <what it is about> --wait`: one thing at once (video, flashcards, quiz, audio or guide).
+- `opensourcebook plan make <request>`, `plan show <id>`, `plan start <id> --wait`: several things as a plan.
+- `opensourcebook item get <item>`, `item open <item>`, `item ask <item> <words>`: what was made.
+- `opensourcebook quiz show <item>`, `quiz answer <item> 1=B 2=A`, `cards review <item>`, `cards mark <item> 1=got 2=not`: take a quiz or go through flashcards.
+- `opensourcebook makers`, `maker list`, `style list`, `agent list`, `pack list`: who makes what, and what can be made now.
+- `opensourcebook skill install`: copies the agent skill to where the person's agent looks for skills.
+
+## Docs
+
+- [README](https://github.com/Mikiyas-Meles-Assefa/opensourcebook/blob/main/README.md): what it is and what it makes.
+- [Install](https://github.com/Mikiyas-Meles-Assefa/opensourcebook/blob/main/docs/INSTALL.md): the install lines, what is needed, an API key instead of a plan.
+- [Using it](https://github.com/Mikiyas-Meles-Assefa/opensourcebook/blob/main/docs/USING.md): each thing it makes, and how to ask for it.
+- [The command](https://github.com/Mikiyas-Meles-Assefa/opensourcebook/blob/main/docs/COMMAND.md): driving it from an agent's session.
+- [Agent skill](https://github.com/Mikiyas-Meles-Assefa/opensourcebook/blob/main/skills/opensourcebook/SKILL.md): how an agent drives Open Sourcebook. Start here.
+- [Limits](https://github.com/Mikiyas-Meles-Assefa/opensourcebook/blob/main/docs/LIMITS.md): what has been run for real, and what is rough.
+- [Privacy](https://github.com/Mikiyas-Meles-Assefa/opensourcebook/blob/main/docs/PRIVACY.md): what leaves the computer.
+
+## Project
+
+- [Contributing](https://github.com/Mikiyas-Meles-Assefa/opensourcebook/blob/main/CONTRIBUTING.md)
+- [Issues](https://github.com/Mikiyas-Meles-Assefa/opensourcebook/issues)
+- [Licence: MIT](https://github.com/Mikiyas-Meles-Assefa/opensourcebook/blob/main/LICENSE)

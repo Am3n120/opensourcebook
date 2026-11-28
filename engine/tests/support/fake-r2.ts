@@ -10,15 +10,22 @@ interface StoredObject {
 export class FakeR2Bucket implements R2BucketLike {
   readonly objects = new Map<string, StoredObject>();
 
-  async get(key: string) {
+  /** Every get, with the range it asked for, so a test can see what was read. */
+  readonly reads: Array<{ key: string; range?: { offset: number; length: number } }> = [];
+
+  async get(key: string, options?: { range?: { offset: number; length: number } }) {
+    this.reads.push({ key, ...(options?.range ? { range: options.range } : {}) });
     const object = this.objects.get(key);
     if (!object) return null;
+    const range = options?.range;
+    const bytes = range ? object.bytes.slice(range.offset, range.offset + range.length) : object.bytes.slice(0);
     return {
       key,
       size: object.bytes.byteLength,
       httpMetadata: object.httpMetadata,
       customMetadata: object.customMetadata,
-      arrayBuffer: async () => object.bytes.slice(0),
+      body: new Response(bytes).body!,
+      arrayBuffer: async () => bytes.slice(0),
     };
   }
 

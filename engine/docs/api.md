@@ -1096,6 +1096,8 @@ of the video is kept, and the old one stays (and plays) until the new one is rea
 with `206 Partial Content` and `content-range`, and says `accept-ranges:
 bytes` on every answer, so a video can be seeked in a browser or on the
 phone. A range it cannot satisfy is `416` with `content-range: bytes */<size>`.
+Only the asked bytes are read from storage, streamed as they are sent; an
+open range (`bytes=N-`) is the rest of the file.
 
 ## Usage
 
@@ -1654,6 +1656,21 @@ interface SetupState {
 - Step 2 is the voice routes; `voice.set` is false when there is no scenes
   service to ask. Step 3 ("Try it") uses the example import.
 - With no connector set up, `providers` is `{ connected: 0, ready: 0 }`.
+
+### Drawing a video (Nov 26, 2026)
+
+| Route | Request | Response | Errors |
+|---|---|---|---|
+| `GET /v1/drawing` | | `200 { faster: boolean }` | |
+| `PUT /v1/drawing` | `{ faster: boolean }` | `200 { faster: boolean }` | `400 invalid_request` |
+
+- Settings' "Use more of my computer to make videos faster", off by default.
+  Off, the scenes service draws a video with about half the computer at low
+  priority, so the person's own apps come first; on, with most of it at
+  normal priority. Kept per owner (`owner_settings`, key
+  `video.draw-faster`); `false` clears it.
+- Each video the scenes maker starts carries it as `faster: true` in its
+  request; a video already started keeps what it was started with.
 
 ### Open Sourcebook's tools
 

@@ -131,6 +131,34 @@ describe("/api/phone, to the launcher's phone control", () => {
   });
 });
 
+describe("/api/launcher, to what only the launcher can do", () => {
+  const withPhone = { ...env, PHONE_URL: "http://127.0.0.1:5181", PHONE_TOKEN: "phone-secret" };
+
+  test("starts a voice install with the phone token, and refuses one from another site", async () => {
+    const { calls, fetchImpl } = engine(202, { voice: "kokoro", state: "installing" });
+    const res = await proxy(new Request("https://web.test/api/launcher/voices/kokoro/install", { method: "POST", headers: { origin: "https://web.test" } }), withPhone, fetchImpl);
+    expect(res.status).toBe(202);
+    expect(calls[0]).toMatchObject({ url: "http://127.0.0.1:5181/launcher/voices/kokoro/install", init: { method: "POST" } });
+    expect(new Headers(calls[0]?.init.headers).get("x-phone-token")).toBe("phone-secret");
+    const evil = await proxy(new Request("https://web.test/api/launcher/voices/kokoro/install", { method: "POST", headers: { origin: "https://evil.test" } }), withPhone, fetchImpl);
+    expect(evil.status).toBe(403);
+    expect(calls).toHaveLength(1);
+  });
+
+  test("asks the launcher what this computer lacks, with the phone token, and says phone_unavailable when there is no launcher", async () => {
+    const { calls, fetchImpl } = engine(200, { rows: [] });
+    const res = await proxy(new Request("https://web.test/api/launcher/setup-check", { headers: { origin: "https://web.test" } }), withPhone, fetchImpl);
+    expect(res.status).toBe(200);
+    expect(calls[0]).toMatchObject({ url: "http://127.0.0.1:5181/launcher/setup-check", init: { method: "GET" } });
+    expect(new Headers(calls[0]?.init.headers).get("x-phone-token")).toBe("phone-secret");
+    // The setup screen keys on this code to show nothing when the web app runs alone.
+    const alone = await proxy(new Request("https://web.test/api/launcher/setup-check", { headers: { origin: "https://web.test" } }), env, fetchImpl);
+    expect(alone.status).toBe(503);
+    expect(((await alone.json()) as { error: string }).error).toBe("phone_unavailable");
+    expect(calls).toHaveLength(1);
+  });
+});
+
 describe("who may use the engine through this proxy", () => {
   // As `npm start` runs it: a browser key and a door key for this run, and the launcher's control.
   const run = {
@@ -207,8 +235,8 @@ describe("who may use the engine through this proxy", () => {
     expect(used.status).toBe(403);
     expect(used.headers.get("set-cookie")).toBeNull();
     const page = await used.text();
-    expect(page).toMatch(/Start Open Sourcebook again and it opens the right page for you\./);
-    expect(page.indexOf("Start Open Sourcebook again")).toBeLessThan(page.indexOf("opensourcebook open"));
+    expect(page).toMatch(/Open Open Sourcebook with its shortcut \(on Windows, find it in the Start menu\)\. If it is already running, that opens a fresh page for you\./);
+    expect(page.indexOf("its shortcut")).toBeLessThan(page.indexOf("opensourcebook open"));
     expect(page).toMatch(/<code>opensourcebook open<\/code>, or <code>npm run open<\/code> in its folder/);
     expect(page).not.toMatch(/\bRe\b|re open/);
     for (const to of ["//evil.example", "https://evil.example", "/\\evil.example", "/api/phone"]) {
@@ -225,7 +253,34 @@ describe("who may use the engine through this proxy", () => {
     const body = (await res.json()) as { error: string; message: string };
     expect(body.error).toBe("not_opened");
     expect(body.message).toBe(NOT_OPENED);
-    expect(body.message).toBe('This page opens from Open Sourcebook itself. Start Open Sourcebook again and it opens the right page for you. If you use a terminal, the command is "opensourcebook open", or "npm run open" in its folder.');
+    expect(body.message).toBe('This page opens from Open Sourcebook itself. Open Open Sourcebook with its shortcut (on Windows, find it in the Start menu); if it is already running, that opens a fresh page for you. If you use a terminal, the command is "opensourcebook open", or "npm run open" in its folder.');
+    expect((body as { earlier?: boolean }).earlier).toBeUndefined();
+  });
+
+  test("a tab let in by an earlier run is told so, and may ask the launcher for a fresh page, which only opens in this computer's browser", async () => {
+    const asked: string[] = [];
+    const fetchImpl = (async (u: string, init: RequestInit) => {
+      asked.push(`${u} ${String(init.body)} ${new Headers(init.headers).get("x-phone-token")}`);
+      return Response.json({ opened: true });
+    }) as unknown as typeof fetch;
+    const old = { cookie: "opensourcebook_browser_5173=key-of-an-earlier-run" };
+    const session = await proxy(new Request(`${at}/api/session`, { headers: old }), run, fetchImpl);
+    expect(session.status).toBe(401);
+    expect(await session.json()).toMatchObject({ error: "not_opened", earlier: true, canReopen: true });
+
+    const reopened = await proxy(new Request(`${at}/api/reopen`, { method: "POST", headers: { ...old, origin: at, "content-type": "application/json" }, body: JSON.stringify({ to: "/projects/p1" }) }), run, fetchImpl);
+    expect(reopened.status).toBe(200);
+    expect(asked).toEqual(['http://127.0.0.1:5181/browser/reopen {"to":"/projects/p1"} phone-secret']);
+    expect(reopened.headers.get("set-cookie")).toBeNull();
+
+    // Only for such a tab, from this site, never through the door, and never to another site.
+    expect((await proxy(new Request(`${at}/api/reopen`, { method: "POST", headers: { origin: at } }), run, fetchImpl)).status).toBe(403);
+    expect((await proxy(new Request(`${at}/api/reopen`, { method: "POST", headers: { ...old, origin: "https://evil.example" } }), run, fetchImpl)).status).toBe(403);
+    expect((await proxy(new Request(`${at}/api/reopen`, { method: "POST", headers: { ...old, "x-opensourcebook-door": "door-key-of-this-run" } }), run, fetchImpl)).status).toBe(403);
+    expect((await proxy(new Request(`${at}/api/reopen`, { headers: old }), run, fetchImpl)).status).toBe(405);
+    await proxy(new Request(`${at}/api/reopen`, { method: "POST", headers: { ...old, origin: at }, body: JSON.stringify({ to: "//evil.example" }) }), run, fetchImpl);
+    expect(asked[1]).toContain('{"to":"/"}');
+    expect(asked).toHaveLength(2);
   });
 
   test("the door's old header name is not a way in, nor is the old cookie name", async () => {

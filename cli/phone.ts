@@ -30,6 +30,8 @@ import type { Device } from "./devices.ts";
 import { DeviceStore } from "./devices.ts";
 import { openDoor, type Door } from "./door.ts";
 import type { OpenCodes, RunKeys } from "./opener.ts";
+import type { SetupRow } from "./check.ts";
+import type { VoiceInstalls } from "./voice.ts";
 import { PairingCodes } from "./pairing.ts";
 import { encodeQr, svgQr, terminalQr } from "./qr.ts";
 import { writePrivate } from "./secrets.ts";
@@ -89,7 +91,16 @@ export interface PhoneOptions {
   keys?: RunKeys;
   /** The one-time codes that let this computer's browser in. */
   openCodes?: OpenCodes;
+  /** The installs of voices that run on this computer, which the voice screen's button starts (cli/voice.ts). */
+  voices?: VoiceInstalls;
+  /** What this computer has and lacks, for first-time setup (cli/check.ts); read only. */
+  check?: () => Promise<SetupRow[]>;
+  /** Opens a fresh opening address for `to` in this computer's browser, for a tab left from an earlier run (OpenGate). */
+  reopen?: (to: string) => boolean;
 }
+
+/** A tab from an earlier run may ask for a fresh page at most this often. */
+const REOPEN_EVERY_MS = 5_000;
 
 export interface PhoneStatus {
   on: boolean;
@@ -105,6 +116,7 @@ export class Phone {
   private control: Server | undefined;
   private current: { url: string; expiresAt: number } | undefined;
   private readonly o: PhoneOptions;
+  private reopenedAt = 0;
   /** The control server's port, once it listens. */
   controlPort = 0;
 
@@ -243,6 +255,19 @@ export class Phone {
         const { code, expiresAt } = opener.issue();
         return reply(200, { code, expiresAt: new Date(expiresAt).toISOString() });
       }
+      if (req.method === "POST" && path === "/browser/reopen" && this.o.reopen) {
+        const text = await readSmall(req, 2048);
+        let to = "/";
+        try {
+          const asked = (JSON.parse(text ?? "{}") as { to?: unknown }).to;
+          if (typeof asked === "string" && asked.startsWith("/") && !asked.startsWith("//") && !asked.includes("\\")) to = asked;
+        } catch {
+          // The home page.
+        }
+        if (Date.now() - this.reopenedAt < REOPEN_EVERY_MS) return reply(429, { error: "too_soon", message: "A fresh page was opened a moment ago; look for it among the browser's tabs." });
+        this.reopenedAt = Date.now();
+        return this.o.reopen(to) ? reply(200, { opened: true }) : reply(500, { error: "not_opened", message: "Open Sourcebook could not open the browser. Use its shortcut, or run \"opensourcebook open\"." });
+      }
       if (req.method === "POST" && path === "/browser/redeem" && opener) {
         const text = await readSmall(req, 1024);
         let code: unknown;
@@ -252,6 +277,17 @@ export class Phone {
           return reply(400, { error: "bad_request", message: "Send the code as JSON." });
         }
         return opener.redeem(code) ? reply(200, { ok: true }) : reply(403, { error: "wrong_code", message: "That address was used or has run out." });
+      }
+      // What this computer has and lacks, for first-time setup: asked fresh each time, changes nothing.
+      if (req.method === "GET" && path === "/launcher/setup-check" && this.o.check) return reply(200, { rows: await this.o.check() });
+      // A voice that runs on this computer, installed from the voice screen: its state, and a start.
+      const voice = /^\/launcher\/voices\/([a-z0-9-]{1,40})(\/install)?$/.exec(path);
+      const voices = this.o.voices;
+      if (voice && voices) {
+        const id = voice[1]!;
+        if (!voices.has(id)) return reply(404, { error: "not_found", message: `"${id}" is not a voice that runs on this computer.` });
+        if (req.method === "GET" && !voice[2]) return reply(200, { voice: id, ...voices.state(id) });
+        if (req.method === "POST" && voice[2]) return reply(202, { voice: id, ...voices.start(id) });
       }
       const device = /^\/phone\/devices\/([0-9a-f]{1,32})$/.exec(path);
       if (req.method === "DELETE" && device) {

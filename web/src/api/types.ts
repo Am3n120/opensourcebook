@@ -1063,7 +1063,7 @@ export interface VoiceServiceView {
   /** A local one: whether it is installed. */
   installed?: boolean;
   /** A local one: what to run, and where, to install it. */
-  install?: { command: string; folder: string };
+  install?: { command: string; folder?: string };
   listsVoices: boolean;
   /** Whether it offers a sample of its voices to hear; with none, no voice of it has a play button. */
   samples: boolean;
@@ -1099,6 +1099,13 @@ export interface SetupState {
   providers: { connected: number; ready: number };
   /** A voice service is chosen; the person skipped the voice step (kept, so setup does not ask again). */
   voice: { set: boolean; skipped: boolean };
+}
+
+// Drawing a video (GET /v1/drawing)
+
+export interface DrawingSettings {
+  /** "Use more of my computer to make videos faster": most of the computer at normal priority; off, about half of it at low priority. */
+  faster: boolean;
 }
 
 // Sources (GET /v1/uploads/types)
@@ -1149,6 +1156,26 @@ export interface PairedDevice {
   name: string;
   pairedAt: string;
   lastSeenAt: string;
+}
+
+/** An install of a voice that runs on this computer, as the launcher runs it (cli/voice.ts). */
+export type VoiceInstallState = { voice: string } & ({ state: "idle" } | { state: "installing"; since: string } | { state: "done" } | { state: "failed"; message: string });
+
+/** One thing this computer needs, as the launcher reports it for first-time setup (cli/check.ts). */
+export interface SetupRow {
+  id: "node" | "ffmpeg" | "agent" | "signin" | "voice" | (string & {});
+  label: string;
+  /** `waiting` needs the row before it first (an agent has to be installed to be signed in to). */
+  state: "ok" | "missing" | "waiting" | (string & {});
+  text: string;
+  /** What to do about it, in words, until the app does it with a button. */
+  detail?: string;
+  /** Open Sourcebook works without it (a voice: videos are made without sound). */
+  optional?: boolean;
+}
+
+export interface SetupCheck {
+  rows: SetupRow[];
 }
 
 export interface PhoneStatus {

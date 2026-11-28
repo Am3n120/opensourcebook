@@ -12,6 +12,11 @@
   Content-Type: text/plain; charset=utf-8
   Cache-Control: public, max-age=300, must-revalidate
 
+# The summary for agents, read as plain text.
+/llms.txt
+  Content-Type: text/plain; charset=utf-8
+  Cache-Control: public, max-age=300, must-revalidate
+
 # The page: always checked for a newer copy before it is shown.
 /
   Cache-Control: public, max-age=0, must-revalidate

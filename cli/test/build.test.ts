@@ -10,7 +10,7 @@ import { spawnSync } from "node:child_process";
 import { parseArgs } from "../main.ts";
 import { PROGRAMS, webSettings, type Program, type Wiring } from "../programs.ts";
 import { SECRET_NAMES, type Secrets } from "../secrets.ts";
-import { builtModules, parsePrepareArgs, parseServeArgs, runtimeOptions, settingsFiles, settingsFromEnv, type Runtime } from "../serve-worker.ts";
+import { builtModules, parsePrepareArgs, parseServeArgs, runtimeOptions, settingsFiles, settingsFromEnv, withoutLocalBrowser, type Runtime } from "../serve-worker.ts";
 import { parseEnv } from "../envfile.ts";
 
 const dir = mkdtempSync(join(tmpdir(), "opensourcebook-build-"));
@@ -194,6 +194,10 @@ test("serve-worker: the built modules, the settings over the config's variables,
   assert.deepEqual(options.workers[0]!.bindings, { MODEL: "a", OPENSOURCEBOOK_CLIENT_TOKEN: "from-settings", KEY: "k" });
   assert.deepEqual(options.workers[0]!.compatibilityFlags, ["nodejs_compat"]);
   assert.equal(options.workers[0]!.modulesRoot, "/b");
+  // A deployer's config may name the headless-browser binding; on this computer it is never given to the engine.
+  const withBrowser = runtimeOptions(args, { ...runtime, worker: { ...runtime.worker, browserRendering: { binding: "BROWSER" } } }, {}) as { workers: Array<Record<string, unknown>> };
+  assert.equal("browserRendering" in withBrowser.workers[0]!, false);
+  assert.deepEqual(withoutLocalBrowser({ name: "engine", browserRendering: { binding: "BROWSER" } }), { name: "engine" });
   assert.throws(() => parseServeArgs(["--port", "1"]), /--runtime/);
   assert.throws(() => parsePrepareArgs(["--out", "x"]), /--config/);
   assert.deepEqual(parsePrepareArgs(["--find-config", "out/app", "--out", "r.json"]), { out: "r.json", findConfig: "out/app" });

@@ -248,7 +248,6 @@ export class Jobs {
   private readonly pinned = new Map<string, Voice>();
   /** Per job: when the agent last called one of Open Sourcebook's tools, and how many of its calls are running now. */
   private readonly activity = new Map<string, { at: number; open: number }>();
-  private renderQueue: Promise<unknown> = Promise.resolve();
   private readonly o: JobsOptions;
   private readonly log: (line: string) => void;
 
@@ -817,7 +816,7 @@ export class Jobs {
       const t0 = Date.now();
       let made;
       try {
-        made = await this.queued(() => makeCut(ctx));
+        made = await makeCut(ctx);
       } catch (e) {
         // The voice going away waits for the voice, as a render after the turn would; anything else, the render after the turn tries again.
         if (voiceDownOf(e) || abort.signal.aborted) throw e;
@@ -886,7 +885,8 @@ export class Jobs {
    */
   private async viewerTurn(job: JobRecord, abort: AbortController, ctx: ToolContext, cut: Cut, kept: string): Promise<{ review?: Review; why?: string; model?: string }> {
     // The viewer's own pick when the request names one (its model and effort go with that agent alone), else the
-    // video's agent with the service's review model and effort when that agent is the service's own.
+    // video's agent with the service's review model and effort when that agent is the service's own, and otherwise
+    // the video's own model and effort.
     const own = job.request.reviewAgent ? { agent: job.request.reviewAgent, ...(job.request.reviewModel ? { model: job.request.reviewModel } : {}), ...(job.request.reviewEffort ? { effort: job.request.reviewEffort } : {}) } : undefined;
     const viewerAgent = own?.agent ?? job.request.agent;
     const status = await this.o.connector.status(false, viewerAgent);
@@ -894,6 +894,9 @@ export class Jobs {
     if (!status.reachable || status.problem) return { why: status.problem ?? "agentUnreachable" };
     const defaultStatus = !own && job.request.agent && !this.o.connector.config.agent ? await this.o.connector.status() : undefined;
     const reviewMatchesAgent = !own && (!job.request.agent || job.request.agent === (this.o.connector.config.agent ?? defaultStatus?.id));
+    const r = this.o.review;
+    const viewerModel = own ? own.model : ((reviewMatchesAgent ? r?.model : undefined) ?? job.request.model);
+    const viewerEffort = own ? own.effort : ((reviewMatchesAgent ? r?.effort : undefined) ?? job.request.effort);
     const folder = this.folder(job.id);
     const report = cut.facts && existsSync(join(folder, cut.facts)) ? await viewerReportOf(ctx, cut).catch(() => undefined) : undefined;
     const session: ViewerSession = {
@@ -911,7 +914,6 @@ export class Jobs {
     this.running.get(job.id)!.turnId = turnId;
     abort.signal.addEventListener("abort", () => this.turns.get(turnId)?.ended({ outcome: "failed", problem: "stopped" }), { once: true });
     const prompt = viewerPrompt(session);
-    const r = this.o.review;
     const started = await this.o.connector.start({
       turnId,
       systemPrompt: VIEWER_SYSTEM,
@@ -923,8 +925,8 @@ export class Jobs {
       keepAgentPrompt: this.o.keepAgentPrompt ?? !status.replacesWorkPrompt,
       ...(viewerAgent ? { agent: viewerAgent } : {}),
       target: { type: "video-review", id: job.id },
-      ...(own?.model ? { model: own.model } : reviewMatchesAgent && r?.model ? { model: r.model } : {}),
-      ...(own?.effort ? { effort: own.effort } : reviewMatchesAgent && r?.effort ? { effort: r.effort } : {}),
+      ...(viewerModel ? { model: viewerModel } : {}),
+      ...(viewerEffort ? { effort: viewerEffort } : {}),
     });
     if (!started.ok) {
       this.turns.delete(turnId);
@@ -932,8 +934,8 @@ export class Jobs {
     }
     this.stepTo(job, "A fresh viewer is watching the video");
     this.save(job);
-    const vModel = started.model ?? own?.model ?? (reviewMatchesAgent ? r?.model : undefined) ?? status.model;
-    const vEffort = started.effort ?? own?.effort ?? (reviewMatchesAgent ? r?.effort : undefined) ?? status.effort;
+    const vModel = started.model ?? viewerModel ?? status.model;
+    const vEffort = started.effort ?? viewerEffort ?? status.effort;
     this.log(`job ${job.id}: turn ${turnId} started: a fresh viewer on cut ${cut.number} (${started.agent}${vModel ? `, ${vModel}` : ""}${vEffort ? `, ${vEffort}` : ""}), a first message of about ${tokens(prompt)} tokens`);
     const t0 = Date.now();
     const beating = new AbortController();
@@ -999,8 +1001,9 @@ export class Jobs {
     this.stepTo(job, "Rendering the video");
     this.save(job);
     t0 = Date.now();
-    // One render at a time: each uses several Chrome tabs and most of the processor.
-    const out = await this.queued(() => renderVideo(ctx, placed, spoken, (p) => this.setProgress(job, 0.8 + 0.2 * p, false)));
+    // One video draws at a time (pipeline/stages/render.ts): this one's voice and scenes go on while another draws,
+    // and only its drawing waits, saying so in its step.
+    const out = await renderVideo(ctx, placed, spoken, (p) => this.setProgress(job, 0.8 + 0.2 * p, false));
     job.timings.renderMs += Date.now() - t0;
     if (abort.signal.aborted) return;
     const script = ctx.draft.script!;
@@ -1043,13 +1046,6 @@ export class Jobs {
     this.save(job);
   }
 
-  /** One render at a time on this computer: each uses several Chrome tabs and most of the processor. */
-  private queued<T>(work: () => Promise<T>): Promise<T> {
-    const next = this.renderQueue.catch(() => undefined).then(work);
-    this.renderQueue = next;
-    return next;
-  }
-
   // -------------------------------------------------------------------------------------------------------------------
 
   private context(job: JobRecord, signal?: AbortSignal): ToolContext {
@@ -1060,7 +1056,6 @@ export class Jobs {
       folder: this.folder(job.id),
       styles: this.o.styles(),
       voice: this.voiceOf(job),
-      queue: (work) => this.queued(work),
       step: (label) => this.stepTo(job, label),
       save: () => this.saveDraft(job.id, draft),
       ...(signal ? { signal } : {}),

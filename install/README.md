@@ -149,7 +149,7 @@ In this order. Each step has a check, and the next step waits for it.
 
    It should print the home folder and the archive address from step 1.
 
-3. **Put `install/site/` on `opensourcebook.app`.** This is done: the folder is served by a Cloudflare Worker with static assets named `opensourcebook-site`, set up in `install/wrangler.jsonc`, which reads `_headers` and holds the domain as its custom domain (Cloudflare made the DNS record and the certificate). To publish a change to the page or a script, run `npx wrangler deploy` from `install/`, signed in with `npx wrangler login` to the account that holds the domain. There is no build step. `www.opensourcebook.app` is not set up. Check that both scripts come back as scripts and not as a web page:
+3. **Put `install/site/` on `opensourcebook.app`.** This is done: the folder is served by a Cloudflare Worker with static assets named `opensourcebook-site`, set up in `install/wrangler.jsonc`, which reads `_headers` and holds the domain as its custom domain (Cloudflare made the DNS record and the certificate). To publish a change to the page or a script, run `npx wrangler deploy` from `install/`, signed in with `npx wrangler login` to the account that holds the domain. There is no build step. `www.opensourcebook.app` is a second custom domain of the same Worker: `worker.js` runs first and sends it, and plain `http://`, to `https://opensourcebook.app` with a 301 that keeps the path and query, and hands every other request to the folder as it is (the `_headers` rules still apply). The folder also serves `llms.txt`, a plain-text summary for agents. Check that both scripts come back as scripts and not as a web page:
 
    ```sh
    curl -fsSL https://opensourcebook.app/install | head -5

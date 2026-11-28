@@ -20,15 +20,22 @@ interface StoredObject {
 class FakeR2Bucket implements R2BucketLike {
   readonly objects = new Map<string, StoredObject>();
 
-  async get(key: string) {
+  /** Every get, with the range it asked for, so a test can see what was read. */
+  readonly reads: Array<{ key: string; range?: { offset: number; length: number } }> = [];
+
+  async get(key: string, options?: { range?: { offset: number; length: number } }) {
+    this.reads.push({ key, ...(options?.range ? { range: options.range } : {}) });
     const object = this.objects.get(key);
     if (!object) return null;
+    const range = options?.range;
+    const bytes = range ? object.bytes.slice(range.offset, range.offset + range.length) : object.bytes.slice(0);
     return {
       key,
       size: object.bytes.byteLength,
       httpMetadata: object.httpMetadata,
       customMetadata: object.customMetadata,
-      arrayBuffer: async () => object.bytes.slice(0),
+      body: new Response(bytes).body!,
+      arrayBuffer: async () => bytes.slice(0),
     };
   }
 
@@ -212,5 +219,69 @@ describe("an asset opened by its address", () => {
     for (const type of ["image/jpeg", "image/webp", "audio/mpeg", "video/mp4"]) {
       expect((await served(type)).headers.get("content-disposition"), type).toBeNull();
     }
+  });
+});
+
+describe("a video asset read in ranges", () => {
+  const size = 1000;
+  async function setUp() {
+    const bucket = new FakeR2Bucket();
+    const bytes = Uint8Array.from({ length: size }, (_, i) => i % 251);
+    const ref = await new AssetStore(bucket).putAsset(bytes, { kind: "video", contentType: "video/mp4" });
+    bucket.reads.length = 0;
+    const get = (range?: string) => getAsset(ref!.id, { bucket } as unknown as EngineDeps, range);
+    return { bucket, bytes, get };
+  }
+
+  it("sends the whole file with its length when no range is asked", async () => {
+    const { bucket, bytes, get } = await setUp();
+    const response = await get();
+    expect(response.status).toBe(200);
+    expect(response.headers.get("content-length")).toBe(String(size));
+    expect(response.headers.get("accept-ranges")).toBe("bytes");
+    expect(new Uint8Array(await response.arrayBuffer())).toEqual(bytes);
+    expect(bucket.reads).toEqual([{ key: bucket.reads[0]!.key }]);
+  });
+
+  it("asks storage for only the bytes of a closed range", async () => {
+    const { bucket, bytes, get } = await setUp();
+    const response = await get("bytes=100-199");
+    expect(response.status).toBe(206);
+    expect(response.headers.get("content-range")).toBe(`bytes 100-199/${size}`);
+    expect(response.headers.get("content-length")).toBe("100");
+    expect(new Uint8Array(await response.arrayBuffer())).toEqual(bytes.slice(100, 200));
+    expect(bucket.reads.map((read) => read.range)).toEqual([{ offset: 100, length: 100 }]);
+  });
+
+  it("sends the rest of the file for an open range, read from that byte on", async () => {
+    const { bucket, bytes, get } = await setUp();
+    const response = await get("bytes=900-");
+    expect(response.status).toBe(206);
+    expect(response.headers.get("content-range")).toBe(`bytes 900-999/${size}`);
+    expect(new Uint8Array(await response.arrayBuffer())).toEqual(bytes.slice(900));
+    expect(bucket.reads.map((read) => read.range)).toEqual([{ offset: 900, length: 100 }]);
+  });
+
+  it("sends the last bytes for a suffix range", async () => {
+    const { bucket, bytes, get } = await setUp();
+    const response = await get("bytes=-50");
+    expect(response.status).toBe(206);
+    expect(response.headers.get("content-range")).toBe(`bytes 950-999/${size}`);
+    expect(new Uint8Array(await response.arrayBuffer())).toEqual(bytes.slice(950));
+    expect(bucket.reads.map((read) => read.range)).toEqual([{ offset: 950, length: 50 }]);
+  });
+
+  it("answers 416 with the size, and reads nothing, for a range past the end", async () => {
+    const { bucket, get } = await setUp();
+    const response = await get(`bytes=${size}-`);
+    expect(response.status).toBe(416);
+    expect(response.headers.get("content-range")).toBe(`bytes */${size}`);
+    expect(response.headers.get("x-content-type-options")).toBe("nosniff");
+    expect(bucket.reads).toEqual([]);
+  });
+
+  it("is not found when there is no such asset", async () => {
+    const response = await getAsset("missing", { bucket: new FakeR2Bucket() } as unknown as EngineDeps, "bytes=0-1");
+    expect(response.status).toBe(404);
   });
 });

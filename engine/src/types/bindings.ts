@@ -32,7 +32,15 @@ export interface R2ObjectBodyLike {
   size?: number;
   httpMetadata?: { contentType?: string };
   customMetadata?: Record<string, string>;
+  /** The object's bytes (only the asked range, for a ranged get), read as they are sent. */
+  body?: ReadableStream<Uint8Array>;
   arrayBuffer(): Promise<ArrayBuffer>;
+}
+
+/** Part of an object to read (R2's `R2Range`): from an offset for a length. */
+export interface R2RangeLike {
+  offset: number;
+  length: number;
 }
 
 export interface R2ObjectHeadLike {
@@ -43,7 +51,8 @@ export interface R2ObjectHeadLike {
 }
 
 export interface R2BucketLike {
-  get(key: string): Promise<R2ObjectBodyLike | null>;
+  /** With `range`, only those bytes are read from storage. */
+  get(key: string, options?: { range?: R2RangeLike }): Promise<R2ObjectBodyLike | null>;
   put(
     key: string,
     value: ArrayBuffer | ArrayBufferView | string,

@@ -49,12 +49,19 @@ function groupsInWords(): string {
 /**
  * An asset, whole or one byte range of it (`Range: bytes=…`), so a video
  * can be seeked in a browser or on the phone (engine/docs/api.md, "Assets").
+ * Storage is asked for only the bytes sent, and they are streamed, never
+ * read whole first: a browser plays a video with many range requests, and
+ * each would otherwise cost the whole file. An open range (`bytes=N-`) is
+ * the rest of the file, as asked; a browser that wants less stops reading
+ * and the stream stops with it.
  */
 export async function getAsset(id: string, deps: EngineDeps, rangeHeader?: string | null): Promise<Response> {
-  const object = deps.bucket ? await deps.bucket.get(assetKeyForId(id)) : null;
-  if (!object) return notFound("Asset not found");
-  const bytes = await object.arrayBuffer();
-  const contentType = object.httpMetadata?.contentType ?? "application/octet-stream";
+  if (!deps.bucket) return notFound("Asset not found");
+  const key = assetKeyForId(id);
+  const head = await deps.bucket.head(key);
+  if (!head) return notFound("Asset not found");
+  const size = head.size ?? 0;
+  const contentType = head.httpMetadata?.contentType ?? "application/octet-stream";
   const headers: Record<string, string> = {
     "content-type": contentType,
     "cache-control": "public, max-age=31536000, immutable",
@@ -63,15 +70,20 @@ export async function getAsset(id: string, deps: EngineDeps, rangeHeader?: strin
     "accept-ranges": "bytes",
     ...assetSafetyHeaders(contentType),
   };
-  if (!rangeHeader) return new Response(bytes, { status: 200, headers });
-  const range = byteRange(rangeHeader, bytes.byteLength);
-  if (range === "ignore") return new Response(bytes, { status: 200, headers });
+  const range = rangeHeader ? byteRange(rangeHeader, size) : "ignore";
   if (range === "unsatisfiable") {
-    return new Response(null, { status: 416, headers: { ...headers, "content-range": `bytes */${bytes.byteLength}` } });
+    return new Response(null, { status: 416, headers: { ...headers, "content-range": `bytes */${size}` } });
   }
-  return new Response(bytes.slice(range.start, range.end + 1), {
+  const whole = range === "ignore";
+  const length = whole ? size : range.end - range.start + 1;
+  const object = whole ? await deps.bucket.get(key) : await deps.bucket.get(key, { range: { offset: range.start, length } });
+  if (!object) return notFound("Asset not found");
+  const body = object.body ?? (await object.arrayBuffer());
+  headers["content-length"] = String(length);
+  if (whole) return new Response(body, { status: 200, headers });
+  return new Response(body, {
     status: 206,
-    headers: { ...headers, "content-range": `bytes ${range.start}-${range.end}/${bytes.byteLength}` },
+    headers: { ...headers, "content-range": `bytes ${range.start}-${range.end}/${size}` },
   });
 }
 

@@ -121,9 +121,20 @@ export function settingsFromEnv(names: string[], env: NodeJS.ProcessEnv): Record
   return out;
 }
 
+/**
+ * A Worker's options without what must not run on a person's computer: the headless-browser binding a deployer's
+ * config may name (`[browser]`). Locally the runtime answers it by downloading a whole Chrome the first time a page is
+ * rendered, and again after every failed try, which stalls the engine while it waits. Pages are read without it.
+ */
+export function withoutLocalBrowser(worker: Record<string, unknown>): Record<string, unknown> {
+  const { browserRendering: _browser, ...rest } = worker;
+  return rest;
+}
+
 /** The runtime's options at a start: what prepare kept, with the address, the state folder and the settings on top. */
 export function runtimeOptions(args: ServeArgs, runtime: Runtime, settings: Record<string, string>): Record<string, unknown> {
-  const worker = runtime.worker;
+  // Also for a build prepared before the browser binding was left out.
+  const worker = withoutLocalBrowser(runtime.worker);
   const compatibilityFlags = [...new Set([...((worker.compatibilityFlags as string[] | undefined) ?? []), ...args.compatibilityFlags])];
   return {
     host: args.ip,
@@ -175,7 +186,7 @@ function prepare(args: PrepareArgs): void {
   const root = dirname(script);
   const { modulesRules, ...worker } = read.workerOptions as { modulesRules?: ModuleRule[] } & Record<string, unknown>;
   const files = walk(root).sort((a, b) => (join(root, a) === script ? -1 : join(root, b) === script ? 1 : 0));
-  const runtime: Runtime = { worker, externalWorkers: read.externalWorkers ?? [], modulesRoot: root, modules: builtModules(root, files, modulesRules ?? []) };
+  const runtime: Runtime = { worker: withoutLocalBrowser(worker), externalWorkers: read.externalWorkers ?? [], modulesRoot: root, modules: builtModules(root, files, modulesRules ?? []) };
   writeFileSync(resolve(args.out), `${JSON.stringify(runtime, null, 1)}\n`);
 }
 

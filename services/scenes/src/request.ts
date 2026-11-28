@@ -26,6 +26,8 @@ export interface VideoRequest {
   reviewAgent?: string;
   reviewModel?: string;
   reviewEffort?: string;
+  /** Draw with most of the computer at normal priority, as the person asked (Settings › Videos); gently when left out. */
+  faster?: boolean;
 }
 
 /** One skill sent with a video: its folder name and its files by their path inside it (`SKILL.md`, `references/x.md`). */
@@ -117,7 +119,9 @@ export function readRequest(body: unknown, styles: string[]): { request: VideoRe
   const reviewAgent = optText("reviewAgent");
   const reviewModel = optText("reviewModel");
   const reviewEffort = optText("reviewEffort");
+  if (b.faster !== undefined && b.faster !== null && typeof b.faster !== "boolean") problems.push("faster: true or false, or leave it out.");
+  const faster = b.faster === true;
   if ((reviewModel || reviewEffort) && !reviewAgent) problems.push("reviewModel, reviewEffort: only with reviewAgent, the agent they were picked for.");
   if (problems.length) return { problems };
-  return { request: { id, title, brief, assumes, frame: { width, height }, ...(target !== undefined ? { targetSeconds: target } : {}), style, ...(agent ? { agent } : {}), ...(model ? { model } : {}), ...(effort ? { effort } : {}), passages, limits: readLimits(b.limits), ...(skills.length ? { skills } : {}), ...(review !== undefined ? { review } : {}), ...(reviewAgent ? { reviewAgent } : {}), ...(reviewModel ? { reviewModel } : {}), ...(reviewEffort ? { reviewEffort } : {}) } };
+  return { request: { id, title, brief, assumes, frame: { width, height }, ...(target !== undefined ? { targetSeconds: target } : {}), style, ...(agent ? { agent } : {}), ...(model ? { model } : {}), ...(effort ? { effort } : {}), passages, limits: readLimits(b.limits), ...(skills.length ? { skills } : {}), ...(review !== undefined ? { review } : {}), ...(reviewAgent ? { reviewAgent } : {}), ...(reviewModel ? { reviewModel } : {}), ...(reviewEffort ? { reviewEffort } : {}), ...(faster ? { faster } : {}) } };
 }

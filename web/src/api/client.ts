@@ -4,6 +4,7 @@ import type {
   ActivityQuery,
   Json,
   PhoneStatus,
+  VoiceInstallState,
   AgentPick,
   AgentPickPatch,
   AgentStatus,
@@ -58,7 +59,9 @@ import type {
   VoiceSetup,
   VoiceServiceView,
   VoiceOption,
+  SetupCheck,
   SetupState,
+  DrawingSettings,
   UploadType,
 } from "./types";
 
@@ -425,6 +428,13 @@ export class ApiClient {
   skipVoice(): Promise<SetupState> {
     return this.request("PUT", "/v1/setup", { json: { voice: { skipped: true } } });
   }
+  // Drawing a video
+  drawing(): Promise<DrawingSettings> {
+    return this.request("GET", "/v1/drawing");
+  }
+  setDrawing(faster: boolean): Promise<DrawingSettings> {
+    return this.request("PUT", "/v1/drawing", { json: { faster } });
+  }
   /** Who can make videos on this engine, and whether each can now. */
   async videoMakers(): Promise<VideoMaker[]> {
     return (await this.request<{ makers: VideoMaker[] }>("GET", "/v1/video-makers")).makers;
@@ -517,6 +527,19 @@ export class ApiClient {
   }
   unpairDevice(id: string): Promise<PhoneStatus> {
     return this.request("DELETE", `/phone/devices/${enc(id)}`);
+  }
+
+  // A voice that runs on this computer, installed by the launcher (cli/voice.ts), through the proxy. Only this computer reaches it.
+  installVoice(id: string): Promise<VoiceInstallState> {
+    return this.request("POST", `/launcher/voices/${enc(id)}/install`);
+  }
+  voiceInstall(id: string): Promise<VoiceInstallState> {
+    return this.request("GET", `/launcher/voices/${enc(id)}`);
+  }
+
+  // What this computer has and lacks (Node, ffmpeg, an agent, its sign-in, a voice), asked of the launcher through the proxy. Only this computer reaches it.
+  setupCheck(): Promise<SetupCheck> {
+    return this.request("GET", "/launcher/setup-check");
   }
 
   /** A harvested asset's URL, through the proxy. */

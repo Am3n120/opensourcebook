@@ -35,6 +35,7 @@
  *
  * The key also answers a turn when the CLI is not signed in.
  */
+import { programOf } from "./locate.ts";
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { homedir, tmpdir } from "node:os";
 import { join } from "node:path";
@@ -76,7 +77,9 @@ export const CLAUDE_FILES = "Works in each piece of work's own folder with its f
 export const CLAUDE_FULL = "Works in each piece of work's own folder with its own shell, files and web, walled in on this Mac, on the Anthropic API key in Open Sourcebook's connector settings.";
 
 export function claudeAdapter(options: ClaudeOptions = {}): AgentAdapter {
-  const bin = options.bin ?? "claude";
+  const name = options.bin ?? "claude";
+  // Looked for again at each check and turn, also where it installs itself when that is not on the PATH (./locate.ts).
+  const where = () => programOf(name, [".claude/local"]);
   // A turn on the key only when the CLI is not signed in; asked again at most every half minute.
   const login = new Remembered<{ signedIn?: boolean }>(30_000);
   return {
@@ -91,9 +94,13 @@ export function claudeAdapter(options: ClaudeOptions = {}): AgentAdapter {
       unready: () => (options.apiKey ? undefined : NO_CLAUDE_KEY),
       upstream: () => (options.apiKey ? { origin: options.apiOrigin ?? ANTHROPIC, headers: { "x-api-key": options.apiKey }, allows: anthropicAllows } : undefined),
     },
-    signIn: `${bin} auth login`,
+    signIn: `${name} auth login`,
     // From its own install page.
-    install: { command: "curl -fsSL https://claude.ai/install.sh | bash", url: "https://code.claude.com/docs/en/setup" },
+    install: {
+        command: "curl -fsSL https://claude.ai/install.sh | bash",
+      windowsCommand: "irm https://claude.ai/install.ps1 | iex",
+        url: "https://code.claude.com/docs/en/setup",
+    },
     // The CLI's own aliases: each always means that family's newest model.
     models: [
       { id: "haiku", label: "Haiku", tier: "fast" },
@@ -112,6 +119,7 @@ export function claudeAdapter(options: ClaudeOptions = {}): AgentAdapter {
       { id: "max", label: "Max", weight: "max" },
     ],
     async info(): Promise<AgentInfo> {
+      const bin = where();
       const version = await firstLine(bin, ["--version"]);
       if (version.missing || !version.text) return { installed: false };
       const status = await signedIn(bin);
@@ -119,6 +127,7 @@ export function claudeAdapter(options: ClaudeOptions = {}): AgentAdapter {
       return { installed: true, version: version.text.replace(/\s*\(Claude Code\)\s*$/, ""), ...status, ...(onKey ? { apiKey: true, note: CLAUDE_ON_KEY } : {}) };
     },
     run(spec: TurnSpec): RunningTurn {
+      const bin = where();
       if (spec.workspace?.access === "full" && (!spec.workspace.model || !spec.workspace.box)) return { done: Promise.resolve({ ok: false, problem: "error", detail: NO_CLAUDE_KEY }), kill: () => undefined };
       // Passed via file so long prompts stay clear of OS argv limits; inside a boxed turn's own tmp when boxed.
       const promptDir = spec.workspace?.tmp ? undefined : mkdtempSync(join(tmpdir(), "opensourcebook-claude-prompt-"));
@@ -394,11 +403,23 @@ async function classify(bin: string, seen: StreamFacts, stderr: string): Promise
   return login.signedIn === false ? "agentSignedOut" : "error";
 }
 
-/** Whether the CLI says it is signed in (`claude auth status`); only that one field is read. */
+/**
+ * Whether the CLI says it is signed in (`claude auth status`); only that one field is read. The JSON is read from the
+ * first `{` to the last `}`, as a notice printed before or after it (an update, a warning on Windows) would otherwise
+ * leave a signed-out program counted as ready.
+ */
 async function signedIn(bin: string): Promise<{ signedIn?: boolean }> {
   const { lines } = await allLines(bin, ["auth", "status", "--json"]);
+  return signedInFrom(lines.join("\n"));
+}
+
+/** `loggedIn` from what `claude auth status --json` printed; nothing when it says neither. */
+export function signedInFrom(text: string): { signedIn?: boolean } {
+  const start = text.indexOf("{");
+  const end = text.lastIndexOf("}");
+  if (start < 0 || end < start) return {};
   try {
-    const status = JSON.parse(lines.join("\n")) as { loggedIn?: unknown };
+    const status = JSON.parse(text.slice(start, end + 1)) as { loggedIn?: unknown };
     return typeof status.loggedIn === "boolean" ? { signedIn: status.loggedIn } : {};
   } catch {
     return {};

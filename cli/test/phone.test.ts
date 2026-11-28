@@ -98,3 +98,58 @@ test("phone: the home address is a private address of a real network card", () =
   assert.equal(homeAddress({ en0: [nic("8.8.8.8")] }), undefined);
   assert.equal(homeAddress({}), undefined);
 });
+
+test("browser reopen: a tab from an earlier run gets a fresh page opened in this computer's browser, a path of the app only, and not twice in a row", async () => {
+  const home = mkdtempSync(join(tmpdir(), "opensourcebook-phone-"));
+  const opened: string[] = [];
+  const phone = new Phone({ home, webPort: 1, doorPort: 0, controlPort: 0, token: "phone-token-0123456789", say: () => undefined, ansi: false, listenHost: "127.0.0.1", reopen: (to) => (opened.push(to), true) });
+  try {
+    await phone.start(false);
+    const port = phone.controlPort;
+    const send = (body: string) =>
+      new Promise<number>((resolve, reject) => {
+        const req = request({ host: "127.0.0.1", port, method: "POST", path: "/browser/reopen", headers: { host: `127.0.0.1:${port}`, "x-phone-token": "phone-token-0123456789", "content-type": "application/json" } }, (res) => {
+          res.resume();
+          res.on("end", () => resolve(res.statusCode!));
+        });
+        req.on("error", reject);
+        req.end(body);
+      });
+    assert.equal(await send(JSON.stringify({ to: "//evil.example" })), 200);
+    assert.deepEqual(opened, ["/"]);
+    assert.equal(await send(JSON.stringify({ to: "/projects/p1" })), 429, "not twice in a row");
+    assert.equal((await call(port, "POST", "/browser/reopen", { host: `127.0.0.1:${port}` })).status, 401, "only with the token");
+  } finally {
+    await phone.stop();
+    rmSync(home, { recursive: true, force: true });
+  }
+});
+
+test("setup check: the launcher answers what this computer lacks, read only, only with its token, and has no route without a check", async () => {
+  const home = mkdtempSync(join(tmpdir(), "opensourcebook-phone-check-"));
+  const rows = [{ id: "node", label: "Node", state: "ok", text: "Node 24.1.0" }, { id: "voice", label: "Voice", state: "missing", optional: true, text: "No voice yet: videos are made without sound" }];
+  let asked = 0;
+  const make = (check?: () => Promise<any>) => new Phone({ home, webPort: 1, doorPort: 0, controlPort: 0, token: "phone-token-0123456789", say: () => undefined, ansi: false, listenHost: "127.0.0.1", ...(check ? { check } : {}) });
+  const phone = make(async () => (asked++, rows as any));
+  const bare = make();
+  try {
+    await phone.start(false);
+    const port = phone.controlPort;
+    const ok = { host: `127.0.0.1:${port}`, "x-phone-token": "phone-token-0123456789" };
+    assert.equal((await call(port, "GET", "/launcher/setup-check", { host: ok.host })).status, 401);
+    assert.equal(asked, 0, "nothing is looked at for a caller without the token");
+    const answer = await call(port, "GET", "/launcher/setup-check", ok);
+    assert.equal(answer.status, 200);
+    assert.deepEqual(answer.body, { rows });
+    await call(port, "GET", "/launcher/setup-check", ok);
+    assert.equal(asked, 2, "asked fresh each time");
+    assert.equal((await call(port, "POST", "/launcher/setup-check", ok)).status, 404, "it only reads");
+    await bare.start(false);
+    const bareOk = { host: `127.0.0.1:${bare.controlPort}`, "x-phone-token": "phone-token-0123456789" };
+    assert.equal((await call(bare.controlPort, "GET", "/launcher/setup-check", bareOk)).status, 404);
+  } finally {
+    await phone.stop();
+    await bare.stop();
+    rmSync(home, { recursive: true, force: true });
+  }
+});
