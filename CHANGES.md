@@ -8,6 +8,7 @@ The newest first. `opensourcebook update` prints the lines here that your copy d
 
 ## 2026-11-27
 
+- On Windows, setup now shows the Windows install line for each agent instead of the Mac and Linux one; an agent with no Windows line shows its install page instead.
 - First-time setup now starts with a short list of what your computer has and what it still needs: Node, ffmpeg, a coding agent, its sign-in and a voice. Each row says where it stands, and Check again looks once more after you change something.
 
 ## 2026-11-26
